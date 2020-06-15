@@ -571,7 +571,7 @@
   resolved "https://registry.yarnpkg.com/@types/minimist/-/minimist-1.2.0.tgz#69a23a3ad29caf0097f06eda59b361ee2f0639f6"
   integrity sha1-aaI6OtKcrwCX8G7aWbNh7i8GOfY=
 
-"@types/node@*", "@types/node@^14.0.13":
+"@types/node@*", "@types/node@^14.0.0":
   version "14.0.13"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.13.tgz#ee1128e881b874c371374c1f72201893616417c9"
   integrity sha512-rouEWBImiRaSJsVA+ITTFM6ZxibuAlTuNOCyxVbwreu6k6+ujs7DfnU9o+PShFhET78pMBl3eH+AGSI5eOTkPA==
@@ -4486,10 +4486,10 @@ progress@^2.0.0:
   resolved "https://registry.yarnpkg.com/progress/-/progress-2.0.3.tgz#7e8cf8d8f5b8f239c1bc68beb4eb78567d572ef8"
   integrity sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==
 
-projen@^0.1.23:
-  version "0.1.23"
-  resolved "https://registry.yarnpkg.com/projen/-/projen-0.1.23.tgz#06683c3619a30655dfe56a70f4cd4f836fa665bb"
-  integrity sha512-mMVMu3dkQQFvwH5fiuVZ4ToCaDQfCbxBfPoWBgFI9WD5OwmEmGEYzOhru56zqhLc+4+x4c7F+5N5X9hHEsB9+w==
+projen@^0.1.26:
+  version "0.1.26"
+  resolved "https://registry.yarnpkg.com/projen/-/projen-0.1.26.tgz#d5e4cf9602b1601c8ccffe0d55d63fd67c957e78"
+  integrity sha512-lbZJavvLqdn+qHVJ1DS8+KLGOUqAd+4ptnHDOfu0YWp5CW2fIIhHF+0X0rm4zmjxupVteGg8owF74AbYfr93Uw==
   dependencies:
     constructs "2.0.1"
     yaml "^1.9.2"
@@ -5637,7 +5637,7 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@^3.8.3:
+typescript@^3.9.5:
   version "3.9.5"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.5.tgz#586f0dba300cde8be52dd1ac4f7e1009c1b13f36"
   integrity sha512-hSAifV3k+i6lEoCJ2k6R2Z/rp/H3+8sdmcn5NrS3/3kE7+RyZXm9aqvxWqjEXHAd8b0pShatpcdMTvEdvAJltQ==

@@ -12,15 +12,10 @@ const project = new TypeScriptLibraryProject({
     'codemaker': Semver.caret('1.6.0')
   },
   devDependencies: {
-    '@types/node': Semver.caret('14.0.13'),
     '@types/json-schema': Semver.caret('7.0.5'),
-    'typescript': Semver.caret('3.9.5'),
     'jsii-srcmak': Semver.caret('0.0.4')
-  }
+  },
+  minNodeVersion: '14.0.0'
 });
-
-new Jest(project);
-new Mergify(project);
-new Eslint(project);
 
 project.synth();

@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`basic usage 1`] = `
+"/**
+ * @schema Person
+ */
+export interface Person {
+    /**
+     * The first name of the person
+     *
+     * @schema Person#firstName
+     */
+    readonly firstName: string;
+
+    /**
+     * The last name of the person
+     *
+     * @schema Person#lastName
+     */
+    readonly lastName: string;
+
+    /**
+     * Favorite color. Default is green
+     *
+     * @default green
+     * @schema Person#color
+     */
+    readonly color?: any;
+
+}
+
+"
+`;
