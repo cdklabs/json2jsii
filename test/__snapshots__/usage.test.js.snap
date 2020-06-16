@@ -1,23 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`basic usage 1`] = `
+exports[`example with $ref 1`] = `
 "/**
  * @schema Person
  */
 export interface Person {
     /**
-     * The first name of the person
+     * The person's name
      *
-     * @schema Person#firstName
+     * @schema Person#name
      */
-    readonly firstName: string;
-
-    /**
-     * The last name of the person
-     *
-     * @schema Person#lastName
-     */
-    readonly lastName: string;
+    readonly name: Name;
 
     /**
      * Favorite color. Default is green
@@ -26,6 +19,28 @@ export interface Person {
      * @schema Person#color
      */
     readonly color?: any;
+
+}
+
+/**
+ * Represents a name of a person
+ *
+ * @schema Name
+ */
+export interface Name {
+    /**
+     * The first name of the person
+     *
+     * @schema Name#firstName
+     */
+    readonly firstName: string;
+
+    /**
+     * The last name of the person
+     *
+     * @schema Name#lastName
+     */
+    readonly lastName: string;
 
 }
 

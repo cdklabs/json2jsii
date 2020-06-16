@@ -5,17 +5,31 @@
 ## Usage
 
 ```ts
-const g = new TypeGenerator();
-g.emitType('Person', {
-  required: [ 'firstName', 'lastName' ],
-  properties: {
-    firstName: {
-      type: 'string',
-      description: 'The first name of the person',
+const g = new TypeGenerator({
+  definitions: {
+    Name: {
+      description: 'Represents a name of a person',
+      required: [ 'firstName', 'lastName' ],
+      properties: {
+        firstName: {
+          type: 'string',
+          description: 'The first name of the person',
+        },
+        lastName: {
+          type: 'string',
+          description: 'The last name of the person',
+        },
+      },
     },
-    lastName: {
-      type: 'string',
-      description: 'The last name of the person',
+  },
+});
+
+g.emitType('Person', {
+  required: [ 'name' ],
+  properties: {
+    name: {
+      description: 'The person\'s name',
+      $ref: '#/definitions/Name',
     },
     color: {
       description: 'Favorite color. Default is green',
@@ -24,15 +38,10 @@ g.emitType('Person', {
   },
 });
 
-const code = new CodeMaker();
-code.openFile('person.ts');
-g.generate(code);
-code.closeFile('person.ts');
-
-await code.save('.');
+await g.writeToFile('gen/ts/person.ts');
 ```
 
-Then, `person.ts` will look like this;
+Then, `gen/ts/person.ts` will look like this;
 
 ```ts
 /**
@@ -40,18 +49,11 @@ Then, `person.ts` will look like this;
  */
 export interface Person {
   /**
-   * The first name of the person
+   * The person's name
    *
-   * @schema Person#firstName
+   * @schema Person#name
    */
-  readonly firstName: string;
-
-  /**
-   * The last name of the person
-   *
-   * @schema Person#lastName
-   */
-  readonly lastName: string;
+  readonly name: Name;
 
   /**
    * Favorite color. Default is green
@@ -61,7 +63,44 @@ export interface Person {
    */
   readonly color?: any;
 }
+
+/**
+ * Represents a name of a person
+ *
+ * @schema Name
+ */
+export interface Name {
+  /**
+   * The first name of the person
+   *
+   * @schema Name#firstName
+   */
+  readonly firstName: string;
+
+  /**
+   * The last name of the person
+   *
+   * @schema Name#lastName
+   */
+  readonly lastName: string;
+}
 ```
+
+## Language bindings
+
+Once you generate jsii-compatible TypeScript source (such as `person.ts` above),
+you can use [jsii-srcmak](https://github.com/eladb/jsii-srcmak) in order to
+produce source code in any of the jsii supported languages.
+
+The following command will produce Python sources for the `Person` types:
+
+```shell
+$ jsii-srcmak gen/ts \
+  --python-outdir gen/py --python-module-name person \
+  --java-outdir gen/java --java-package person
+```
+
+See the [jsii-srcmak](https://github.com/eladb/jsii-srcmak) for library usage.
 
 ## Contributions
 

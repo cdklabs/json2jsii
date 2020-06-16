@@ -1,0 +1,242 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`language bindings 1`] = `
+"import abc
+import builtins
+import datetime
+import enum
+import typing
+
+import jsii
+import jsii.compat
+import publication
+
+from ._jsii import *
+
+
+@jsii.data_type(jsii_type=\\"generated.Name\\", jsii_struct_bases=[], name_mapping={'first': 'first', 'last': 'last', 'middle': 'middle'})
+class Name():
+    def __init__(self, *, first: str, last: str, middle: typing.Optional[str]=None) -> None:
+        \\"\\"\\"
+        :param first: 
+        :param last: 
+        :param middle: 
+
+        schema:
+        :schema:: Name
+        \\"\\"\\"
+        self._values = {
+            'first': first,
+            'last': last,
+        }
+        if middle is not None: self._values[\\"middle\\"] = middle
+
+    @builtins.property
+    def first(self) -> str:
+        \\"\\"\\"
+        schema:
+        :schema:: Name#first
+        \\"\\"\\"
+        return self._values.get('first')
+
+    @builtins.property
+    def last(self) -> str:
+        \\"\\"\\"
+        schema:
+        :schema:: Name#last
+        \\"\\"\\"
+        return self._values.get('last')
+
+    @builtins.property
+    def middle(self) -> typing.Optional[str]:
+        \\"\\"\\"
+        schema:
+        :schema:: Name#middle
+        \\"\\"\\"
+        return self._values.get('middle')
+
+    def __eq__(self, rhs) -> bool:
+        return isinstance(rhs, self.__class__) and rhs._values == self._values
+
+    def __ne__(self, rhs) -> bool:
+        return not (rhs == self)
+
+    def __repr__(self) -> str:
+        return 'Name(%s)' % ', '.join(k + '=' + repr(v) for k, v in self._values.items())
+
+
+__all__ = [
+    \\"Name\\",
+]
+
+publication.publish()
+"
+`;
+
+exports[`language bindings 2`] = `
+"package org.myorg;
+
+/**
+ */
+@javax.annotation.Generated(value = \\"jsii-pacmak/1.6.0 (build 248e75b)\\", date = \\"2020-06-16T12:56:55.837Z\\")
+@software.amazon.jsii.Jsii(module = org.myorg.$Module.class, fqn = \\"generated.Name\\")
+@software.amazon.jsii.Jsii.Proxy(Name.Jsii$Proxy.class)
+public interface Name extends software.amazon.jsii.JsiiSerializable {
+
+    /**
+     */
+    @org.jetbrains.annotations.NotNull java.lang.String getFirst();
+
+    /**
+     */
+    @org.jetbrains.annotations.NotNull java.lang.String getLast();
+
+    /**
+     */
+    default @org.jetbrains.annotations.Nullable java.lang.String getMiddle() {
+        return null;
+    }
+
+    /**
+     * @return a {@link Builder} of {@link Name}
+     */
+    static Builder builder() {
+        return new Builder();
+    }
+    /**
+     * A builder for {@link Name}
+     */
+    public static final class Builder implements software.amazon.jsii.Builder<Name> {
+        private java.lang.String first;
+        private java.lang.String last;
+        private java.lang.String middle;
+
+        /**
+         * Sets the value of {@link Name#getFirst}
+         * @param first the value to be set. This parameter is required.
+         * @return {@code this}
+         */
+        public Builder first(java.lang.String first) {
+            this.first = first;
+            return this;
+        }
+
+        /**
+         * Sets the value of {@link Name#getLast}
+         * @param last the value to be set. This parameter is required.
+         * @return {@code this}
+         */
+        public Builder last(java.lang.String last) {
+            this.last = last;
+            return this;
+        }
+
+        /**
+         * Sets the value of {@link Name#getMiddle}
+         * @param middle the value to be set.
+         * @return {@code this}
+         */
+        public Builder middle(java.lang.String middle) {
+            this.middle = middle;
+            return this;
+        }
+
+        /**
+         * Builds the configured instance.
+         * @return a new instance of {@link Name}
+         * @throws NullPointerException if any required attribute was not provided
+         */
+        @Override
+        public Name build() {
+            return new Jsii$Proxy(first, last, middle);
+        }
+    }
+
+    /**
+     * An implementation for {@link Name}
+     */
+    final class Jsii$Proxy extends software.amazon.jsii.JsiiObject implements Name {
+        private final java.lang.String first;
+        private final java.lang.String last;
+        private final java.lang.String middle;
+
+        /**
+         * Constructor that initializes the object based on values retrieved from the JsiiObject.
+         * @param objRef Reference to the JSII managed object.
+         */
+        protected Jsii$Proxy(final software.amazon.jsii.JsiiObjectRef objRef) {
+            super(objRef);
+            this.first = this.jsiiGet(\\"first\\", java.lang.String.class);
+            this.last = this.jsiiGet(\\"last\\", java.lang.String.class);
+            this.middle = this.jsiiGet(\\"middle\\", java.lang.String.class);
+        }
+
+        /**
+         * Constructor that initializes the object based on literal property values passed by the {@link Builder}.
+         */
+        private Jsii$Proxy(final java.lang.String first, final java.lang.String last, final java.lang.String middle) {
+            super(software.amazon.jsii.JsiiObject.InitializationMode.JSII);
+            this.first = java.util.Objects.requireNonNull(first, \\"first is required\\");
+            this.last = java.util.Objects.requireNonNull(last, \\"last is required\\");
+            this.middle = middle;
+        }
+
+        @Override
+        public java.lang.String getFirst() {
+            return this.first;
+        }
+
+        @Override
+        public java.lang.String getLast() {
+            return this.last;
+        }
+
+        @Override
+        public java.lang.String getMiddle() {
+            return this.middle;
+        }
+
+        @Override
+        public com.fasterxml.jackson.databind.JsonNode $jsii$toJson() {
+            final com.fasterxml.jackson.databind.ObjectMapper om = software.amazon.jsii.JsiiObjectMapper.INSTANCE;
+            final com.fasterxml.jackson.databind.node.ObjectNode data = com.fasterxml.jackson.databind.node.JsonNodeFactory.instance.objectNode();
+
+            data.set(\\"first\\", om.valueToTree(this.getFirst()));
+            data.set(\\"last\\", om.valueToTree(this.getLast()));
+            if (this.getMiddle() != null) {
+                data.set(\\"middle\\", om.valueToTree(this.getMiddle()));
+            }
+
+            final com.fasterxml.jackson.databind.node.ObjectNode struct = com.fasterxml.jackson.databind.node.JsonNodeFactory.instance.objectNode();
+            struct.set(\\"fqn\\", om.valueToTree(\\"generated.Name\\"));
+            struct.set(\\"data\\", data);
+
+            final com.fasterxml.jackson.databind.node.ObjectNode obj = com.fasterxml.jackson.databind.node.JsonNodeFactory.instance.objectNode();
+            obj.set(\\"$jsii.struct\\", struct);
+
+            return obj;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Name.Jsii$Proxy that = (Name.Jsii$Proxy) o;
+
+            if (!first.equals(that.first)) return false;
+            if (!last.equals(that.last)) return false;
+            return this.middle != null ? this.middle.equals(that.middle) : that.middle == null;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = this.first.hashCode();
+            result = 31 * result + (this.last.hashCode());
+            result = 31 * result + (this.middle != null ? this.middle.hashCode() : 0);
+            return result;
+        }
+    }
+}
+"
+`;

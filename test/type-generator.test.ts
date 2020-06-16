@@ -257,6 +257,19 @@ describe('enums', () => {
 
 });
 
+which('primitives', {
+  type: 'object',
+  properties: {
+    stringValue: { type: 'string' },
+    booleanValue: { type: 'boolean' },
+    dateValue: { type: 'string', format: 'date-time' },
+    anyValue: { type: 'any' },
+    nullValue: { type: 'null' },
+    numberValue: { type: 'number' },
+    integerValue: { type: 'integer' },
+  },
+});
+
 function which(name: string, schema: JSONSchema4, definitions?: JSONSchema4) {
   test(name, async () => {
     const gen = new TypeGenerator(definitions);
@@ -274,7 +287,7 @@ async function generate(workdir: string, gen: TypeGenerator) {
   const entrypoint = 'index.ts';
 
   code.openFile(entrypoint);
-  gen.generate(code);
+  gen.writeToCodeMaker(code);
   code.closeFile(entrypoint)
 
   await code.save(workdir);

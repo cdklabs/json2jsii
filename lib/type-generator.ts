@@ -1,20 +1,41 @@
 import { JSONSchema4 } from 'json-schema';
 import { CodeMaker, toPascalCase } from 'codemaker';
+import * as path from 'path';
 
 const PRIMITIVE_TYPES = [ 'string', 'number', 'integer', 'boolean' ];
 const DEFINITIONS_PREFIX = '#/definitions/';
 
 export interface TypeGeneratorOptions {
-  exclude?: string[];
+  /**
+   * Patterns of type FQNs to exclude.
+   * @default - include all types
+   */
+  readonly exclude?: string[];
+
+  /**
+   * Schema definitions for resolving $refs
+   * @default - $refs are not supported
+   */
+  readonly definitions?: { [def: string]: JSONSchema4 };
 }
 
+/**
+ * Generates typescript types from JSON schemas.
+ */
 export class TypeGenerator {
   private readonly typesToEmit: { [name: string]: (code: CodeMaker) => void } = { };
   private readonly emittedTypes = new Set<string>();
   private readonly exclude: string[];
+  private readonly definitions: { [def: string]: JSONSchema4 };
 
-  constructor(private readonly schema: JSONSchema4 = { }, options: TypeGeneratorOptions = { }) {
-    this.exclude = options.exclude || [];
+  /**
+   *
+   * @param schema Schema definitions
+   * @param options
+   */
+  constructor(options: TypeGeneratorOptions = { }) {
+    this.exclude = options.exclude ?? [];
+    this.definitions = options.definitions ?? { };
   }
 
   /**
@@ -36,11 +57,6 @@ export class TypeGenerator {
 
     if (this.isExcluded(structFqn)) {
       throw new Error(`Type ${structFqn} cannot be added since it matches one of the exclusion patterns`);
-    }
-
-    // skip api objects (they are emitted as constructs and not as data types)
-    if ('x-kubernetes-group-version-kind' in def && def.properties?.metadata) {
-      return typeName;
     }
 
     if (def.$ref) {
@@ -97,7 +113,30 @@ export class TypeGenerator {
     return 'any';
   }
 
-  public generate(code: CodeMaker) {
+  /**
+   * Generates a file with all the types added to this generator.
+   *
+   * @param filePath The output file path, must have a ".ts" extension.
+   */
+  public async writeToFile(filePath: string) {
+    if (path.extname(filePath) !== '.ts') {
+      throw new Error('file must have a .ts extension');
+    }
+
+    const code = new CodeMaker();
+    const filename = path.basename(filePath);
+    code.openFile(filename);
+    this.writeToCodeMaker(code);
+    code.closeFile(filename);
+    await code.save(path.dirname(filePath));
+  }
+
+  /**
+   * Writes all types to a `CodeMaker` with an open file.
+   * Use this method in case you need to add those type to an existing file.
+   * @param code The `CodeMaker` instance.
+   */
+  public writeToCodeMaker(code: CodeMaker) {
     while (Object.keys(this.typesToEmit).length) {
       const name = Object.keys(this.typesToEmit)[0];
       const emitter = this.typesToEmit[name];
@@ -267,7 +306,7 @@ export class TypeGenerator {
   private typeForRef(def: JSONSchema4): string {
     const prefix = '#/definitions/';
     if (!def.$ref || !def.$ref.startsWith(prefix)) {
-      throw new Error('invalid $ref');
+      throw new Error(`invalid $ref ${JSON.stringify(def)}`);
     }
 
     if (this.isExcluded(def.$ref)) {
@@ -294,14 +333,10 @@ export class TypeGenerator {
       throw new Error('expecting a local reference');
     }
 
-    if (!this.schema.definitions) {
-      throw new Error('schema does not have "definitions"');
-    }
-
     const lookup = ref.substr(DEFINITIONS_PREFIX.length);
-    const found = this.schema.definitions[lookup];
+    const found = this.definitions[lookup];
     if (!found) {
-      throw new Error(`cannot resolve local reference ${ref}`);
+      throw new Error(`unable to find a definition for the $ref "${lookup}"`);
     }
 
     return found;

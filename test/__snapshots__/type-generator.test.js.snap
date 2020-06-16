@@ -114,6 +114,51 @@ export enum FqnOfTestTypeChildSecondEnum {
 "
 `;
 
+exports[`primitives 1`] = `
+"/**
+ * @schema fqn.of.TestType
+ */
+export interface TestType {
+    /**
+     * @schema fqn.of.TestType#stringValue
+     */
+    readonly stringValue?: string;
+
+    /**
+     * @schema fqn.of.TestType#booleanValue
+     */
+    readonly booleanValue?: boolean;
+
+    /**
+     * @schema fqn.of.TestType#dateValue
+     */
+    readonly dateValue?: Date;
+
+    /**
+     * @schema fqn.of.TestType#anyValue
+     */
+    readonly anyValue?: any;
+
+    /**
+     * @schema fqn.of.TestType#nullValue
+     */
+    readonly nullValue?: any;
+
+    /**
+     * @schema fqn.of.TestType#numberValue
+     */
+    readonly numberValue?: number;
+
+    /**
+     * @schema fqn.of.TestType#integerValue
+     */
+    readonly integerValue?: number;
+
+}
+
+"
+`;
+
 exports[`structs array of structs is considered optional 1`] = `
 "/**
  * @schema fqn.of.TestType

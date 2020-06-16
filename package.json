@@ -26,7 +26,7 @@
   },
   "devDependencies": {
     "@types/json-schema": "^7.0.5",
-    "jsii-srcmak": "^0.0.4",
+    "jsii-srcmak": "^0.1.1",
     "projen": "^0.1.28",
     "standard-version": "^8.0.0",
     "jest": "^26.0.1",
