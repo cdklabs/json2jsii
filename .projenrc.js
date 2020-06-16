@@ -1,5 +1,4 @@
-const { TypeScriptLibraryProject, Semver, Jest, Eslint } = require('projen');
-const { Mergify } = require('projen/lib/mergify');
+const { TypeScriptLibraryProject, Semver } = require('projen');
 
 const project = new TypeScriptLibraryProject({
   name: 'json2jsii',
@@ -15,7 +14,8 @@ const project = new TypeScriptLibraryProject({
     '@types/json-schema': Semver.caret('7.0.5'),
     'jsii-srcmak': Semver.caret('0.0.4')
   },
-  minNodeVersion: '14.0.0'
+  minNodeVersion: '14.0.0',
+  releaseToNpm: true
 });
 
 project.synth();
