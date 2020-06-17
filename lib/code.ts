@@ -21,7 +21,9 @@ export class Code {
   }
 
   public line(text: string = ''): void {
-    const line = ' '.repeat(this.indent) + text;
+    const line = text.length > 0
+      ? ' '.repeat(this.indent) + text // only indent if line has content
+      : text;
     this.lines.push(line);
   }
 

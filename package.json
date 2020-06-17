@@ -11,13 +11,15 @@
   "scripts": {
     "projen": "node .projenrc.js && yarn install",
     "projen:upgrade": "yarn upgrade projen && yarn projen",
-    "test": "jest && yarn eslint",
+    "test": "jest --passWithNoTests && yarn eslint",
     "bump": "standard-version",
     "release": "yarn bump && git push --follow-tags origin master",
     "compile": "tsc",
     "watch": "tsc -w",
     "package": "rm -fr dist && mkdir -p dist/js && yarn pack && mv *.tgz dist/js/",
     "build": "yarn compile && yarn test && yarn run package",
+    "test:watch": "jest --watch",
+    "test:update": "jest -u",
     "eslint": "eslint . --ext .ts"
   },
   "author": {
@@ -27,10 +29,12 @@
   "devDependencies": {
     "@types/json-schema": "^7.0.5",
     "jsii-srcmak": "^0.1.4",
-    "projen": "^0.1.32",
+    "prettier": "^2.0.5",
+    "projen": "^0.1.36",
     "standard-version": "^8.0.0",
     "jest": "^26.0.1",
     "@types/jest": "^25.2.1",
+    "ts-jest": "^26.1.0",
     "typescript": "^3.9.5",
     "@typescript-eslint/eslint-plugin": "^2.31.0",
     "@typescript-eslint/parser": "^2.19.2",
@@ -56,12 +60,16 @@
   "jest": {
     "clearMocks": true,
     "collectCoverage": true,
-    "coverageDirectory": "coverage",
     "coveragePathIgnorePatterns": [
       "/node_modules/"
     ],
-    "moduleFileExtensions": [
-      "js"
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "preset": "ts-jest",
+    "testMatch": [
+      "**/__tests__/**/*.ts?(x)",
+      "**/?(*.)+(spec|test).ts?(x)"
     ]
   }
 }

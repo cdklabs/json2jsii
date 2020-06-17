@@ -11,7 +11,7 @@ export interface Person {
    * @schema Person#name
    */
   readonly name: Name;
-  
+
   /**
    * Favorite color. Default is green
    *
@@ -19,7 +19,7 @@ export interface Person {
    * @schema Person#color
    */
   readonly color?: any;
-  
+
 }
 
 /**
@@ -34,14 +34,14 @@ export interface Name {
    * @schema Name#firstName
    */
   readonly firstName: string;
-  
+
   /**
    * The last name of the person
    *
    * @schema Name#lastName
    */
   readonly lastName: string;
-  
+
 }
 "
 `;
