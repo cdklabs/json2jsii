@@ -1,6 +1,6 @@
 import { TypeGenerator } from '../lib';
 import { CodeMaker } from 'codemaker';
-import * as fs from 'fs/promises';
+import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 
@@ -43,10 +43,10 @@ test('example with $ref', async () => {
   g.writeToCodeMaker(code);
   code.closeFile('person.ts');
 
-  const outdir = await fs.mkdtemp(path.join(os.tmpdir(), 'json2jsii'));
+  const outdir = fs.mkdtempSync(path.join(os.tmpdir(), 'json2jsii'));
   await code.save(outdir);
 
-  expect(await fs.readFile(path.join(outdir, 'person.ts'), 'utf-8')).toMatchSnapshot();
+  expect(fs.readFileSync(path.join(outdir, 'person.ts'), 'utf-8')).toMatchSnapshot();
 });
 
 test('fails when trying to resolve an undefined $ref', () => {

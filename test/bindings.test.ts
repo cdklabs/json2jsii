@@ -1,8 +1,10 @@
 import { TypeGenerator } from '../lib';
 import { srcmak } from 'jsii-srcmak';
-import * as fs from 'fs/promises';
+import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
+
+jest.setTimeout(5 * 60 * 1000);
 
 test('language bindings', async () => {
   const g = new TypeGenerator();
@@ -16,10 +18,10 @@ test('language bindings', async () => {
     required: [ 'first', 'last' ],
   });
 
-  const workdir = await fs.mkdtemp(path.join(os.tmpdir(), 'json2jsii'));
+  const workdir = fs.mkdtempSync(path.join(os.tmpdir(), 'json2jsii'));
   await g.writeToFile(path.join(workdir, 'typescript', 'index.ts'));
 
-  await fs.mkdir(path.join(workdir, 'java'));
+  fs.mkdirSync(path.join(workdir, 'java'));
 
   await srcmak(path.join(workdir, 'typescript'), {
     java: {
@@ -32,8 +34,12 @@ test('language bindings', async () => {
     },
   });
 
-  expect(await fs.readFile(path.join(workdir, 'python/myorg/__init__.py'), 'utf-8')).toMatchSnapshot();
-  expect(await fs.readFile(path.join(workdir, 'java/src/main/java/org/myorg/Name.java'), 'utf-8')).toMatchSnapshot();
-
-  await fs.rmdir(workdir, { recursive: true });
+  expect(readFile(path.join(workdir, 'python/myorg/__init__.py'))).toMatchSnapshot();
+  expect(readFile(path.join(workdir, 'java/src/main/java/org/myorg/Name.java'), [ '@javax.annotation.Generated' ])).toMatchSnapshot();
 });
+
+function readFile(filePath: string, ignoreLines: string[] = []) {
+  const lines = (fs.readFileSync(filePath, 'utf-8')).split('\n');
+  const shouldInclude = (line: string) => !ignoreLines.find(pattern => line.includes(pattern));
+  return lines.filter(shouldInclude).join('\n');
+}

@@ -303,9 +303,5 @@ async function generate(workdir: string, gen: TypeGenerator) {
 
 async function mkdtemp(closure: (dir: string) => Promise<void>) {
   const workdir = await fs.mkdtemp(path.join(os.tmpdir(), 'cdk8s-'));
-  try {
-    await closure(workdir);
-  } finally {
-    await fs.rmdir(workdir, { recursive: true });
-  }
+  await closure(workdir);
 }

@@ -78,7 +78,6 @@ exports[`language bindings 2`] = `
 
 /**
  */
-@javax.annotation.Generated(value = \\"jsii-pacmak/1.6.0 (build 248e75b)\\", date = \\"2020-06-16T12:56:55.837Z\\")
 @software.amazon.jsii.Jsii(module = org.myorg.$Module.class, fqn = \\"generated.Name\\")
 @software.amazon.jsii.Jsii.Proxy(Name.Jsii$Proxy.class)
 public interface Name extends software.amazon.jsii.JsiiSerializable {

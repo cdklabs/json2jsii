@@ -12,10 +12,10 @@ const project = new TypeScriptLibraryProject({
   },
   devDependencies: {
     '@types/json-schema': Semver.caret('7.0.5'),
-    'jsii-srcmak': Semver.caret('0.1.1')
+    'jsii-srcmak': Semver.caret('0.1.4')
   },
-  minNodeVersion: '14.0.0',
-  releaseToNpm: true
+  releaseToNpm: true,
+  minNodeVersion: '10.17.0'
 });
 
 project.synth();
