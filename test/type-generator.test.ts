@@ -2,7 +2,6 @@ import { TypeGenerator } from '../lib';
 import { promises as fs } from 'fs';
 import * as path from 'path';
 import * as os from 'os';
-import { CodeMaker } from 'codemaker';
 import { JSONSchema4 } from 'json-schema';
 import { srcmak } from 'jsii-srcmak';
 
@@ -273,30 +272,21 @@ which('primitives', {
 function which(name: string, schema: JSONSchema4, definitions?: JSONSchema4) {
   test(name, async () => {
     const gen = new TypeGenerator(definitions);
-    gen.emitType('TestType', schema, 'fqn.of.TestType');
-
-    await mkdtemp(async workdir => {
-      expect(await generate(workdir, gen)).toMatchSnapshot();
-    });
+    gen.addType('TestType', schema, 'fqn.of.TestType');
+    expect(await generate(gen)).toMatchSnapshot();
   });
 }
 
-async function generate(workdir: string, gen: TypeGenerator) {
-  const code = new CodeMaker();
-
-  const entrypoint = 'index.ts';
-
-  code.openFile(entrypoint);
-  gen.writeToCodeMaker(code);
-  code.closeFile(entrypoint)
-
-  await code.save(workdir);
-
-  const source = await fs.readFile(path.join(workdir, entrypoint), 'utf-8');
+async function generate(gen: TypeGenerator) {
+  const source = await gen.render();
   const deps = [ '@types/node' ].map(d => path.dirname(require.resolve(`${d}/package.json`)));
 
   // check that the output compiles & is jsii-compatible
-  await srcmak(workdir, { deps });
+  await mkdtemp(async workdir => {
+    await fs.writeFile(path.join(workdir, 'index.ts'), source);
+    await srcmak(workdir, { deps });
+  });
+
 
   return source;
 }

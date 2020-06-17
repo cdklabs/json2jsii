@@ -9,7 +9,7 @@ jest.setTimeout(5 * 60 * 1000);
 test('language bindings', async () => {
   const g = new TypeGenerator();
 
-  g.emitType('Name', {
+  g.addType('Name', {
     properties: {
       first: { type: 'string' },
       middle: { type: 'string' },
@@ -19,11 +19,12 @@ test('language bindings', async () => {
   });
 
   const workdir = fs.mkdtempSync(path.join(os.tmpdir(), 'json2jsii'));
-  await g.writeToFile(path.join(workdir, 'typescript', 'index.ts'));
 
-  fs.mkdirSync(path.join(workdir, 'java'));
+  const src = path.join(workdir, 'tyepscript');
+  fs.mkdirSync(src);
+  fs.writeFileSync(path.join(src, 'index.ts'), await g.render());
 
-  await srcmak(path.join(workdir, 'typescript'), {
+  await srcmak(src, {
     java: {
       outdir: path.join(workdir, 'java'),
       package: 'org.myorg',

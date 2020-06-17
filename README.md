@@ -24,7 +24,7 @@ const g = new TypeGenerator({
   },
 });
 
-g.emitType('Person', {
+g.addType('Person', {
   required: [ 'name' ],
   properties: {
     name: {
@@ -38,7 +38,7 @@ g.emitType('Person', {
   },
 });
 
-await g.writeToFile('gen/ts/person.ts');
+fs.writeFileSync('gen/ts/person.ts', await g.render());
 ```
 
 Then, `gen/ts/person.ts` will look like this;

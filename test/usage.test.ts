@@ -1,8 +1,4 @@
 import { TypeGenerator } from '../lib';
-import { CodeMaker } from 'codemaker';
-import * as fs from 'fs';
-import * as os from 'os';
-import * as path from 'path';
 
 test('example with $ref', async () => {
   const g = new TypeGenerator({
@@ -24,7 +20,7 @@ test('example with $ref', async () => {
     },
   });
 
-  g.emitType('Person', {
+  g.addType('Person', {
     required: [ 'name' ],
     properties: {
       name: {
@@ -38,19 +34,11 @@ test('example with $ref', async () => {
     },
   });
 
-  const code = new CodeMaker();
-  code.openFile('person.ts');
-  g.writeToCodeMaker(code);
-  code.closeFile('person.ts');
-
-  const outdir = fs.mkdtempSync(path.join(os.tmpdir(), 'json2jsii'));
-  await code.save(outdir);
-
-  expect(fs.readFileSync(path.join(outdir, 'person.ts'), 'utf-8')).toMatchSnapshot();
+  expect(await g.render()).toMatchSnapshot();
 });
 
 test('fails when trying to resolve an undefined $ref', () => {
   const g = new TypeGenerator();
-  expect(() => g.emitType('Foo', { $ref: 'unresolvable' })).toThrow(/invalid \$ref {\"\$ref\":\"unresolvable\"}/);
-  expect(() => g.emitType('Foo', { $ref: '#/definitions/unresolvable' })).toThrow(/unable to find a definition for the \$ref \"unresolvable\"/);
+  expect(() => g.addType('Foo', { $ref: 'unresolvable' })).toThrow(/invalid \$ref {\"\$ref\":\"unresolvable\"}/);
+  expect(() => g.addType('Foo', { $ref: '#/definitions/unresolvable' })).toThrow(/unable to find a definition for the \$ref \"unresolvable\"/);
 });
