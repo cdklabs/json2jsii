@@ -43,7 +43,9 @@
   },
   "peerDependencies": {},
   "dependencies": {
-    "codemaker": "^1.6.0"
+    "json-schema": "^0.2.5",
+    "camelcase": "^6.0.0",
+    "snake-case": "^3.0.3"
   },
   "bundledDependencies": [],
   "engines": {

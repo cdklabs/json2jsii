@@ -7,7 +7,9 @@ const project = new TypeScriptLibraryProject({
   authorEmail: 'elad.benisrael@gmail.com',
   repository: 'https://github.com/joe/schmo.git',
   dependencies: {
-    'codemaker': Semver.caret('1.6.0')
+    'json-schema': Semver.caret('0.2.5'),
+    'camelcase': Semver.caret('6.0.0'),
+    'snake-case': Semver.caret('3.0.3')
   },
   devDependencies: {
     '@types/json-schema': Semver.caret('7.0.5'),

@@ -1,8 +1,8 @@
 import { JSONSchema4 } from 'json-schema';
-import { CodeMaker, toPascalCase } from 'codemaker';
-import * as path from 'path';
-import * as os from 'os';
-import * as fs from 'fs';
+import { Code } from './code';
+
+import * as camelCase from 'camelcase';
+import { snakeCase } from 'snake-case';
 
 const PRIMITIVE_TYPES = [ 'string', 'number', 'integer', 'boolean' ];
 const DEFINITIONS_PREFIX = '#/definitions/';
@@ -49,7 +49,7 @@ export class TypeGenerator {
     return result;
   }
 
-  private readonly typesToEmit: { [name: string]: (code: CodeMaker) => void } = { };
+  private readonly typesToEmit: { [name: string]: (code: Code) => void } = { };
   private readonly emittedTypes = new Set<string>();
   private readonly exclude: string[];
   private readonly definitions: { [def: string]: JSONSchema4 };
@@ -144,7 +144,7 @@ export class TypeGenerator {
    * @param uniqueid A unique identifier for the code snippet (e.g. the name of the type)
    * @param codeEmitter A function that will be called to emit the code.
    */
-  public addCode(uniqueid: string, codeEmitter: (code: CodeMaker) => void) {
+  public addCode(uniqueid: string, codeEmitter: (code: Code) => void) {
     if (this.emittedTypes.has(uniqueid)) {
       return;
     }
@@ -152,20 +152,10 @@ export class TypeGenerator {
     this.typesToEmit[uniqueid] = codeEmitter;
   }
 
-  public async render() {
-    const filePath = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'json2jsii')), 'out.ts');
-    const code = new CodeMaker();
-    const filename = path.basename(filePath);
-    code.openFile(filename);
-    this.writeToCodeMaker(code);
-    code.closeFile(filename);
-
-    await code.save(path.dirname(filePath));
-
-    const data = fs.readFileSync(filePath, 'utf-8');
-    fs.unlinkSync(filePath);
-    fs.rmdirSync(path.dirname(filePath));
-    return data;
+  public render() {
+    const code = new Code();
+    this.emitCode(code);
+    return code.render();
   }
 
   /**
@@ -173,7 +163,7 @@ export class TypeGenerator {
    * Use this method in case you need to add those type to an existing file.
    * @param code The `CodeMaker` instance.
    */
-  private writeToCodeMaker(code: CodeMaker) {
+  public emitCode(code: Code) {
     while (Object.keys(this.typesToEmit).length) {
       const name = Object.keys(this.typesToEmit)[0];
       const emitter = this.typesToEmit[name];
@@ -242,13 +232,13 @@ export class TypeGenerator {
     });
   }
 
-  private emitProperty(code: CodeMaker, name: string, propDef: JSONSchema4, structFqn: string, structDef: JSONSchema4) {
+  private emitProperty(code: Code, name: string, propDef: JSONSchema4, structFqn: string, structDef: JSONSchema4) {
     const originalName = name;
 
     // if name is not camelCase, convert it to camel case, but this is likely to
     // produce invalid output during synthesis, so add some annotation to the docs.
     if (name[0] === name[0].toUpperCase()) {
-      name = code.toCamelCase(name);
+      name = camelCase(name);
     }
 
     // if the name starts with '$' (like $ref or $schema), we remove the "$"
@@ -288,7 +278,7 @@ export class TypeGenerator {
         }
 
         // sluggify and turn to UPPER_SNAKE_CASE
-        const memberName = code.toSnakeCase(value.replace(/[^a-z0-9]/gi, '_')).split('_').filter(x => x).join('_').toUpperCase();
+        const memberName = snakeCase(value.replace(/[^a-z0-9]/gi, '_')).split('_').filter(x => x).join('_').toUpperCase();
 
         code.line(`/** ${value} */`);
         code.line(`${memberName} = "${value}",`);
@@ -300,7 +290,7 @@ export class TypeGenerator {
     return typeName;
   }
 
-  private emitDescription(code: CodeMaker, fqn: string, description?: string, annotations: { [type: string]: string } = { }) {
+  private emitDescription(code: Code, fqn: string, description?: string, annotations: { [type: string]: string } = { }) {
     code.line('/**');
 
     if (description) {
@@ -327,7 +317,7 @@ export class TypeGenerator {
   }
 
   private typeForProperty(propertyFqn: string, def: JSONSchema4): string {
-    const subtype = TypeGenerator.normalizeTypeName(propertyFqn.split('.').map(x => toPascalCase(x)).join(''));
+    const subtype = TypeGenerator.normalizeTypeName(propertyFqn.split('.').map(x => pascalCase(x)).join(''));
     return this.addType(subtype, def, subtype);
   }
 
@@ -386,7 +376,10 @@ export class TypeGenerator {
   }
 }
 
-
 function supportedUnionOptionType(type: any): type is string {
   return type && (typeof(type) === 'string' && PRIMITIVE_TYPES.includes(type));
+}
+
+function pascalCase(s: string): string {
+  return camelCase(s, { pascalCase: true });
 }
