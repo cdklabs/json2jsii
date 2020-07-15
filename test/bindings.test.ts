@@ -1,4 +1,4 @@
-import { TypeGenerator } from '../lib';
+import { TypeGenerator } from '../src';
 import { srcmak } from 'jsii-srcmak';
 import * as fs from 'fs';
 import * as os from 'os';

@@ -1,4 +1,4 @@
-import { TypeGenerator } from '../lib';
+import { TypeGenerator } from '../src';
 import { promises as fs } from 'fs';
 import * as path from 'path';
 import * as os from 'os';
@@ -17,51 +17,51 @@ describe('unions', () => {
   });
 
   which('constraints are ignored for objects', {
-    'description': 'An ordered list of route rules for HTTP traffic.',
-    'type': 'array',
-    'items': {
-      'type': 'object',
-      'properties': {
-        'fault': {
-          'type': 'object',
-          'description': 'Fault injection policy to apply on HTTP traffic at\nthe client side.',
-          'properties': {
-            'delay': {
-              'oneOf': [
+    description: 'An ordered list of route rules for HTTP traffic.',
+    type: 'array',
+    items: {
+      type: 'object',
+      properties: {
+        fault: {
+          type: 'object',
+          description: 'Fault injection policy to apply on HTTP traffic at\nthe client side.',
+          properties: {
+            delay: {
+              oneOf: [
                 {
-                  'anyOf': [
-                    { 'required': [ 'fixedDelay' ] },
-                    { 'required': [ 'exponentialDelay' ] },
+                  anyOf: [
+                    { required: [ 'fixedDelay' ] },
+                    { required: [ 'exponentialDelay' ] },
                   ],
                 },
-                { 'required': [ 'fixedDelay' ] },
-                { 'required': [ 'exponentialDelay' ] },
+                { required: [ 'fixedDelay' ] },
+                { required: [ 'exponentialDelay' ] },
               ],
-              'properties': {
-                'exponentialDelay': {
-                  'type': 'string',
+              properties: {
+                exponentialDelay: {
+                  type: 'string',
                 },
-                'fixedDelay': {
-                  'description': 'Add a fixed delay before forwarding the request.',
-                  'type': 'string',
+                fixedDelay: {
+                  description: 'Add a fixed delay before forwarding the request.',
+                  type: 'string',
                 },
-                'percent': {
-                  'description': 'Percentage of requests on which the delay\nwill be injected (0-100).',
-                  'format': 'int32',
-                  'type': 'integer',
+                percent: {
+                  description: 'Percentage of requests on which the delay\nwill be injected (0-100).',
+                  format: 'int32',
+                  type: 'integer',
                 },
-                'percentage': {
-                  'description': 'Percentage of requests on which the delay\nwill be injected.',
-                  'properties': {
-                    'value': {
-                      'format': 'double',
-                      'type': 'number',
+                percentage: {
+                  description: 'Percentage of requests on which the delay\nwill be injected.',
+                  properties: {
+                    value: {
+                      format: 'double',
+                      type: 'number',
                     },
                   },
-                  'type': 'object',
+                  type: 'object',
                 },
               },
-              'type': 'object',
+              type: 'object',
             },
           },
         },

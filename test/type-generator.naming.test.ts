@@ -1,4 +1,4 @@
-import { TypeGenerator } from '../lib';
+import { TypeGenerator } from '../src';
 
 describe('normalizeTypeName', () => {
   test('no normalization needed', () => {

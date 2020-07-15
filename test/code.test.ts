@@ -1,4 +1,4 @@
-import { Code } from '../lib/code';
+import { Code } from '../src/code';
 
 test('empty newlines are not indented', () => {
   // GIVEN

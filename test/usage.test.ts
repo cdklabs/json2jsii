@@ -1,4 +1,4 @@
-import { TypeGenerator } from '../lib';
+import { TypeGenerator } from '../src';
 
 test('example with $ref', async () => {
   const g = new TypeGenerator({
