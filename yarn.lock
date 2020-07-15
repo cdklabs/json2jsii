@@ -4514,9 +4514,9 @@ progress@^2.0.0:
   integrity sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==
 
 projen@^0.3.5:
-  version "0.3.4"
-  resolved "https://registry.yarnpkg.com/projen/-/projen-0.3.4.tgz#93c204b8033f87d9665b70e2b3b630aa424076df"
-  integrity sha512-76BDv3q0HqBgNEHYwEGWDuqzbChY6HsGY/+RIndNR88gwrevvTijmZ4hBvSnelKo1XDGpAQoL0ks3B7zbkYAjQ==
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/projen/-/projen-0.3.5.tgz#24e3abdf63b6d0bd904eda679e517894b46925c3"
+  integrity sha512-hf1XadIAJVOVAiFt5fZQaI6lCeaWCHqk4rDQ3v3Zk1w5Wa/luqiQ3ku85qzwBdFy02FkyHRQFobq8bAp5K8fXQ==
   dependencies:
     constructs "2.0.1"
     decamelize "^4.0.0"
