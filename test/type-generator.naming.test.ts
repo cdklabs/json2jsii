@@ -16,4 +16,10 @@ describe('normalizeTypeName', () => {
     expect(TypeGenerator.normalizeTypeName('StorageIO')).toEqual('StorageIo');
     expect(TypeGenerator.normalizeTypeName('AFoo')).toEqual('AFoo');
   });
+
+  test('Lowercase words are converted to PascalCase', () => {
+    expect(TypeGenerator.normalizeTypeName('attributemanifests')).toEqual('Attributemanifests');
+    expect(TypeGenerator.normalizeTypeName('attributemanifestsOptions')).toEqual('AttributemanifestsOptions');
+    expect(TypeGenerator.normalizeTypeName('attributeMANIFESTSOptions')).toEqual('AttributeManifestsOptions');
+  });
 });
