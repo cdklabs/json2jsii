@@ -46,6 +46,7 @@ export class TypeGenerator {
       }
     } while (m);
 
+    result = result.replace(/^./, result[0].toUpperCase()) // ensure first letter is capitalized
     return result;
   }
 
