@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/joe/schmo.git"
+    "url": "https://github.com/aws/json2jsii.git"
   },
   "bin": {},
   "scripts": {

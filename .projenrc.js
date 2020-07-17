@@ -5,7 +5,7 @@ const project = new TypeScriptLibraryProject({
   description: 'Generates jsii structs from JSON schemas',
   authorName: 'Elad Ben-Israel',
   authorEmail: 'elad.benisrael@gmail.com',
-  repository: 'https://github.com/joe/schmo.git',
+  repository: 'https://github.com/aws/json2jsii.git',
   dependencies: {
     'json-schema': Semver.caret('0.2.5'),
     'camelcase': Semver.caret('6.0.0'),
