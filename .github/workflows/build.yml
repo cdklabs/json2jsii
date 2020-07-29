@@ -2,6 +2,8 @@
 name: Build
 on:
   pull_request: {}
+  push: {}
+  workflow_dispatch: {}
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -10,8 +12,12 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 10.17.0
-      - run: npx projen@0.3.5
+      - run: npx projen@0.3.10
       - run: yarn install --frozen-lockfile
+      - name: Set git identity
+        run: |-
+          git config user.name "Auto-bump"
+          git config user.email "github-actions@github.com"
       - run: yarn build
       - name: Anti-tamper check
         run: git diff --exit-code

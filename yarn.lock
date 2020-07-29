@@ -548,10 +548,10 @@
     "@types/istanbul-lib-coverage" "*"
     "@types/istanbul-lib-report" "*"
 
-"@types/jest@^25.2.1":
-  version "25.2.3"
-  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-25.2.3.tgz#33d27e4c4716caae4eced355097a47ad363fdcaf"
-  integrity sha512-JXc1nK/tXHiDhV55dvfzqtmP4S3sy3T3ouV2tkViZgxY/zeUkcpQcQPGRlgF4KmWzWW5oiWYSZwtCB+2RsE4Fw==
+"@types/jest@^26.0.7":
+  version "26.0.7"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-26.0.7.tgz#495cb1d1818c1699dbc3b8b046baf1c86ef5e324"
+  integrity sha512-+x0077/LoN6MjqBcVOe1y9dpryWnfDZ+Xfo3EqGeBcfPRJlQp3Lw62RvNlWxuGv7kOEwlHriAa54updi3Jvvwg==
   dependencies:
     jest-diff "^25.2.1"
     pretty-format "^25.2.1"
@@ -4513,10 +4513,10 @@ progress@^2.0.0:
   resolved "https://registry.yarnpkg.com/progress/-/progress-2.0.3.tgz#7e8cf8d8f5b8f239c1bc68beb4eb78567d572ef8"
   integrity sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==
 
-projen@^0.3.5:
-  version "0.3.5"
-  resolved "https://registry.yarnpkg.com/projen/-/projen-0.3.5.tgz#24e3abdf63b6d0bd904eda679e517894b46925c3"
-  integrity sha512-hf1XadIAJVOVAiFt5fZQaI6lCeaWCHqk4rDQ3v3Zk1w5Wa/luqiQ3ku85qzwBdFy02FkyHRQFobq8bAp5K8fXQ==
+projen@^0.3.10:
+  version "0.3.11"
+  resolved "https://registry.yarnpkg.com/projen/-/projen-0.3.11.tgz#05b1fbd8353652c1a8f344483e4e5647362e1029"
+  integrity sha512-j+w6f2Zs/ZPZEIZ/0x0PnVl3W0Jy03Lne8JuVfRpVEeu0Ajw6zSaTfrRc/FCK72NVVQZBVMYqnZuhKomBvB6qA==
   dependencies:
     constructs "2.0.1"
     decamelize "^4.0.0"
