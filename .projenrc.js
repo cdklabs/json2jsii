@@ -17,7 +17,8 @@ const project = new TypeScriptLibraryProject({
     'prettier': Semver.caret('2.0.5')
   },
   releaseToNpm: true,
-  minNodeVersion: '10.17.0'
+  minNodeVersion: '10.17.0',
+  projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
 });
 
 project.synth();
