@@ -13,7 +13,7 @@ const project = new TypeScriptLibraryProject({
   },
   devDependencies: {
     '@types/json-schema': Semver.caret('7.0.5'),
-    'jsii-srcmak': Semver.caret('0.1.4'),
+    'jsii-srcmak': Semver.caret('0.1.24'),
     'prettier': Semver.caret('2.0.5')
   },
   releaseToNpm: true,

@@ -14,9 +14,15 @@ import publication
 from ._jsii import *
 
 
-@jsii.data_type(jsii_type=\\"generated.Name\\", jsii_struct_bases=[], name_mapping={'first': 'first', 'last': 'last', 'middle': 'middle'})
-class Name():
-    def __init__(self, *, first: str, last: str, middle: typing.Optional[str]=None) -> None:
+@jsii.data_type(
+    jsii_type=\\"1bc04b5291c26a46d918139138b992d2de976d6851d0893b0476b85bfbdfc6e6.Name\\",
+    jsii_struct_bases=[],
+    name_mapping={\\"first\\": \\"first\\", \\"last\\": \\"last\\", \\"middle\\": \\"middle\\"},
+)
+class Name:
+    def __init__(
+        self, *, first: str, last: str, middle: typing.Optional[str] = None
+    ) -> None:
         \\"\\"\\"
         :param first: 
         :param last: 
@@ -26,10 +32,11 @@ class Name():
         :schema:: Name
         \\"\\"\\"
         self._values = {
-            'first': first,
-            'last': last,
+            \\"first\\": first,
+            \\"last\\": last,
         }
-        if middle is not None: self._values[\\"middle\\"] = middle
+        if middle is not None:
+            self._values[\\"middle\\"] = middle
 
     @builtins.property
     def first(self) -> str:
@@ -37,7 +44,7 @@ class Name():
         schema:
         :schema:: Name#first
         \\"\\"\\"
-        return self._values.get('first')
+        return self._values.get(\\"first\\")
 
     @builtins.property
     def last(self) -> str:
@@ -45,7 +52,7 @@ class Name():
         schema:
         :schema:: Name#last
         \\"\\"\\"
-        return self._values.get('last')
+        return self._values.get(\\"last\\")
 
     @builtins.property
     def middle(self) -> typing.Optional[str]:
@@ -53,7 +60,7 @@ class Name():
         schema:
         :schema:: Name#middle
         \\"\\"\\"
-        return self._values.get('middle')
+        return self._values.get(\\"middle\\")
 
     def __eq__(self, rhs) -> bool:
         return isinstance(rhs, self.__class__) and rhs._values == self._values
@@ -62,7 +69,9 @@ class Name():
         return not (rhs == self)
 
     def __repr__(self) -> str:
-        return 'Name(%s)' % ', '.join(k + '=' + repr(v) for k, v in self._values.items())
+        return \\"Name(%s)\\" % \\", \\".join(
+            k + \\"=\\" + repr(v) for k, v in self._values.items()
+        )
 
 
 __all__ = [
@@ -78,7 +87,7 @@ exports[`language bindings 2`] = `
 
 /**
  */
-@software.amazon.jsii.Jsii(module = org.myorg.$Module.class, fqn = \\"generated.Name\\")
+@software.amazon.jsii.Jsii(module = org.myorg.$Module.class, fqn = \\"1bc04b5291c26a46d918139138b992d2de976d6851d0893b0476b85bfbdfc6e6.Name\\")
 @software.amazon.jsii.Jsii.Proxy(Name.Jsii$Proxy.class)
 public interface Name extends software.amazon.jsii.JsiiSerializable {
 
@@ -207,7 +216,7 @@ public interface Name extends software.amazon.jsii.JsiiSerializable {
             }
 
             final com.fasterxml.jackson.databind.node.ObjectNode struct = com.fasterxml.jackson.databind.node.JsonNodeFactory.instance.objectNode();
-            struct.set(\\"fqn\\", om.valueToTree(\\"generated.Name\\"));
+            struct.set(\\"fqn\\", om.valueToTree(\\"1bc04b5291c26a46d918139138b992d2de976d6851d0893b0476b85bfbdfc6e6.Name\\"));
             struct.set(\\"data\\", data);
 
             final com.fasterxml.jackson.databind.node.ObjectNode obj = com.fasterxml.jackson.databind.node.JsonNodeFactory.instance.objectNode();
