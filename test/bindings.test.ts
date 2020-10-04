@@ -1,8 +1,8 @@
-import { TypeGenerator } from '../src';
-import { srcmak } from 'jsii-srcmak';
 import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
+import { srcmak } from 'jsii-srcmak';
+import { TypeGenerator } from '../src';
 
 jest.setTimeout(5 * 60 * 1000);
 
@@ -15,7 +15,7 @@ test('language bindings', async () => {
       middle: { type: 'string' },
       last: { type: 'string' },
     },
-    required: [ 'first', 'last' ],
+    required: ['first', 'last'],
   });
 
   const workdir = fs.mkdtempSync(path.join(os.tmpdir(), 'json2jsii'));
@@ -36,7 +36,7 @@ test('language bindings', async () => {
   });
 
   expect(readFile(path.join(workdir, 'python/myorg/__init__.py'))).toMatchSnapshot();
-  expect(readFile(path.join(workdir, 'java/src/main/java/org/myorg/Name.java'), [ '@javax.annotation.Generated' ])).toMatchSnapshot();
+  expect(readFile(path.join(workdir, 'java/src/main/java/org/myorg/Name.java'), ['@javax.annotation.Generated'])).toMatchSnapshot();
 });
 
 function readFile(filePath: string, ignoreLines: string[] = []) {

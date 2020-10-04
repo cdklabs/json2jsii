@@ -1,9 +1,9 @@
-import { TypeGenerator } from '../src';
 import { promises as fs } from 'fs';
-import * as path from 'path';
 import * as os from 'os';
-import { JSONSchema4 } from 'json-schema';
+import * as path from 'path';
 import { srcmak } from 'jsii-srcmak';
+import { JSONSchema4 } from 'json-schema';
+import { TypeGenerator } from '../src';
 
 jest.setTimeout(3 * 60_000); // 1min
 
@@ -30,12 +30,12 @@ describe('unions', () => {
               oneOf: [
                 {
                   anyOf: [
-                    { required: [ 'fixedDelay' ] },
-                    { required: [ 'exponentialDelay' ] },
+                    { required: ['fixedDelay'] },
+                    { required: ['exponentialDelay'] },
                   ],
                 },
-                { required: [ 'fixedDelay' ] },
-                { required: [ 'exponentialDelay' ] },
+                { required: ['fixedDelay'] },
+                { required: ['exponentialDelay'] },
               ],
               properties: {
                 exponentialDelay: {
@@ -80,7 +80,7 @@ describe('structs', () => {
       stringValue: { type: 'string' },
       boolValue: { type: 'boolean' },
       numberValue: { type: 'number' },
-      integerValue: {type: 'integer' },
+      integerValue: { type: 'integer' },
       arrayOfString: {
         type: 'array',
         items: { type: 'string' },
@@ -102,7 +102,7 @@ describe('structs', () => {
         properties: {
           stringValue: { type: 'string' },
         },
-        required: [ 'stringValue' ],
+        required: ['stringValue'],
       },
     },
   });
@@ -144,7 +144,7 @@ describe('structs', () => {
     definitions: {
       ItemType: {
         type: 'object',
-        required: [ 'requiredField' ],
+        required: ['requiredField'],
         properties: {
           requiredField: { type: 'string' },
         },
@@ -234,12 +234,12 @@ describe('enums', () => {
 
   which('renders a typescript enum', {
     type: 'object',
-    required: [ 'firstEnum' ],
+    required: ['firstEnum'],
     properties: {
       firstEnum: {
         description: 'description of first enum',
         type: 'string',
-        enum: [ 'value1', 'value2', 'value-of-three', 'valueOfFour' ],
+        enum: ['value1', 'value2', 'value-of-three', 'valueOfFour'],
       },
       child: {
         type: 'object',
@@ -247,7 +247,7 @@ describe('enums', () => {
           secondEnum: {
             description: 'description of second enum',
             type: 'string',
-            enum: [ 'hey', 'enum values can be crazy', 'yes>>123' ],
+            enum: ['hey', 'enum values can be crazy', 'yes>>123'],
           },
         },
       },
@@ -279,7 +279,7 @@ function which(name: string, schema: JSONSchema4, definitions?: JSONSchema4) {
 
 async function generate(gen: TypeGenerator) {
   const source = await gen.render();
-  const deps = [ '@types/node' ].map(d => path.dirname(require.resolve(`${d}/package.json`)));
+  const deps = ['@types/node'].map(d => path.dirname(require.resolve(`${d}/package.json`)));
 
   // check that the output compiles & is jsii-compatible
   await mkdtemp(async workdir => {

@@ -5,7 +5,7 @@ test('example with $ref', async () => {
     definitions: {
       Name: {
         description: 'Represents a name of a person',
-        required: [ 'firstName', 'lastName' ],
+        required: ['firstName', 'lastName'],
         properties: {
           firstName: {
             type: 'string',
@@ -21,7 +21,7 @@ test('example with $ref', async () => {
   });
 
   g.addType('Person', {
-    required: [ 'name' ],
+    required: ['name'],
     properties: {
       name: {
         description: 'The person\'s name',
@@ -29,7 +29,7 @@ test('example with $ref', async () => {
       },
       color: {
         description: 'Favorite color. Default is green',
-        enum: [ 'red', 'green', 'blue', 'yellow' ],
+        enum: ['red', 'green', 'blue', 'yellow'],
       },
     },
   });
