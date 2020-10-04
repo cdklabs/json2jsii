@@ -1,10 +1,10 @@
+import * as camelCase from 'camelcase';
 import { JSONSchema4 } from 'json-schema';
+import { snakeCase } from 'snake-case';
 import { Code } from './code';
 
-import * as camelCase from 'camelcase';
-import { snakeCase } from 'snake-case';
 
-const PRIMITIVE_TYPES = [ 'string', 'number', 'integer', 'boolean' ];
+const PRIMITIVE_TYPES = ['string', 'number', 'integer', 'boolean'];
 const DEFINITIONS_PREFIX = '#/definitions/';
 
 export interface TypeGeneratorOptions {
@@ -46,7 +46,7 @@ export class TypeGenerator {
       }
     } while (m);
 
-    result = result.replace(/^./, result[0].toUpperCase()) // ensure first letter is capitalized
+    result = result.replace(/^./, result[0].toUpperCase()); // ensure first letter is capitalized
     return result;
   }
 
@@ -102,7 +102,7 @@ export class TypeGenerator {
     if (def.type === 'string' && def.format === 'date-time') {
       return 'Date';
     }
-  
+
     switch (def.type) {
       case 'boolean': return 'boolean';
       case 'array': return `${this.typeForArray(typeName, def)}[]`;
@@ -125,7 +125,7 @@ export class TypeGenerator {
 
       return 'string';
     }
-    
+
     // map
     if (!def.properties && def.additionalProperties && typeof(def.additionalProperties) === 'object') {
       return `{ [key: string]: ${this.typeForProperty(typeName, def.additionalProperties)} }`;
@@ -133,7 +133,7 @@ export class TypeGenerator {
 
     // struct
     if (def.properties) {
-      this.emitStruct(typeName, def, structFqn)
+      this.emitStruct(typeName, def, structFqn);
       return typeName;
     }
 
@@ -172,7 +172,7 @@ export class TypeGenerator {
       code.line();
       delete this.typesToEmit[name];
       this.emittedTypes.add(name);
-    }    
+    }
   }
   /**
    * @returns true if this definition can be represented as a union or false if it cannot
@@ -215,20 +215,20 @@ export class TypeGenerator {
       this.emitDescription(code, structFqn, structDef.description);
       code.openBlock(`export interface ${typeName}`);
 
-      for (const [ propName, propSpec ] of Object.entries(structDef.properties || {})) {
-  
+      for (const [propName, propSpec] of Object.entries(structDef.properties || {})) {
+
         if (propName.startsWith('x-')) {
           continue; // skip extensions for now
         }
 
         if (propName.includes('_')) {
           console.error(`warning: property ${structFqn}.${propName} omitted since it includes an underscore`);
-          continue; // skip 
+          continue; // skip
         }
-  
+
         this.emitProperty(code, propName, propSpec, structFqn, structDef);
       }
-    
+
       code.closeBlock();
     });
   }
@@ -299,22 +299,22 @@ export class TypeGenerator {
 
       const extractDefault = /Defaults?\W+(to|is)\W+(.+)/g.exec(description);
       const def = extractDefault && extractDefault[2];
-    
+
       code.line(` * ${description}`);
       if (def) {
-        annotations['default'] = def;
+        annotations.default = def;
       }
 
       code.line(' *');
     }
 
-    annotations['schema'] = fqn;
+    annotations.schema = fqn;
 
-    for (const [ type, value ] of Object.entries(annotations)) {
+    for (const [type, value] of Object.entries(annotations)) {
       code.line(` * @${type} ${value}`);
     }
 
-    code.line(' */')
+    code.line(' */');
   }
 
   private typeForProperty(propertyFqn: string, def: JSONSchema4): string {
@@ -344,7 +344,7 @@ export class TypeGenerator {
     }
 
     return this.typeForProperty(propertyFqn, def.items);
-  }  
+  }
 
   private resolveReference(def: JSONSchema4): JSONSchema4 {
     const ref = def.$ref;
