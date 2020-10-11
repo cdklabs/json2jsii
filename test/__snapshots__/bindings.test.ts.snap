@@ -8,8 +8,8 @@ import enum
 import typing
 
 import jsii
-import jsii.compat
 import publication
+import typing_extensions
 
 from ._jsii import *
 
@@ -21,17 +21,20 @@ from ._jsii import *
 )
 class Name:
     def __init__(
-        self, *, first: str, last: str, middle: typing.Optional[str] = None
+        self,
+        *,
+        first: builtins.str,
+        last: builtins.str,
+        middle: typing.Optional[builtins.str] = None,
     ) -> None:
         \\"\\"\\"
         :param first: 
         :param last: 
         :param middle: 
 
-        schema:
-        :schema:: Name
+        :schema: Name
         \\"\\"\\"
-        self._values = {
+        self._values: typing.Dict[str, typing.Any] = {
             \\"first\\": first,
             \\"last\\": last,
         }
@@ -39,33 +42,35 @@ class Name:
             self._values[\\"middle\\"] = middle
 
     @builtins.property
-    def first(self) -> str:
+    def first(self) -> builtins.str:
         \\"\\"\\"
-        schema:
-        :schema:: Name#first
+        :schema: Name#first
         \\"\\"\\"
-        return self._values.get(\\"first\\")
+        result = self._values.get(\\"first\\")
+        assert result is not None, \\"Required property 'first' is missing\\"
+        return result
 
     @builtins.property
-    def last(self) -> str:
+    def last(self) -> builtins.str:
         \\"\\"\\"
-        schema:
-        :schema:: Name#last
+        :schema: Name#last
         \\"\\"\\"
-        return self._values.get(\\"last\\")
+        result = self._values.get(\\"last\\")
+        assert result is not None, \\"Required property 'last' is missing\\"
+        return result
 
     @builtins.property
-    def middle(self) -> typing.Optional[str]:
+    def middle(self) -> typing.Optional[builtins.str]:
         \\"\\"\\"
-        schema:
-        :schema:: Name#middle
+        :schema: Name#middle
         \\"\\"\\"
-        return self._values.get(\\"middle\\")
+        result = self._values.get(\\"middle\\")
+        return result
 
-    def __eq__(self, rhs) -> bool:
+    def __eq__(self, rhs: typing.Any) -> builtins.bool:
         return isinstance(rhs, self.__class__) and rhs._values == self._values
 
-    def __ne__(self, rhs) -> bool:
+    def __ne__(self, rhs: typing.Any) -> builtins.bool:
         return not (rhs == self)
 
     def __repr__(self) -> str:
