@@ -109,7 +109,7 @@
       "category": 1
     }
   },
-  "version": "0.1.57",
+  "version": "0.1.58",
   "types": "lib/index.d.ts",
   "jest": {
     "clearMocks": true,
