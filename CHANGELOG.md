@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.1.69 (2020-10-25)
+
+
+### Bug Fixes
+
+* export `Code` ([#134](https://github.com/aws/json2jsii/issues/134)) ([2d3fb58](https://github.com/aws/json2jsii/commit/2d3fb58575357934f8dd51ca7639f08ddbc5728b))
+
 ### 0.1.68 (2020-10-24)
 
 ### 0.1.67 (2020-10-23)
