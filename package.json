@@ -21,7 +21,7 @@
     "test": "rm -fr lib/ && jest --passWithNoTests --updateSnapshot && yarn run eslint",
     "test:watch": "jest --watch",
     "test:update": "jest --updateSnapshot",
-    "eslint": "eslint --ext .ts --fix src test"
+    "eslint": "eslint --ext .ts --fix --no-error-on-unmatched-pattern src test"
   },
   "author": {
     "name": "Elad Ben-Israel",
@@ -42,7 +42,7 @@
     "jsii-srcmak": "^0.1.24",
     "json-schema": "^0.2.5",
     "prettier": "^2.0.5",
-    "projen": "^0.3.141",
+    "projen": "^0.3.153",
     "standard-version": "^9.0.0",
     "ts-jest": "^26.1.0",
     "typescript": "^3.9.5"
