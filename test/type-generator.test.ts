@@ -269,16 +269,49 @@ which('primitives', {
   },
 });
 
+describe('type aliases', () => {
+
+  test('alias to a custom type', () => {
+    // GIVEN
+    const gen = new TypeGenerator();
+    gen.addDefinition('TypeB', { type: 'object', properties: { refToTypeA: { $ref: '#/definitions/TypeA' } } });
+    gen.emitCustomType('NewType', code => code.line('// this is NewType'));
+
+    // WHEN
+    gen.addAlias('TypeA', 'NewType'); // this is a type alias
+    gen.emitType('TypeB');
+
+    // THEN
+    expect(gen.render()).toMatchSnapshot();
+  });
+
+  test('alias to a definition', () => {
+    // GIVEN
+    const gen = new TypeGenerator();
+    gen.addDefinition('TypeA', { type: 'object', properties: { ref: { $ref: '#/definitions/TypeB' } } } );
+    gen.addDefinition('TypeC', { type: 'object', properties: { field: { type: 'string' } } });
+
+    // WHEN
+    gen.addAlias('TypeB', 'TypeC');
+
+    // THEN
+    gen.emitType('TypeA');
+    expect(gen.render()).toMatchSnapshot();
+  });
+
+});
+
+
 function which(name: string, schema: JSONSchema4, definitions?: JSONSchema4) {
   test(name, async () => {
     const gen = new TypeGenerator(definitions);
-    gen.addType('TestType', schema, 'fqn.of.TestType');
+    gen.emitType('TestType', schema, 'fqn.of.TestType');
     expect(await generate(gen)).toMatchSnapshot();
   });
 }
 
 async function generate(gen: TypeGenerator) {
-  const source = await gen.render();
+  const source = gen.render();
   const deps = ['@types/node'].map(d => path.dirname(require.resolve(`${d}/package.json`)));
 
   // check that the output compiles & is jsii-compatible
@@ -286,7 +319,6 @@ async function generate(gen: TypeGenerator) {
     await fs.writeFile(path.join(workdir, 'index.ts'), source);
     await srcmak(workdir, { deps });
   });
-
 
   return source;
 }
