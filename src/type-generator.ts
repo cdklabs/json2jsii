@@ -25,7 +25,6 @@ export interface TypeGeneratorOptions {
  * Generates typescript types from JSON schemas.
  */
 export class TypeGenerator {
-
   /**
    * Convert all-caps acronyms (e.g. "VPC", "FooBARZooFIGoo") to pascal case
    * (e.g. "Vpc", "FooBarZooFiGoo").
@@ -62,16 +61,53 @@ export class TypeGenerator {
    */
   constructor(options: TypeGeneratorOptions = { }) {
     this.exclude = options.exclude ?? [];
-    this.definitions = options.definitions ?? { };
+    this.definitions = {};
+
+    for (const [typeName, def] of Object.entries(options.definitions ?? {})) {
+      this.addDefinition(typeName, def);
+    }
   }
 
   /**
-   * Emit a type based on a JSON schema.
-   * @param typeName The name of th type
-   * @param def JSON schema
-   * @param structFqn FQN for the type (defaults to `typeName`)
+   * Adds a JSON schema definition for a type name. This method does not emit the type
+   * but rather just registers the definition that will get resolved if this type is `$ref`ed.
+   *
+   * @param typeName The name of the type.
+   * @param def The JSON schema definition for this type
    */
-  public addType(typeName: string, def: JSONSchema4, structFqn: string = typeName): string {
+  public addDefinition(typeName: string, def: JSONSchema4) {
+    this.definitions[typeName] = def;
+  }
+
+  /**
+   * Overrides the definition of `fromTypeName` such that any references to it
+   * will be resolved as `toTypeName`. Bear in mind that the type name specified
+   * in `to` must either be defined as a definition (`addDefinition()`) _or_
+   * emitted as a custom type (`emitCustomType()`).
+   */
+  public addAlias(from: string, to: string) {
+    this.addDefinition(from, { $ref: `#/definitions/${to}` });
+  }
+
+  /**
+   * Emit a type based on a JSON schema. If `def` is not specified, the
+   * definition of the type will be looked up in the `definitions` provided
+   * during initialization or via `addDefinition()`.
+   *
+   * @param typeName The name of th type
+   * @param def JSON schema. If not specified, the schema is looked up from
+   * `definitions` based on the type name
+   * @param structFqn FQN for the type (defaults to `typeName`)
+   * @returns The resolved type (not always the same as `typeName`)
+   */
+  public emitType(typeName: string, def?: JSONSchema4, structFqn: string = typeName): string {
+    if (!def) {
+      def = this.definitions[typeName];
+      if (!def) {
+        throw new Error(`unable to find schema definition for ${typeName}`);
+      }
+    }
+
     // callers expect that emit a type named `typeName` so we can't change it here
     // but at least we can verify it's correct.
     if (TypeGenerator.normalizeTypeName(typeName) !== typeName) {
@@ -141,21 +177,35 @@ export class TypeGenerator {
   }
 
   /**
-   * Emits code once to the output file.
-   * @param uniqueid A unique identifier for the code snippet (e.g. the name of the type)
-   * @param codeEmitter A function that will be called to emit the code.
+   * Registers a custom type and emits it. This will override any existing
+   * definitions for this type name.
+   *
+   * @param typeName The name of the type emitted by this handler.
+   * @param emitter A function that will be called to emit the code.
    */
-  public addCode(uniqueid: string, codeEmitter: (code: Code) => void) {
-    if (this.emittedTypes.has(uniqueid)) {
+  public emitCustomType(typeName: string, emitter: (code: Code) => void) {
+    if (this.emittedTypes.has(typeName)) {
       return;
     }
 
-    this.typesToEmit[uniqueid] = codeEmitter;
+    this.typesToEmit[typeName] = emitter;
   }
 
-  public render() {
+  /**
+   * @deprecated use `emitCustomType()`
+   */
+  public addCode(typeName: string, codeEmitter: (code: Code) => void) {
+    return this.emitCustomType(typeName, codeEmitter);
+  }
+
+  /**
+   * Renders all emitted types to a string.
+   *
+   * Use `renderToCode()` in order to render output to an existing `Code` object.
+   */
+  public render(): string {
     const code = new Code();
-    this.emitCode(code);
+    this.renderToCode(code);
     return code.render();
   }
 
@@ -164,7 +214,7 @@ export class TypeGenerator {
    * Use this method in case you need to add those type to an existing file.
    * @param code The `CodeMaker` instance.
    */
-  public emitCode(code: Code) {
+  public renderToCode(code: Code) {
     while (Object.keys(this.typesToEmit).length) {
       const name = Object.keys(this.typesToEmit)[0];
       const emitter = this.typesToEmit[name];
@@ -174,6 +224,21 @@ export class TypeGenerator {
       this.emittedTypes.add(name);
     }
   }
+
+  /**
+   * @deprecated use `renderToCode()`
+   */
+  public emitCode(code: Code) {
+    return this.renderToCode(code);
+  }
+
+  /**
+   * @deprecated use `emitType()`
+   */
+  public addType(typeName: string, def?: JSONSchema4, structFqn: string = typeName): string {
+    return this.emitType(typeName, def, structFqn);
+  }
+
   /**
    * @returns true if this definition can be represented as a union or false if it cannot
    */
@@ -319,7 +384,7 @@ export class TypeGenerator {
 
   private typeForProperty(propertyFqn: string, def: JSONSchema4): string {
     const subtype = TypeGenerator.normalizeTypeName(propertyFqn.split('.').map(x => pascalCase(x)).join(''));
-    return this.addType(subtype, def, subtype);
+    return this.emitType(subtype, def, subtype);
   }
 
   private typeForRef(def: JSONSchema4): string {
@@ -334,8 +399,14 @@ export class TypeGenerator {
 
     const comps = def.$ref.substring(prefix.length).split('.');
     const typeName = TypeGenerator.normalizeTypeName(comps[comps.length - 1]);
+
+    // if we already emitted a type with this type name, just return it
+    if (this.emittedTypes.has(typeName)) {
+      return typeName;
+    }
+
     const schema = this.resolveReference(def);
-    return this.addType(typeName, schema, def.$ref);
+    return this.emitType(typeName, schema, def.$ref);
   }
 
   private typeForArray(propertyFqn: string, def: JSONSchema4): string {

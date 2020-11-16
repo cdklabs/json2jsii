@@ -24,7 +24,8 @@ const g = new TypeGenerator({
   },
 });
 
-g.addType('Person', {
+// definitions can also be added like this:
+g.addDefinition('Person', {
   required: [ 'name' ],
   properties: {
     name: {
@@ -37,6 +38,9 @@ g.addType('Person', {
     },
   },
 });
+
+// this will emit the specified type & recursively all the referenced types.
+g.emitType('Person');
 
 fs.writeFileSync('gen/ts/person.ts', await g.render());
 ```
@@ -83,6 +87,35 @@ export interface Name {
    * @schema Name#lastName
    */
   readonly lastName: string;
+}
+```
+
+## Use cases
+
+### Type aliases
+
+It is possible to offer an alias to a type definition using `addAlias(from,
+to)`. The type generator will resolve any references to the original type with
+the alias:
+
+```ts
+const gen = new TypeGenerator();
+gen.addDefinition('TypeA', { type: 'object', properties: { ref: { $ref: '#/definitions/TypeB' } } } );
+gen.addDefinition('TypeC', { type: 'object', properties: { field: { type: 'string' } } });
+gen.addAlias('TypeB', 'TypeC');
+
+gen.emitType('TypeA');
+```
+
+This will output:
+
+```ts
+interface TypeA {
+  readonly ref: TypeC;
+}
+
+interface TypeC {
+  readonly field: string;
 }
 ```
 

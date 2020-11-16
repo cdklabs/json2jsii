@@ -335,6 +335,47 @@ export interface MyType {
 "
 `;
 
+exports[`type aliases alias to a custom type 1`] = `
+"// this is NewType
+
+/**
+ * @schema TypeB
+ */
+export interface TypeB {
+  /**
+   * @schema TypeB#refToTypeA
+   */
+  readonly refToTypeA?: NewType;
+
+}
+"
+`;
+
+exports[`type aliases alias to a definition 1`] = `
+"/**
+ * @schema TypeA
+ */
+export interface TypeA {
+  /**
+   * @schema TypeA#ref
+   */
+  readonly ref?: TypeC;
+
+}
+
+/**
+ * @schema TypeC
+ */
+export interface TypeC {
+  /**
+   * @schema TypeC#field
+   */
+  readonly field?: string;
+
+}
+"
+`;
+
 exports[`unions constraints are ignored for objects 1`] = `
 "/**
  * @schema TestType
