@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.1.104 (2020-11-16)
+
+
+### Features
+
+* type aliases ([#183](https://github.com/aws/json2jsii/issues/183)) ([d39695d](https://github.com/aws/json2jsii/commit/d39695dcdef3a6cee0723b28d0d85e1868a56200)), closes [awslabs/cdk8s#370](https://github.com/awslabs/cdk8s/issues/370)
+
 ### 0.1.103 (2020-11-16)
 
 ### 0.1.102 (2020-11-16)
