@@ -3683,9 +3683,9 @@ jsii-rosetta@^1.13.0:
     yargs "^16.0.3"
 
 jsii-srcmak@^0.1.24:
-  version "0.1.105"
-  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.105.tgz#92a09f68a4401b3d84a0661084d363f552944238"
-  integrity sha512-cxOBya13CXvT1GpjUsQ7+jix1+zKQAag4sSPWeOAMbFCRwC+L8fCuDQBWDnqotU3sapgoW8IZkHiR19sI8nBuA==
+  version "0.1.107"
+  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.107.tgz#8952b65fd4c8c6da40fbe167ae5bd1e0abbe7912"
+  integrity sha512-MHZNYEBvDgv/8Li6NjD6V9603dil+r9/XhQFeSalSd0usZBuplUJaCW1AoijG0c9d6P867lMGHZbg5yPgCr61w==
   dependencies:
     fs-extra "^9.0.1"
     jsii "^1.12.0"
