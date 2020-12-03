@@ -9,12 +9,12 @@ const project = new TypeScriptLibraryProject({
   dependencies: {
     'json-schema': Semver.caret('0.2.5'),
     'camelcase': Semver.caret('6.0.0'),
-    'snake-case': Semver.caret('3.0.3')
+    'snake-case': Semver.caret('3.0.3'),
   },
   devDependencies: {
     '@types/json-schema': Semver.caret('7.0.5'),
     'jsii-srcmak': Semver.caret('0.1.24'),
-    'prettier': Semver.caret('2.0.5')
+    'prettier': Semver.caret('2.0.5'),
   },
   releaseToNpm: true,
   minNodeVersion: '10.17.0',
