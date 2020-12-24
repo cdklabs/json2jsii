@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.1.155 (2020-12-24)
+
+
+### Features
+
+* type aliases ([#183](https://github.com/aws/json2jsii/issues/183)) ([d39695d](https://github.com/aws/json2jsii/commit/d39695dcdef3a6cee0723b28d0d85e1868a56200)), closes [awslabs/cdk8s#370](https://github.com/awslabs/cdk8s/issues/370)
+
+
+### Bug Fixes
+
+* empty lines are indented ([5c4928e](https://github.com/aws/json2jsii/commit/5c4928ef3d154c90978e14692bfd83b1d2e86e68))
+* export `Code` ([#134](https://github.com/aws/json2jsii/issues/134)) ([2d3fb58](https://github.com/aws/json2jsii/commit/2d3fb58575357934f8dd51ca7639f08ddbc5728b))
+* Pascal case for fully-lowercase types ([#2](https://github.com/aws/json2jsii/issues/2)) ([c1e9170](https://github.com/aws/json2jsii/commit/c1e91708b6e08120bfb61b7927927ed978d63a51))
+
 ### 0.1.154 (2020-12-24)
 
 
