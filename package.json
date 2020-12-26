@@ -60,7 +60,7 @@
   },
   "main": "lib/index.js",
   "license": "Apache-2.0",
-  "version": "0.1.156",
+  "version": "0.1.157",
   "jest": {
     "clearMocks": true,
     "collectCoverage": true,
