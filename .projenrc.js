@@ -1,21 +1,21 @@
-const { TypeScriptLibraryProject, Semver } = require('projen');
+const { TypeScriptProject } = require('projen');
 
-const project = new TypeScriptLibraryProject({
+const project = new TypeScriptProject({
   name: 'json2jsii',
   description: 'Generates jsii structs from JSON schemas',
   authorName: 'Elad Ben-Israel',
   authorEmail: 'elad.benisrael@gmail.com',
   repository: 'https://github.com/aws/json2jsii.git',
-  dependencies: {
-    'json-schema': Semver.caret('0.2.5'),
-    'camelcase': Semver.caret('6.0.0'),
-    'snake-case': Semver.caret('3.0.3'),
-  },
-  devDependencies: {
-    '@types/json-schema': Semver.caret('7.0.5'),
-    'jsii-srcmak': Semver.caret('0.1.24'),
-    'prettier': Semver.caret('2.0.5'),
-  },
+  deps: [
+    'json-schema@^0.2.5',
+    'camelcase@^6.0.0',
+    'snake-case@^3.0.3',
+  ],
+  devDeps: [
+    '@types/json-schema@^7.0.5',
+    'jsii-srcmak@^0.1.24',
+    'prettier@^2.0.5',
+  ],
   releaseToNpm: true,
   minNodeVersion: '10.17.0',
   projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
