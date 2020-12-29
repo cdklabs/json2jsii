@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "@types/jest": "^26.0.7",
+    "@types/json-schema": "^7.0.6",
     "@types/node": "^10.17.0",
     "@typescript-eslint/eslint-plugin": "^4.3.0",
     "@typescript-eslint/parser": "^4.3.0",
@@ -38,11 +39,18 @@
     "eslint-plugin-import": "^2.20.2",
     "jest": "^26.4.2",
     "jest-junit": "^12",
+    "jsii-srcmak": "^0.1.170",
     "json-schema": "^0.2.5",
+    "prettier": "^2.2.1",
     "projen": "^0.12.2",
     "standard-version": "^9.0.0",
     "ts-jest": "^26.1.0",
     "typescript": "^3.9.5"
+  },
+  "dependencies": {
+    "camelcase": "^6.2.0",
+    "json-schema": "^0.2.5",
+    "snake-case": "^3.0.4"
   },
   "bundledDependencies": [],
   "engines": {

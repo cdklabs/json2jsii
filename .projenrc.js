@@ -6,16 +6,8 @@ const project = new TypeScriptLibraryProject({
   authorName: 'Elad Ben-Israel',
   authorEmail: 'elad.benisrael@gmail.com',
   repository: 'https://github.com/aws/json2jsii.git',
-  dependencies: {
-    'json-schema': Semver.caret('0.2.5'),
-    'camelcase': Semver.caret('6.0.0'),
-    'snake-case': Semver.caret('3.0.3'),
-  },
-  devDependencies: {
-    '@types/json-schema': Semver.caret('7.0.5'),
-    'jsii-srcmak': Semver.caret('0.1.24'),
-    'prettier': Semver.caret('2.0.5'),
-  },
+  deps: [ 'json-schema', 'camelcase', 'snake-case' ],
+  devDeps: [ '@types/json-schema', 'jsii-srcmak', 'prettier' ],
   releaseToNpm: true,
   minNodeVersion: '10.17.0',
   projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
