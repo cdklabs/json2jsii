@@ -168,6 +168,7 @@ public interface Name extends software.amazon.jsii.JsiiSerializable {
     /**
      * An implementation for {@link Name}
      */
+    @software.amazon.jsii.Internal
     final class Jsii$Proxy extends software.amazon.jsii.JsiiObject implements Name {
         private final java.lang.String first;
         private final java.lang.String last;
@@ -179,15 +180,15 @@ public interface Name extends software.amazon.jsii.JsiiSerializable {
          */
         protected Jsii$Proxy(final software.amazon.jsii.JsiiObjectRef objRef) {
             super(objRef);
-            this.first = this.jsiiGet(\\"first\\", java.lang.String.class);
-            this.last = this.jsiiGet(\\"last\\", java.lang.String.class);
-            this.middle = this.jsiiGet(\\"middle\\", java.lang.String.class);
+            this.first = software.amazon.jsii.Kernel.get(this, \\"first\\", software.amazon.jsii.NativeType.forClass(java.lang.String.class));
+            this.last = software.amazon.jsii.Kernel.get(this, \\"last\\", software.amazon.jsii.NativeType.forClass(java.lang.String.class));
+            this.middle = software.amazon.jsii.Kernel.get(this, \\"middle\\", software.amazon.jsii.NativeType.forClass(java.lang.String.class));
         }
 
         /**
          * Constructor that initializes the object based on literal property values passed by the {@link Builder}.
          */
-        private Jsii$Proxy(final java.lang.String first, final java.lang.String last, final java.lang.String middle) {
+        protected Jsii$Proxy(final java.lang.String first, final java.lang.String last, final java.lang.String middle) {
             super(software.amazon.jsii.JsiiObject.InitializationMode.JSII);
             this.first = java.util.Objects.requireNonNull(first, \\"first is required\\");
             this.last = java.util.Objects.requireNonNull(last, \\"last is required\\");
@@ -195,21 +196,22 @@ public interface Name extends software.amazon.jsii.JsiiSerializable {
         }
 
         @Override
-        public java.lang.String getFirst() {
+        public final java.lang.String getFirst() {
             return this.first;
         }
 
         @Override
-        public java.lang.String getLast() {
+        public final java.lang.String getLast() {
             return this.last;
         }
 
         @Override
-        public java.lang.String getMiddle() {
+        public final java.lang.String getMiddle() {
             return this.middle;
         }
 
         @Override
+        @software.amazon.jsii.Internal
         public com.fasterxml.jackson.databind.JsonNode $jsii$toJson() {
             final com.fasterxml.jackson.databind.ObjectMapper om = software.amazon.jsii.JsiiObjectMapper.INSTANCE;
             final com.fasterxml.jackson.databind.node.ObjectNode data = com.fasterxml.jackson.databind.node.JsonNodeFactory.instance.objectNode();
@@ -231,7 +233,7 @@ public interface Name extends software.amazon.jsii.JsiiSerializable {
         }
 
         @Override
-        public boolean equals(Object o) {
+        public final boolean equals(final Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
 
@@ -243,7 +245,7 @@ public interface Name extends software.amazon.jsii.JsiiSerializable {
         }
 
         @Override
-        public int hashCode() {
+        public final int hashCode() {
             int result = this.first.hashCode();
             result = 31 * result + (this.last.hashCode());
             result = 31 * result + (this.middle != null ? this.middle.hashCode() : 0);
