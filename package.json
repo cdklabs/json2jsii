@@ -42,7 +42,7 @@
     "jsii-srcmak": "^0.1.170",
     "json-schema": "^0.2.5",
     "prettier": "^2.2.1",
-    "projen": "^0.12.3",
+    "projen": "^0.12.7",
     "standard-version": "^9.0.0",
     "ts-jest": "^26.1.0",
     "typescript": "^3.9.5"
