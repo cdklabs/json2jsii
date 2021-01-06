@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.173](https://github.com/aws/json2jsii/compare/v0.1.172...v0.1.173) (2021-01-06)
+
 ### [0.1.172](https://github.com/aws/json2jsii/compare/v0.1.170...v0.1.172) (2021-01-05)
 
 ### [0.1.171](https://github.com/aws/json2jsii/compare/v0.1.170...v0.1.171) (2021-01-05)
