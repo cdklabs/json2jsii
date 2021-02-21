@@ -12,6 +12,6 @@ const project = new TypeScriptLibraryProject({
   minNodeVersion: '10.17.0',
   projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
   defaultReleaseBranch: 'main',  
-});g
+});
 
 project.synth();
