@@ -42,7 +42,7 @@
     "jsii-srcmak": "^0.1.170",
     "json-schema": "^0.2.5",
     "prettier": "^2.2.1",
-    "projen": "^0.15.14",
+    "projen": "^0.16.9",
     "standard-version": "^9.0.0",
     "ts-jest": "^26.1.0",
     "typescript": "^3.9.5"
@@ -58,7 +58,7 @@
   },
   "main": "lib/index.js",
   "license": "Apache-2.0",
-  "version": "0.1.188",
+  "version": "0.1.191",
   "jest": {
     "testMatch": [
       "**/__tests__/**/*.ts?(x)",
