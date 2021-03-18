@@ -27,13 +27,13 @@ class Name:
         last: builtins.str,
         middle: typing.Optional[builtins.str] = None,
     ) -> None:
-        \\"\\"\\"
+        '''
         :param first: 
         :param last: 
         :param middle: 
 
         :schema: Name
-        \\"\\"\\"
+        '''
         self._values: typing.Dict[str, typing.Any] = {
             \\"first\\": first,
             \\"last\\": last,
@@ -43,29 +43,29 @@ class Name:
 
     @builtins.property
     def first(self) -> builtins.str:
-        \\"\\"\\"
+        '''
         :schema: Name#first
-        \\"\\"\\"
+        '''
         result = self._values.get(\\"first\\")
         assert result is not None, \\"Required property 'first' is missing\\"
-        return result
+        return typing.cast(builtins.str, result)
 
     @builtins.property
     def last(self) -> builtins.str:
-        \\"\\"\\"
+        '''
         :schema: Name#last
-        \\"\\"\\"
+        '''
         result = self._values.get(\\"last\\")
         assert result is not None, \\"Required property 'last' is missing\\"
-        return result
+        return typing.cast(builtins.str, result)
 
     @builtins.property
     def middle(self) -> typing.Optional[builtins.str]:
-        \\"\\"\\"
+        '''
         :schema: Name#middle
-        \\"\\"\\"
+        '''
         result = self._values.get(\\"middle\\")
-        return result
+        return typing.cast(typing.Optional[builtins.str], result)
 
     def __eq__(self, rhs: typing.Any) -> builtins.bool:
         return isinstance(rhs, self.__class__) and rhs._values == self._values
