@@ -4660,10 +4660,10 @@ progress@^2.0.0:
   resolved "https://registry.yarnpkg.com/progress/-/progress-2.0.3.tgz#7e8cf8d8f5b8f239c1bc68beb4eb78567d572ef8"
   integrity sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==
 
-projen@^0.17.75:
-  version "0.17.75"
-  resolved "https://registry.yarnpkg.com/projen/-/projen-0.17.75.tgz#b242fd0ef4345ba8d2145fdea60e2e4f2b2ca7b0"
-  integrity sha512-OrJd7t4Bo8/x3uaclwIjHQ1CHiQbNrBeZVv4QMISbnTe05MjjgnxdfyFdaTaezl9iLBkSdGrcczdfyYDvyx7IQ==
+projen@^0.17.78:
+  version "0.17.78"
+  resolved "https://registry.yarnpkg.com/projen/-/projen-0.17.78.tgz#061d110f8614e31fee21b86991240c7fbcf7b701"
+  integrity sha512-R9gJqfQm+09Fgw/Kz/idHqdJYl7mIq67MvNqNsbZ+ylPrqz3qRWOyb1/S0lZGO9QxCfeONP5zeXTaImHH1I+6w==
   dependencies:
     "@iarna/toml" "^2.2.5"
     chalk "^4.1.0"
@@ -5354,9 +5354,9 @@ stack-utils@^2.0.2:
     escape-string-regexp "^2.0.0"
 
 standard-version@^9:
-  version "9.1.1"
-  resolved "https://registry.yarnpkg.com/standard-version/-/standard-version-9.1.1.tgz#7561df6351b075a44544ce3d3ebcffcb9582ba5a"
-  integrity sha512-PF9JnRauBwH7DAkmefYu1mB2Kx0MVG13udqDTFmDUiogbyikBAHBdMrVuauxtAb2YIkyZ3FMYCNv0hqUKMOPww==
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/standard-version/-/standard-version-9.3.0.tgz#2e6ff439aa49b2ea8952262f30ae6b70c02467d3"
+  integrity sha512-cYxxKXhYfI3S9+CA84HmrJa9B88H56V5FQ302iFF2TNwJukJCNoU8FgWt+11YtwKFXRkQQFpepC2QOF7aDq2Ow==
   dependencies:
     chalk "^2.4.2"
     conventional-changelog "3.1.24"
