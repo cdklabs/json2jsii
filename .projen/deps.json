@@ -55,12 +55,22 @@
       "type": "build"
     },
     {
+      "name": "npm-check-updates",
+      "version": "^11",
+      "type": "build"
+    },
+    {
+      "name": "npm-check-updates",
+      "version": "^11",
+      "type": "build"
+    },
+    {
       "name": "prettier",
       "type": "build"
     },
     {
       "name": "projen",
-      "version": "^0.17.91",
+      "version": "^0.17.95",
       "type": "build"
     },
     {
