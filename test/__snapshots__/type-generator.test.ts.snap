@@ -172,7 +172,7 @@ export interface TestType {
   /**
    * @schema fqn.of.TestType#shouldAllowAdditionalProperties
    */
-  readonly shouldAllowAdditionalProperties?: { [key: string]: any };
+  readonly shouldAllowAdditionalProperties?: FqnOfTestTypeShouldAllowAdditionalProperties;
 
   /**
    * @schema fqn.of.TestType#arrayShouldBeOptional
@@ -190,6 +190,18 @@ export interface ItemType {
    */
   readonly requiredField: string;
 
+}
+
+/**
+ * @schema FqnOfTestTypeShouldAllowAdditionalProperties
+ */
+export interface FqnOfTestTypeShouldAllowAdditionalProperties {
+  /**
+   * @schema FqnOfTestTypeShouldAllowAdditionalProperties#someProperty
+   */
+  readonly someProperty?: ItemType;
+
+  [key: string]: any;
 }
 "
 `;

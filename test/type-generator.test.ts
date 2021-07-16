@@ -135,6 +135,11 @@ describe('structs', () => {
       },
       shouldAllowAdditionalProperties: {
         type: 'object',
+        properties: {
+          someProperty: {
+            $ref: '#/definitions/ItemType',
+          },
+        },
         additionalProperties: true,
       },
       arrayShouldBeOptional: {

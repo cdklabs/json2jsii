@@ -163,11 +163,8 @@ export class TypeGenerator {
     }
 
     // map
-    if (!def.properties && def.additionalProperties) {
-      if (typeof def.additionalProperties === 'object') {
-        return `{ [key: string]: ${this.typeForProperty(typeName, def.additionalProperties)} }`;
-      }
-      return '{ [key: string]: any }';
+    if (!def.properties && def.additionalProperties && typeof(def.additionalProperties) === 'object') {
+      return `{ [key: string]: ${this.typeForProperty(typeName, def.additionalProperties)} }`;
     }
 
     // struct
@@ -295,6 +292,10 @@ export class TypeGenerator {
         }
 
         this.emitProperty(code, propName, propSpec, structFqn, structDef);
+      }
+
+      if (structDef.additionalProperties === true) {
+        code.line('[key: string]: any;');
       }
 
       code.closeBlock();
