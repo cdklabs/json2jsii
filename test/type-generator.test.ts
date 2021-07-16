@@ -100,9 +100,9 @@ describe('structs', () => {
       Other: {
         type: 'object',
         properties: {
-          stringValue: { type: 'string' },
+          StringValue: { type: 'string' },
         },
-        required: ['stringValue'],
+        required: ['StringValue'],
       },
     },
   });
@@ -132,6 +132,10 @@ describe('structs', () => {
       mapShouldBeOptional: {
         type: 'object',
         additionalProperties: { $ref: '#/definitions/ItemType' },
+      },
+      shouldAllowAdditionalProperties: {
+        type: 'object',
+        additionalProperties: true,
       },
       arrayShouldBeOptional: {
         type: 'array',

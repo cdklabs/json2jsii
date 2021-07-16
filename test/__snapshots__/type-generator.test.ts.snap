@@ -170,6 +170,11 @@ export interface TestType {
   readonly mapShouldBeOptional?: { [key: string]: ItemType };
 
   /**
+   * @schema fqn.of.TestType#shouldAllowAdditionalProperties
+   */
+  readonly shouldAllowAdditionalProperties?: { [key: string]: any };
+
+  /**
    * @schema fqn.of.TestType#arrayShouldBeOptional
    */
   readonly arrayShouldBeOptional?: ItemType[];
@@ -206,7 +211,7 @@ export interface TestType {
  */
 export interface Other {
   /**
-   * @schema Other#stringValue
+   * @schema Other#StringValue
    */
   readonly stringValue: string;
 

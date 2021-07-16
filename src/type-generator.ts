@@ -163,8 +163,11 @@ export class TypeGenerator {
     }
 
     // map
-    if (!def.properties && def.additionalProperties && typeof(def.additionalProperties) === 'object') {
-      return `{ [key: string]: ${this.typeForProperty(typeName, def.additionalProperties)} }`;
+    if (!def.properties && def.additionalProperties) {
+      if (typeof def.additionalProperties === 'object') {
+        return `{ [key: string]: ${this.typeForProperty(typeName, def.additionalProperties)} }`;
+      }
+      return '{ [key: string]: any }';
     }
 
     // struct
@@ -433,7 +436,13 @@ export class TypeGenerator {
   }
 
   private isPropertyRequired(property: string, structDef: JSONSchema4) {
-    return Array.isArray(structDef.required) && structDef.required.includes(property);
+    if (Array.isArray(structDef.required)) {
+      return structDef.required.find((name: string) => {
+        const normalized = camelCase(TypeGenerator.normalizeTypeName(name));
+        return property === normalized;
+      });
+    }
+    return false;
   }
 
   private isExcluded(fqn: string) {
