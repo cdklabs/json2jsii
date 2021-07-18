@@ -19,6 +19,19 @@ export interface TypeGeneratorOptions {
    * @default - $refs are not supported
    */
   readonly definitions?: { [def: string]: JSONSchema4 };
+
+  /**
+   * Convert all property names to camel case so they are idiomatic in
+   * TypeScript/JavaScript.
+   *
+   * The implication is that generated interfaces will not use the same casing
+   * as the JSON schema and will need to be converted back to the original
+   * casing in serialization. This is impossible to do safely since case
+   * conversaion is lossy.
+   *
+   * @default false
+   */
+  readonly camelCase?: boolean;
 }
 
 /**
@@ -53,6 +66,7 @@ export class TypeGenerator {
   private readonly emittedTypes = new Set<string>();
   private readonly exclude: string[];
   private readonly definitions: { [def: string]: JSONSchema4 };
+  private readonly camelCase: boolean;
 
   /**
    *
@@ -61,6 +75,7 @@ export class TypeGenerator {
    */
   constructor(options: TypeGeneratorOptions = { }) {
     this.exclude = options.exclude ?? [];
+    this.camelCase = options.camelCase ?? false;
     this.definitions = {};
 
     for (const [typeName, def] of Object.entries(options.definitions ?? {})) {
@@ -303,8 +318,10 @@ export class TypeGenerator {
 
     // if name is not camelCase, convert it to camel case, but this is likely to
     // produce invalid output during synthesis, so add some annotation to the docs.
-    if (name[0] === name[0].toUpperCase()) {
-      name = camelCase(name);
+    if (this.camelCase) {
+      if (name[0] === name[0].toUpperCase()) {
+        name = camelCase(name);
+      }
     }
 
     // if the name starts with '$' (like $ref or $schema), we remove the "$"

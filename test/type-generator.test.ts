@@ -301,6 +301,49 @@ describe('type aliases', () => {
 
 });
 
+describe('camelCase', () => {
+
+  test('By default (disabled), properties will keep their original casing in generated structs', () => {
+    // GIVEN
+    const gen = new TypeGenerator();
+
+    gen.addDefinition('TypeA', {
+      type: 'object',
+      properties: {
+        FooBar: { type: 'string' },
+        GooBear: { type: 'number' },
+      },
+    });
+
+    // WHEN
+    gen.emitType('TypeA');
+
+    // THEN
+    expect(gen.render()).toMatchSnapshot();
+  });
+
+  test('If enabled, properties be converted to camel case', () => {
+    // GIVEN
+    const gen = new TypeGenerator({ camelCase: true });
+
+    gen.addDefinition('TypeA', {
+      type: 'object',
+      properties: {
+        FooBar: { type: 'string' },
+        GooBear: { type: 'number' },
+      },
+    });
+
+    // WHEN
+    gen.emitType('TypeA');
+
+    // THEN
+    expect(gen.render()).toMatchSnapshot();
+  });
+
+
+});
+
 
 function which(name: string, schema: JSONSchema4, definitions?: JSONSchema4) {
   test(name, async () => {

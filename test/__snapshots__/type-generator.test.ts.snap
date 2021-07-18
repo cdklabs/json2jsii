@@ -1,5 +1,43 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`camelCase By default (disabled), properties will keep their original casing in generated structs 1`] = `
+"/**
+ * @schema TypeA
+ */
+export interface TypeA {
+  /**
+   * @schema TypeA#FooBar
+   */
+  readonly FooBar?: string;
+
+  /**
+   * @schema TypeA#GooBear
+   */
+  readonly GooBear?: number;
+
+}
+"
+`;
+
+exports[`camelCase If enabled, properties be converted to camel case 1`] = `
+"/**
+ * @schema TypeA
+ */
+export interface TypeA {
+  /**
+   * @schema TypeA#FooBar
+   */
+  readonly fooBar?: string;
+
+  /**
+   * @schema TypeA#GooBear
+   */
+  readonly gooBear?: number;
+
+}
+"
+`;
+
 exports[`documentation "*/" is is escaped 1`] = `
 "/**
  * @schema fqn.of.TestType
