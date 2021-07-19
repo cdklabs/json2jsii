@@ -1,16 +1,15 @@
 import { Code } from './code';
 
-export class toJsonFunction {
-  public static nameOf(typeName: string) {
-    return `${typeName}$toJson`;
-  }
+export class ToJsonFunction {
+  /**
+   * The name the toJson function for a struct.
+   */
+  public readonly functionName: string;
 
   private readonly fields: Record<string, string> = {};
 
-  public readonly functionName: string;
-
   constructor(private readonly baseType: string) {
-    this.functionName = toJsonFunction.nameOf(this.baseType);
+    this.functionName = `toJson_${baseType}`;
   }
 
   public addField(schemaName: string, propertyName: string, toJson: toJson) {
@@ -22,6 +21,7 @@ export class toJsonFunction {
     code.line('/**');
     code.line(` * Converts an object of type '${this.baseType}' to JSON representation.`);
     code.line(' */');
+    code.line('/* eslint-disable max-len, quote-props */');
     code.openBlock(`export function ${this.functionName}(obj: ${this.baseType} | undefined): Record<string, any> | undefined`);
     code.line('if (obj === undefined) { return undefined; }');
     code.open('const result = {');
@@ -34,6 +34,7 @@ export class toJsonFunction {
     code.line('return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});');
 
     code.closeBlock();
+    code.line('/* eslint-enable max-len, quote-props */');
   }
 }
 

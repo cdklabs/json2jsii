@@ -5,7 +5,6 @@ import { tmpdir } from 'os';
 import { join } from 'path';
 import { JSONSchema4 } from 'json-schema';
 import { TypeGenerator } from '../src';
-import { toJsonFunction } from '../src/tojson';
 
 test('primitives', () => {
   const toJson = generateToJson({
@@ -39,6 +38,7 @@ test('names can get crazy', () => {
       'hyphen-name': { type: 'string' },
       '$nameWithDolar': { type: 'string' },
       'name with spaces': { type: 'string' },
+      'x-extension': { type: 'string' },
     },
   });
 
@@ -46,10 +46,12 @@ test('names can get crazy', () => {
     hyphenName: 'boomboom',
     nameWithDolar: 'hey',
     nameWithSpaces: 'glow',
+    xExtention: 'booom',
   })).toStrictEqual({
     'hyphen-name': 'boomboom',
     '$nameWithDolar': 'hey',
     'name with spaces': 'glow',
+    'x-extension': 'booom',
   });
 });
 
@@ -287,8 +289,7 @@ test('union types', () => {
  * toJson method for the top-level struct.
  */
 function generateToJson(schema: JSONSchema4): (x: any) => any {
-  const fnName = toJsonFunction.nameOf('MyStruct');
-  return generateModule('MyStruct', schema)[fnName];
+  return generateModule('MyStruct', schema).toJson_MyStruct;
 }
 
 /**

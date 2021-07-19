@@ -2,7 +2,7 @@ import * as camelCase from 'camelcase';
 import { JSONSchema4 } from 'json-schema';
 import { snakeCase } from 'snake-case';
 import { Code } from './code';
-import { toJsonFunction } from './tojson';
+import { ToJsonFunction } from './tojson';
 
 
 const PRIMITIVE_TYPES = ['string', 'number', 'integer', 'boolean'];
@@ -337,19 +337,18 @@ export class TypeGenerator {
   }
 
   private emitStruct(typeName: string, structDef: JSONSchema4, structFqn: string): EmittedType {
+    const toJson = new ToJsonFunction(typeName);
     const emitted: EmittedType = {
       type: typeName,
-      toJson: x => `${toJsonFunction.nameOf(typeName)}(${x})`,
+      toJson: x => `${toJson.functionName}(${x})`,
     };
 
     this.emitCustomType(typeName, code => {
-      const toJson = new toJsonFunction(typeName);
 
       this.emitDescription(code, structFqn, structDef.description);
       code.openBlock(`export interface ${typeName}`);
 
       for (const [propName, propSpec] of Object.entries(structDef.properties || {})) {
-
         if (propName.startsWith('x-')) {
           continue; // skip extensions for now
         }
@@ -367,7 +366,7 @@ export class TypeGenerator {
     return emitted;
   }
 
-  private emitProperty(code: Code, name: string, propDef: JSONSchema4, structFqn: string, structDef: JSONSchema4, toJson: toJsonFunction) {
+  private emitProperty(code: Code, name: string, propDef: JSONSchema4, structFqn: string, structDef: JSONSchema4, toJson: ToJsonFunction) {
     const originalName = name;
 
     // if the name starts with '$' (like $ref or $schema), we remove the "$"
@@ -419,7 +418,7 @@ export class TypeGenerator {
         const memberName = snakeCase(value.replace(/[^a-z0-9]/gi, '_')).split('_').filter(x => x).join('_').toUpperCase();
 
         code.line(`/** ${value} */`);
-        code.line(`${memberName} = "${value}",`);
+        code.line(`${memberName} = '${value}',`);
       }
 
       code.closeBlock();
@@ -503,7 +502,7 @@ export class TypeGenerator {
     const lookup = ref.substr(DEFINITIONS_PREFIX.length);
     const found = this.definitions[lookup];
     if (!found) {
-      throw new Error(`unable to find a definition for the $ref "${lookup}"`);
+      throw new Error(`unable to find a definition for the $ref ${lookup}"`);
     }
 
     return found;
