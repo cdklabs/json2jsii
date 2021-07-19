@@ -18,8 +18,21 @@ export interface Person {
    * @default green
    * @schema Person#color
    */
-  readonly color?: any;
+  readonly color?: PersonColor;
 
+}
+
+/**
+ * Converts an object of type 'Person' to JSON representation.
+ */
+export function Person_toJson(obj: Person | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'name': Name_toJson(obj.name),
+    'color': obj.color,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 
 /**
@@ -42,6 +55,36 @@ export interface Name {
    */
   readonly lastName: string;
 
+}
+
+/**
+ * Converts an object of type 'Name' to JSON representation.
+ */
+export function Name_toJson(obj: Name | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'firstName': obj.firstName,
+    'lastName': obj.lastName,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+
+/**
+ * Favorite color. Default is green
+ *
+ * @default green
+ * @schema PersonColor
+ */
+export enum PersonColor {
+  /** red */
+  RED = \\"red\\",
+  /** green */
+  GREEN = \\"green\\",
+  /** blue */
+  BLUE = \\"blue\\",
+  /** yellow */
+  YELLOW = \\"yellow\\",
 }
 "
 `;

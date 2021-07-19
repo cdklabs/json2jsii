@@ -1,5 +1,55 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`camel casing 1`] = `
+"/**
+ * @schema fqn.of.TestType
+ */
+export interface TestType {
+  /**
+   * @schema fqn.of.TestType#CamelCase1
+   */
+  readonly camelCase1?: string;
+
+  /**
+   * @schema fqn.of.TestType#Camel_Case2
+   */
+  readonly camelCase2?: string;
+
+  /**
+   * @schema fqn.of.TestType#camel_case_3
+   */
+  readonly camelCase3?: string;
+
+  /**
+   * @schema fqn.of.TestType#CAMEL_CASE_4
+   */
+  readonly camelCase4?: string;
+
+  /**
+   * @schema fqn.of.TestType#camel-case-5
+   */
+  readonly camelCase5?: string;
+
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+export function TestType_toJson(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'CamelCase1': obj.camelCase1,
+    'Camel_Case2': obj.camelCase2,
+    'camel_case_3': obj.camelCase3,
+    'CAMEL_CASE_4': obj.camelCase4,
+    'camel-case-5': obj.camelCase5,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+"
+`;
+
 exports[`documentation "*/" is is escaped 1`] = `
 "/**
  * @schema fqn.of.TestType
@@ -12,6 +62,18 @@ export interface TestType {
    */
   readonly field?: string;
 
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+export function TestType_toJson(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'field': obj.field,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 "
 `;
@@ -26,6 +88,18 @@ export interface TestType {
    */
   readonly field?: boolean;
 
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+export function TestType_toJson(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'field': obj.field,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 "
 `;
@@ -42,6 +116,18 @@ export interface TestType {
    */
   readonly field?: string;
 
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+export function TestType_toJson(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'field': obj.field,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 "
 `;
@@ -63,6 +149,19 @@ export interface TestType {
    */
   readonly child?: FqnOfTestTypeChild;
 
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+export function TestType_toJson(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'firstEnum': obj.firstEnum,
+    'child': FqnOfTestTypeChild_toJson(obj.child),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 
 /**
@@ -95,6 +194,18 @@ export interface FqnOfTestTypeChild {
 }
 
 /**
+ * Converts an object of type 'FqnOfTestTypeChild' to JSON representation.
+ */
+export function FqnOfTestTypeChild_toJson(obj: FqnOfTestTypeChild | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'secondEnum': obj.secondEnum,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+
+/**
  * description of second enum
  *
  * @schema FqnOfTestTypeChildSecondEnum
@@ -106,6 +217,433 @@ export enum FqnOfTestTypeChildSecondEnum {
   ENUM_VALUES_CAN_BE_CRAZY = \\"enum values can be crazy\\",
   /** yes>>123 */
   YES_123 = \\"yes>>123\\",
+}
+"
+`;
+
+exports[`enums without type implies "string" 1`] = `
+"/**
+ * @schema fqn.of.TestType
+ */
+export interface TestType {
+  /**
+   * @schema fqn.of.TestType#Color
+   */
+  readonly color?: FqnOfTestTypeColor;
+
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+export function TestType_toJson(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'Color': obj.color,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+
+/**
+ * @schema FqnOfTestTypeColor
+ */
+export enum FqnOfTestTypeColor {
+  /** red */
+  RED = \\"red\\",
+  /** green */
+  GREEN = \\"green\\",
+  /** blue */
+  BLUE = \\"blue\\",
+}
+"
+`;
+
+exports[`forStruct 1`] = `
+"/**
+ * A resource that creates Amazon Elastic Kubernetes Service (Amazon EKS) clusters.
+ *
+ * @schema EksProps
+ */
+export interface EksProps {
+  /**
+   * A unique name for your cluster.
+   *
+   * @schema EksProps#Name
+   */
+  readonly name?: string;
+
+  /**
+   * Amazon Resource Name (ARN) of the AWS Identity and Access Management (IAM) role. This provides permissions for Amazon EKS to call other AWS APIs.
+   *
+   * @schema EksProps#RoleArn
+   */
+  readonly roleArn: string;
+
+  /**
+   * Name of the AWS Identity and Access Management (IAM) role used for clusters that have the public endpoint disabled. this provides permissions for Lambda to be invoked and attach to the cluster VPC
+   *
+   * @schema EksProps#LambdaRoleName
+   */
+  readonly lambdaRoleName?: string;
+
+  /**
+   * Desired Kubernetes version for your cluster. If you don't specify this value, the cluster uses the latest version from Amazon EKS.
+   *
+   * @schema EksProps#Version
+   */
+  readonly version?: string;
+
+  /**
+   * Network configuration for Amazon EKS cluster.
+   * 
+   * 
+   *
+   * @schema EksProps#KubernetesNetworkConfig
+   */
+  readonly kubernetesNetworkConfig?: EksPropsKubernetesNetworkConfig;
+
+  /**
+   * An object that represents the virtual private cloud (VPC) configuration to use for an Amazon EKS cluster.
+   *
+   * @schema EksProps#ResourcesVpcConfig
+   */
+  readonly resourcesVpcConfig: EksPropsResourcesVpcConfig;
+
+  /**
+   * Enables exporting of logs from the Kubernetes control plane to Amazon CloudWatch Logs. By default, logs from the cluster control plane are not exported to CloudWatch Logs. The valid log types are api, audit, authenticator, controllerManager, and scheduler.
+   *
+   * @schema EksProps#EnabledClusterLoggingTypes
+   */
+  readonly enabledClusterLoggingTypes?: string[];
+
+  /**
+   * Encryption configuration for the cluster.
+   *
+   * @schema EksProps#EncryptionConfig
+   */
+  readonly encryptionConfig?: EncryptionConfigEntry[];
+
+  /**
+   * @schema EksProps#KubernetesApiAccess
+   */
+  readonly kubernetesApiAccess?: EksPropsKubernetesApiAccess;
+
+  /**
+   * ARN of the cluster (e.g., \`arn:aws:eks:us-west-2:666666666666:cluster/prod\`).
+   *
+   * @schema EksProps#Arn
+   */
+  readonly arn?: string;
+
+  /**
+   * Certificate authority data for your cluster.
+   *
+   * @schema EksProps#CertificateAuthorityData
+   */
+  readonly certificateAuthorityData?: string;
+
+  /**
+   * Security group that was created by Amazon EKS for your cluster. Managed-node groups use this security group for control-plane-to-data-plane communications.
+   *
+   * @schema EksProps#ClusterSecurityGroupId
+   */
+  readonly clusterSecurityGroupId?: string;
+
+  /**
+   * Endpoint for your Kubernetes API server (e.g., https://5E1D0CEXAMPLEA591B746AFC5AB30262.yl4.us-west-2.eks.amazonaws.com).
+   *
+   * @schema EksProps#Endpoint
+   */
+  readonly endpoint?: string;
+
+  /**
+   * ARN or alias of the customer master key (CMK).
+   *
+   * @schema EksProps#EncryptionConfigKeyArn
+   */
+  readonly encryptionConfigKeyArn?: string;
+
+  /**
+   * Issuer URL for the OpenID Connect identity provider.
+   *
+   * @schema EksProps#OIDCIssuerURL
+   */
+  readonly oidcIssuerUrl?: string;
+
+  /**
+   * @schema EksProps#Tags
+   */
+  readonly tags?: EksPropsTags[];
+
+}
+
+/**
+ * Converts an object of type 'EksProps' to JSON representation.
+ */
+export function EksProps_toJson(obj: EksProps | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'Name': obj.name,
+    'RoleArn': obj.roleArn,
+    'LambdaRoleName': obj.lambdaRoleName,
+    'Version': obj.version,
+    'KubernetesNetworkConfig': EksPropsKubernetesNetworkConfig_toJson(obj.kubernetesNetworkConfig),
+    'ResourcesVpcConfig': EksPropsResourcesVpcConfig_toJson(obj.resourcesVpcConfig),
+    'EnabledClusterLoggingTypes': obj.enabledClusterLoggingTypes?.map(y => y),
+    'EncryptionConfig': obj.encryptionConfig?.map(y => EncryptionConfigEntry_toJson(y)),
+    'KubernetesApiAccess': EksPropsKubernetesApiAccess_toJson(obj.kubernetesApiAccess),
+    'Arn': obj.arn,
+    'CertificateAuthorityData': obj.certificateAuthorityData,
+    'ClusterSecurityGroupId': obj.clusterSecurityGroupId,
+    'Endpoint': obj.endpoint,
+    'EncryptionConfigKeyArn': obj.encryptionConfigKeyArn,
+    'OIDCIssuerURL': obj.oidcIssuerUrl,
+    'Tags': obj.tags?.map(y => EksPropsTags_toJson(y)),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+
+/**
+ * Network configuration for Amazon EKS cluster.
+ * 
+ * 
+ *
+ * @schema EksPropsKubernetesNetworkConfig
+ */
+export interface EksPropsKubernetesNetworkConfig {
+  /**
+   * Specify the range from which cluster services will receive IPv4 addresses.
+   *
+   * @schema EksPropsKubernetesNetworkConfig#ServiceIpv4Cidr
+   */
+  readonly serviceIpv4Cidr?: string;
+
+}
+
+/**
+ * Converts an object of type 'EksPropsKubernetesNetworkConfig' to JSON representation.
+ */
+export function EksPropsKubernetesNetworkConfig_toJson(obj: EksPropsKubernetesNetworkConfig | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'ServiceIpv4Cidr': obj.serviceIpv4Cidr,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+
+/**
+ * An object that represents the virtual private cloud (VPC) configuration to use for an Amazon EKS cluster.
+ *
+ * @schema EksPropsResourcesVpcConfig
+ */
+export interface EksPropsResourcesVpcConfig {
+  /**
+   * Specify one or more security groups for the cross-account elastic network interfaces that Amazon EKS creates to use to allow communication between your worker nodes and the Kubernetes control plane. If you don't specify a security group, the default security group for your VPC is used.
+   *
+   * @schema EksPropsResourcesVpcConfig#SecurityGroupIds
+   */
+  readonly securityGroupIds?: string[];
+
+  /**
+   * Specify subnets for your Amazon EKS worker nodes. Amazon EKS creates cross-account elastic network interfaces in these subnets to allow communication between your worker nodes and the Kubernetes control plane.
+   *
+   * @schema EksPropsResourcesVpcConfig#SubnetIds
+   */
+  readonly subnetIds: string[];
+
+  /**
+   * Set this value to false to disable public access to your cluster's Kubernetes API server endpoint. If you disable public access, your cluster's Kubernetes API server can only receive requests from within the cluster VPC. The default value for this parameter is true , which enables public access for your Kubernetes API server.
+   *
+   * @schema EksPropsResourcesVpcConfig#EndpointPublicAccess
+   */
+  readonly endpointPublicAccess?: boolean;
+
+  /**
+   * Set this value to true to enable private access for your cluster's Kubernetes API server endpoint. If you enable private access, Kubernetes API requests from within your cluster's VPC use the private VPC endpoint. The default value for this parameter is false , which disables private access for your Kubernetes API server. If you disable private access and you have worker nodes or AWS Fargate pods in the cluster, then ensure that publicAccessCidrs includes the necessary CIDR blocks for communication with the worker nodes or Fargate pods.
+   *
+   * @schema EksPropsResourcesVpcConfig#EndpointPrivateAccess
+   */
+  readonly endpointPrivateAccess?: boolean;
+
+  /**
+   * The CIDR blocks that are allowed access to your cluster's public Kubernetes API server endpoint. Communication to the endpoint from addresses outside of the CIDR blocks that you specify is denied. The default value is 0.0.0.0/0 . If you've disabled private endpoint access and you have worker nodes or AWS Fargate pods in the cluster, then ensure that you specify the necessary CIDR blocks.
+   *
+   * @schema EksPropsResourcesVpcConfig#PublicAccessCidrs
+   */
+  readonly publicAccessCidrs?: string[];
+
+}
+
+/**
+ * Converts an object of type 'EksPropsResourcesVpcConfig' to JSON representation.
+ */
+export function EksPropsResourcesVpcConfig_toJson(obj: EksPropsResourcesVpcConfig | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'SecurityGroupIds': obj.securityGroupIds?.map(y => y),
+    'SubnetIds': obj.subnetIds?.map(y => y),
+    'EndpointPublicAccess': obj.endpointPublicAccess,
+    'EndpointPrivateAccess': obj.endpointPrivateAccess,
+    'PublicAccessCidrs': obj.publicAccessCidrs?.map(y => y),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+
+/**
+ * The encryption configuration for the cluster.
+ *
+ * @schema EncryptionConfigEntry
+ */
+export interface EncryptionConfigEntry {
+  /**
+   * Specifies the resources to be encrypted. The only supported value is \\"secrets\\".
+   *
+   * @schema EncryptionConfigEntry#Resources
+   */
+  readonly resources?: string[];
+
+  /**
+   * @schema EncryptionConfigEntry#Provider
+   */
+  readonly provider?: Provider;
+
+}
+
+/**
+ * Converts an object of type 'EncryptionConfigEntry' to JSON representation.
+ */
+export function EncryptionConfigEntry_toJson(obj: EncryptionConfigEntry | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'Resources': obj.resources?.map(y => y),
+    'Provider': Provider_toJson(obj.provider),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+
+/**
+ * @schema EksPropsKubernetesApiAccess
+ */
+export interface EksPropsKubernetesApiAccess {
+  /**
+   * @schema EksPropsKubernetesApiAccess#Roles
+   */
+  readonly roles?: KubernetesApiAccessEntry[];
+
+  /**
+   * @schema EksPropsKubernetesApiAccess#Users
+   */
+  readonly users?: KubernetesApiAccessEntry[];
+
+}
+
+/**
+ * Converts an object of type 'EksPropsKubernetesApiAccess' to JSON representation.
+ */
+export function EksPropsKubernetesApiAccess_toJson(obj: EksPropsKubernetesApiAccess | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'Roles': obj.roles?.map(y => KubernetesApiAccessEntry_toJson(y)),
+    'Users': obj.users?.map(y => KubernetesApiAccessEntry_toJson(y)),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+
+/**
+ * @schema EksPropsTags
+ */
+export interface EksPropsTags {
+  /**
+   * @schema EksPropsTags#Value
+   */
+  readonly value: string;
+
+  /**
+   * @schema EksPropsTags#Key
+   */
+  readonly key: string;
+
+}
+
+/**
+ * Converts an object of type 'EksPropsTags' to JSON representation.
+ */
+export function EksPropsTags_toJson(obj: EksPropsTags | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'Value': obj.value,
+    'Key': obj.key,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+
+/**
+ * AWS Key Management Service (AWS KMS) customer master key (CMK). Either the ARN or the alias can be used.
+ *
+ * @schema Provider
+ */
+export interface Provider {
+  /**
+   * Amazon Resource Name (ARN) or alias of the customer master key (CMK). The CMK must be symmetric, created in the same region as the cluster, and if the CMK was created in a different account, the user must have access to the CMK.
+   *
+   * @schema Provider#KeyArn
+   */
+  readonly keyArn?: string;
+
+}
+
+/**
+ * Converts an object of type 'Provider' to JSON representation.
+ */
+export function Provider_toJson(obj: Provider | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'KeyArn': obj.keyArn,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+
+/**
+ * @schema KubernetesApiAccessEntry
+ */
+export interface KubernetesApiAccessEntry {
+  /**
+   * @schema KubernetesApiAccessEntry#Arn
+   */
+  readonly arn?: string;
+
+  /**
+   * @schema KubernetesApiAccessEntry#Username
+   */
+  readonly username?: string;
+
+  /**
+   * @schema KubernetesApiAccessEntry#Groups
+   */
+  readonly groups?: string[];
+
+}
+
+/**
+ * Converts an object of type 'KubernetesApiAccessEntry' to JSON representation.
+ */
+export function KubernetesApiAccessEntry_toJson(obj: KubernetesApiAccessEntry | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'Arn': obj.arn,
+    'Username': obj.username,
+    'Groups': obj.groups?.map(y => y),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 "
 `;
@@ -131,6 +669,11 @@ export interface TestType {
   readonly dateValue?: Date;
 
   /**
+   * @schema fqn.of.TestType#dateValueImplicitType
+   */
+  readonly dateValueImplicitType?: Date;
+
+  /**
    * @schema fqn.of.TestType#anyValue
    */
   readonly anyValue?: any;
@@ -150,6 +693,25 @@ export interface TestType {
    */
   readonly integerValue?: number;
 
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+export function TestType_toJson(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'stringValue': obj.stringValue,
+    'booleanValue': obj.booleanValue,
+    'dateValue': obj.dateValue?.toISOString(),
+    'dateValueImplicitType': obj.dateValueImplicitType?.toISOString(),
+    'anyValue': obj.anyValue,
+    'nullValue': obj.nullValue,
+    'numberValue': obj.numberValue,
+    'integerValue': obj.integerValue,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 "
 `;
@@ -177,6 +739,20 @@ export interface TestType {
 }
 
 /**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+export function TestType_toJson(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'shouldBeRequired': ItemType_toJson(obj.shouldBeRequired),
+    'mapShouldBeOptional': ((obj.mapShouldBeOptional) === undefined) ? undefined : (Object.entries(obj.mapShouldBeOptional).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: ItemType_toJson(i[1]) }), {})),
+    'arrayShouldBeOptional': obj.arrayShouldBeOptional?.map(y => ItemType_toJson(y)),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+
+/**
  * @schema ItemType
  */
 export interface ItemType {
@@ -185,6 +761,18 @@ export interface ItemType {
    */
   readonly requiredField: string;
 
+}
+
+/**
+ * Converts an object of type 'ItemType' to JSON representation.
+ */
+export function ItemType_toJson(obj: ItemType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'requiredField': obj.requiredField,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 "
 `;
@@ -202,6 +790,18 @@ export interface TestType {
 }
 
 /**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+export function TestType_toJson(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'other': Other_toJson(obj.other),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+
+/**
  * @schema Other
  */
 export interface Other {
@@ -210,6 +810,18 @@ export interface Other {
    */
   readonly stringValue: string;
 
+}
+
+/**
+ * Converts an object of type 'Other' to JSON representation.
+ */
+export function Other_toJson(obj: Other | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'stringValue': obj.stringValue,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 "
 `;
@@ -245,6 +857,22 @@ export interface TestType {
   readonly arrayOfString?: string[];
 
 }
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+export function TestType_toJson(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'stringValue': obj.stringValue,
+    'boolValue': obj.boolValue,
+    'numberValue': obj.numberValue,
+    'integerValue': obj.integerValue,
+    'arrayOfString': obj.arrayOfString?.map(y => y),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
 "
 `;
 
@@ -258,6 +886,18 @@ export interface TestType {
    */
   readonly foo?: string;
 
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+export function TestType_toJson(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'foo': obj.foo,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 "
 `;
@@ -306,6 +946,28 @@ export interface TestType {
    */
   readonly revisionHistoryLimit: number;
 
+  /**
+   * @schema fqn.of.TestType#NonCamelCaseRequired
+   */
+  readonly nonCamelCaseRequired: string;
+
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+export function TestType_toJson(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'minReadySeconds': obj.minReadySeconds,
+    'paused': obj.paused,
+    'progressDeadlineSeconds': obj.progressDeadlineSeconds,
+    'replicas': obj.replicas,
+    'revisionHistoryLimit': obj.revisionHistoryLimit,
+    'NonCamelCaseRequired': obj.nonCamelCaseRequired,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 "
 `;
@@ -323,6 +985,18 @@ export interface TestType {
 }
 
 /**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+export function TestType_toJson(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'entrypoint': MyType_toJson(obj.entrypoint),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+
+/**
  * @schema MyType
  */
 export interface MyType {
@@ -331,6 +1005,18 @@ export interface MyType {
    */
   readonly self?: MyType;
 
+}
+
+/**
+ * Converts an object of type 'MyType' to JSON representation.
+ */
+export function MyType_toJson(obj: MyType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'self': MyType_toJson(obj.self),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 "
 `;
@@ -348,6 +1034,18 @@ export interface TypeB {
   readonly refToTypeA?: NewType;
 
 }
+
+/**
+ * Converts an object of type 'TypeB' to JSON representation.
+ */
+export function TypeB_toJson(obj: TypeB | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'refToTypeA': NewType_toJson(obj.refToTypeA),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
 "
 `;
 
@@ -364,6 +1062,18 @@ export interface TypeA {
 }
 
 /**
+ * Converts an object of type 'TypeA' to JSON representation.
+ */
+export function TypeA_toJson(obj: TypeA | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'ref': TypeC_toJson(obj.ref),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+
+/**
  * @schema TypeC
  */
 export interface TypeC {
@@ -372,6 +1082,18 @@ export interface TypeC {
    */
   readonly field?: string;
 
+}
+
+/**
+ * Converts an object of type 'TypeC' to JSON representation.
+ */
+export function TypeC_toJson(obj: TypeC | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'field': obj.field,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 "
 `;
@@ -383,7 +1105,7 @@ exports[`unions constraints are ignored for objects 1`] = `
 export interface TestType {
   /**
    * Fault injection policy to apply on HTTP traffic at
-the client side.
+   * the client side.
    *
    * @schema TestType#fault
    */
@@ -392,8 +1114,20 @@ the client side.
 }
 
 /**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+export function TestType_toJson(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'fault': TestTypeFault_toJson(obj.fault),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+
+/**
  * Fault injection policy to apply on HTTP traffic at
-the client side.
+ * the client side.
  *
  * @schema TestTypeFault
  */
@@ -403,6 +1137,18 @@ export interface TestTypeFault {
    */
   readonly delay?: TestTypeFaultDelay;
 
+}
+
+/**
+ * Converts an object of type 'TestTypeFault' to JSON representation.
+ */
+export function TestTypeFault_toJson(obj: TestTypeFault | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'delay': TestTypeFaultDelay_toJson(obj.delay),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 
 /**
@@ -423,7 +1169,7 @@ export interface TestTypeFaultDelay {
 
   /**
    * Percentage of requests on which the delay
-will be injected (0-100).
+   * will be injected (0-100).
    *
    * @schema TestTypeFaultDelay#percent
    */
@@ -431,7 +1177,7 @@ will be injected (0-100).
 
   /**
    * Percentage of requests on which the delay
-will be injected.
+   * will be injected.
    *
    * @schema TestTypeFaultDelay#percentage
    */
@@ -440,8 +1186,23 @@ will be injected.
 }
 
 /**
+ * Converts an object of type 'TestTypeFaultDelay' to JSON representation.
+ */
+export function TestTypeFaultDelay_toJson(obj: TestTypeFaultDelay | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'exponentialDelay': obj.exponentialDelay,
+    'fixedDelay': obj.fixedDelay,
+    'percent': obj.percent,
+    'percentage': TestTypeFaultDelayPercentage_toJson(obj.percentage),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+
+/**
  * Percentage of requests on which the delay
-will be injected.
+ * will be injected.
  *
  * @schema TestTypeFaultDelayPercentage
  */
@@ -451,6 +1212,18 @@ export interface TestTypeFaultDelayPercentage {
    */
   readonly value?: number;
 
+}
+
+/**
+ * Converts an object of type 'TestTypeFaultDelayPercentage' to JSON representation.
+ */
+export function TestTypeFaultDelayPercentage_toJson(obj: TestTypeFaultDelayPercentage | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'value': obj.value,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 "
 `;
