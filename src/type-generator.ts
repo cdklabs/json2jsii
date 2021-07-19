@@ -251,7 +251,7 @@ export class TypeGenerator {
   /**
    * @deprecated use `emitCustomType()`
    */
-  public addCode(typeName: string, emitter: TypeEmitter) {
+  public addCode(typeName: string, emitter: TypeEmitter | CodeEmitter) {
     return this.emitCustomType(typeName, emitter);
   }
 
