@@ -296,6 +296,8 @@ export class TypeGenerator {
 
       if (structDef.additionalProperties === true) {
         code.line('[key: string]: any;');
+      } else if (structDef.additionalProperties && typeof(structDef.additionalProperties) === 'object') {
+        code.line(`[key: string]: ${this.typeForProperty(typeName, structDef.additionalProperties)} | undefined`);
       }
 
       code.closeBlock();
@@ -319,7 +321,7 @@ export class TypeGenerator {
 
     this.emitDescription(code, `${structFqn}#${originalName}`, propDef.description);
     const propertyType = this.typeForProperty(`${structFqn}.${name}`, propDef);
-    const required = this.isPropertyRequired(name, structDef);
+    const required = this.isPropertyRequired(originalName, structDef);
     const optional = required ? '' : '?';
 
     code.line(`readonly ${name}${optional}: ${propertyType};`);
@@ -437,13 +439,7 @@ export class TypeGenerator {
   }
 
   private isPropertyRequired(property: string, structDef: JSONSchema4) {
-    if (Array.isArray(structDef.required)) {
-      return structDef.required.find((name: string) => {
-        const normalized = camelCase(TypeGenerator.normalizeTypeName(name));
-        return property === normalized;
-      });
-    }
-    return false;
+    return Array.isArray(structDef.required) && structDef.required.includes(property);
   }
 
   private isExcluded(fqn: string) {
