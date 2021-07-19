@@ -294,10 +294,16 @@ export class TypeGenerator {
         this.emitProperty(code, propName, propSpec, structFqn, structDef);
       }
 
-      if (structDef.additionalProperties === true) {
-        code.line('[key: string]: any;');
-      } else if (structDef.additionalProperties && typeof(structDef.additionalProperties) === 'object') {
-        code.line(`[key: string]: ${this.typeForProperty(typeName, structDef.additionalProperties)} | undefined`);
+      if (structDef.additionalProperties) {
+        if (structDef.additionalProperties === true) {
+          code.line('[key: string]: any;');
+        } else if (typeof(structDef.additionalProperties) === 'object') {
+          let propertyType = 'any';
+          if (Object.keys(structDef.additionalProperties).length > 0) {
+            propertyType = this.typeForProperty(typeName, structDef.additionalProperties) + ' | undefined';
+          }
+          code.line(`[key: string]: ${propertyType}`);
+        }
       }
 
       code.closeBlock();

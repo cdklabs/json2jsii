@@ -21,8 +21,9 @@ from ._jsii import *
         \\"first\\": \\"first\\",
         \\"last\\": \\"last\\",
         \\"middle\\": \\"middle\\",
-        \\"object_with_boolean_additional_properties\\": \\"objectWithBooleanAdditionalProperties\\",
-        \\"object_with_typed_additional_properties\\": \\"objectWithTypedAdditionalProperties\\",
+        \\"object_with_properties_and_boolean_additional_properties\\": \\"objectWithPropertiesAndBooleanAdditionalProperties\\",
+        \\"object_with_properties_and_typed_additional_properties\\": \\"objectWithPropertiesAndTypedAdditionalProperties\\",
+        \\"object_with_typed_additional_properties_only\\": \\"objectWithTypedAdditionalPropertiesOnly\\",
     },
 )
 class Name:
@@ -32,32 +33,36 @@ class Name:
         first: builtins.str,
         last: builtins.str,
         middle: typing.Optional[builtins.str] = None,
-        object_with_boolean_additional_properties: typing.Optional[\\"NameObjectWithBooleanAdditionalProperties\\"] = None,
-        object_with_typed_additional_properties: typing.Optional[\\"NameObjectWithTypedAdditionalProperties\\"] = None,
+        object_with_properties_and_boolean_additional_properties: typing.Optional[\\"NameObjectWithPropertiesAndBooleanAdditionalProperties\\"] = None,
+        object_with_properties_and_typed_additional_properties: typing.Optional[\\"NameObjectWithPropertiesAndTypedAdditionalProperties\\"] = None,
+        object_with_typed_additional_properties_only: typing.Optional[typing.Mapping[builtins.str, builtins.str]] = None,
     ) -> None:
         '''
         :param first: 
         :param last: 
         :param middle: 
-        :param object_with_boolean_additional_properties: 
-        :param object_with_typed_additional_properties: 
+        :param object_with_properties_and_boolean_additional_properties: 
+        :param object_with_properties_and_typed_additional_properties: 
+        :param object_with_typed_additional_properties_only: 
 
         :schema: Name
         '''
-        if isinstance(object_with_boolean_additional_properties, dict):
-            object_with_boolean_additional_properties = NameObjectWithBooleanAdditionalProperties(**object_with_boolean_additional_properties)
-        if isinstance(object_with_typed_additional_properties, dict):
-            object_with_typed_additional_properties = NameObjectWithTypedAdditionalProperties(**object_with_typed_additional_properties)
+        if isinstance(object_with_properties_and_boolean_additional_properties, dict):
+            object_with_properties_and_boolean_additional_properties = NameObjectWithPropertiesAndBooleanAdditionalProperties(**object_with_properties_and_boolean_additional_properties)
+        if isinstance(object_with_properties_and_typed_additional_properties, dict):
+            object_with_properties_and_typed_additional_properties = NameObjectWithPropertiesAndTypedAdditionalProperties(**object_with_properties_and_typed_additional_properties)
         self._values: typing.Dict[str, typing.Any] = {
             \\"first\\": first,
             \\"last\\": last,
         }
         if middle is not None:
             self._values[\\"middle\\"] = middle
-        if object_with_boolean_additional_properties is not None:
-            self._values[\\"object_with_boolean_additional_properties\\"] = object_with_boolean_additional_properties
-        if object_with_typed_additional_properties is not None:
-            self._values[\\"object_with_typed_additional_properties\\"] = object_with_typed_additional_properties
+        if object_with_properties_and_boolean_additional_properties is not None:
+            self._values[\\"object_with_properties_and_boolean_additional_properties\\"] = object_with_properties_and_boolean_additional_properties
+        if object_with_properties_and_typed_additional_properties is not None:
+            self._values[\\"object_with_properties_and_typed_additional_properties\\"] = object_with_properties_and_typed_additional_properties
+        if object_with_typed_additional_properties_only is not None:
+            self._values[\\"object_with_typed_additional_properties_only\\"] = object_with_typed_additional_properties_only
 
     @builtins.property
     def first(self) -> builtins.str:
@@ -86,24 +91,34 @@ class Name:
         return typing.cast(typing.Optional[builtins.str], result)
 
     @builtins.property
-    def object_with_boolean_additional_properties(
+    def object_with_properties_and_boolean_additional_properties(
         self,
-    ) -> typing.Optional[\\"NameObjectWithBooleanAdditionalProperties\\"]:
+    ) -> typing.Optional[\\"NameObjectWithPropertiesAndBooleanAdditionalProperties\\"]:
         '''
-        :schema: Name#objectWithBooleanAdditionalProperties
+        :schema: Name#objectWithPropertiesAndBooleanAdditionalProperties
         '''
-        result = self._values.get(\\"object_with_boolean_additional_properties\\")
-        return typing.cast(typing.Optional[\\"NameObjectWithBooleanAdditionalProperties\\"], result)
+        result = self._values.get(\\"object_with_properties_and_boolean_additional_properties\\")
+        return typing.cast(typing.Optional[\\"NameObjectWithPropertiesAndBooleanAdditionalProperties\\"], result)
 
     @builtins.property
-    def object_with_typed_additional_properties(
+    def object_with_properties_and_typed_additional_properties(
         self,
-    ) -> typing.Optional[\\"NameObjectWithTypedAdditionalProperties\\"]:
+    ) -> typing.Optional[\\"NameObjectWithPropertiesAndTypedAdditionalProperties\\"]:
         '''
-        :schema: Name#objectWithTypedAdditionalProperties
+        :schema: Name#objectWithPropertiesAndTypedAdditionalProperties
         '''
-        result = self._values.get(\\"object_with_typed_additional_properties\\")
-        return typing.cast(typing.Optional[\\"NameObjectWithTypedAdditionalProperties\\"], result)
+        result = self._values.get(\\"object_with_properties_and_typed_additional_properties\\")
+        return typing.cast(typing.Optional[\\"NameObjectWithPropertiesAndTypedAdditionalProperties\\"], result)
+
+    @builtins.property
+    def object_with_typed_additional_properties_only(
+        self,
+    ) -> typing.Optional[typing.Mapping[builtins.str, builtins.str]]:
+        '''
+        :schema: Name#objectWithTypedAdditionalPropertiesOnly
+        '''
+        result = self._values.get(\\"object_with_typed_additional_properties_only\\")
+        return typing.cast(typing.Optional[typing.Mapping[builtins.str, builtins.str]], result)
 
     def __eq__(self, rhs: typing.Any) -> builtins.bool:
         return isinstance(rhs, self.__class__) and rhs._values == self._values
@@ -118,16 +133,16 @@ class Name:
 
 
 @jsii.data_type(
-    jsii_type=\\"1bc04b5291c26a46d918139138b992d2de976d6851d0893b0476b85bfbdfc6e6.NameObjectWithBooleanAdditionalProperties\\",
+    jsii_type=\\"1bc04b5291c26a46d918139138b992d2de976d6851d0893b0476b85bfbdfc6e6.NameObjectWithPropertiesAndBooleanAdditionalProperties\\",
     jsii_struct_bases=[],
     name_mapping={\\"name\\": \\"name\\"},
 )
-class NameObjectWithBooleanAdditionalProperties:
+class NameObjectWithPropertiesAndBooleanAdditionalProperties:
     def __init__(self, *, name: typing.Optional[builtins.str] = None) -> None:
         '''
         :param name: 
 
-        :schema: NameObjectWithBooleanAdditionalProperties
+        :schema: NameObjectWithPropertiesAndBooleanAdditionalProperties
         '''
         self._values: typing.Dict[str, typing.Any] = {}
         if name is not None:
@@ -136,7 +151,7 @@ class NameObjectWithBooleanAdditionalProperties:
     @builtins.property
     def name(self) -> typing.Optional[builtins.str]:
         '''
-        :schema: NameObjectWithBooleanAdditionalProperties#name
+        :schema: NameObjectWithPropertiesAndBooleanAdditionalProperties#name
         '''
         result = self._values.get(\\"name\\")
         return typing.cast(typing.Optional[builtins.str], result)
@@ -148,22 +163,22 @@ class NameObjectWithBooleanAdditionalProperties:
         return not (rhs == self)
 
     def __repr__(self) -> str:
-        return \\"NameObjectWithBooleanAdditionalProperties(%s)\\" % \\", \\".join(
+        return \\"NameObjectWithPropertiesAndBooleanAdditionalProperties(%s)\\" % \\", \\".join(
             k + \\"=\\" + repr(v) for k, v in self._values.items()
         )
 
 
 @jsii.data_type(
-    jsii_type=\\"1bc04b5291c26a46d918139138b992d2de976d6851d0893b0476b85bfbdfc6e6.NameObjectWithTypedAdditionalProperties\\",
+    jsii_type=\\"1bc04b5291c26a46d918139138b992d2de976d6851d0893b0476b85bfbdfc6e6.NameObjectWithPropertiesAndTypedAdditionalProperties\\",
     jsii_struct_bases=[],
     name_mapping={\\"name\\": \\"name\\"},
 )
-class NameObjectWithTypedAdditionalProperties:
+class NameObjectWithPropertiesAndTypedAdditionalProperties:
     def __init__(self, *, name: typing.Optional[builtins.str] = None) -> None:
         '''
         :param name: 
 
-        :schema: NameObjectWithTypedAdditionalProperties
+        :schema: NameObjectWithPropertiesAndTypedAdditionalProperties
         '''
         self._values: typing.Dict[str, typing.Any] = {}
         if name is not None:
@@ -172,7 +187,7 @@ class NameObjectWithTypedAdditionalProperties:
     @builtins.property
     def name(self) -> typing.Optional[builtins.str]:
         '''
-        :schema: NameObjectWithTypedAdditionalProperties#name
+        :schema: NameObjectWithPropertiesAndTypedAdditionalProperties#name
         '''
         result = self._values.get(\\"name\\")
         return typing.cast(typing.Optional[builtins.str], result)
@@ -184,15 +199,15 @@ class NameObjectWithTypedAdditionalProperties:
         return not (rhs == self)
 
     def __repr__(self) -> str:
-        return \\"NameObjectWithTypedAdditionalProperties(%s)\\" % \\", \\".join(
+        return \\"NameObjectWithPropertiesAndTypedAdditionalProperties(%s)\\" % \\", \\".join(
             k + \\"=\\" + repr(v) for k, v in self._values.items()
         )
 
 
 __all__ = [
     \\"Name\\",
-    \\"NameObjectWithBooleanAdditionalProperties\\",
-    \\"NameObjectWithTypedAdditionalProperties\\",
+    \\"NameObjectWithPropertiesAndBooleanAdditionalProperties\\",
+    \\"NameObjectWithPropertiesAndTypedAdditionalProperties\\",
 ]
 
 publication.publish()
@@ -224,13 +239,19 @@ public interface Name extends software.amazon.jsii.JsiiSerializable {
 
     /**
      */
-    default @org.jetbrains.annotations.Nullable org.myorg.NameObjectWithBooleanAdditionalProperties getObjectWithBooleanAdditionalProperties() {
+    default @org.jetbrains.annotations.Nullable org.myorg.NameObjectWithPropertiesAndBooleanAdditionalProperties getObjectWithPropertiesAndBooleanAdditionalProperties() {
         return null;
     }
 
     /**
      */
-    default @org.jetbrains.annotations.Nullable org.myorg.NameObjectWithTypedAdditionalProperties getObjectWithTypedAdditionalProperties() {
+    default @org.jetbrains.annotations.Nullable org.myorg.NameObjectWithPropertiesAndTypedAdditionalProperties getObjectWithPropertiesAndTypedAdditionalProperties() {
+        return null;
+    }
+
+    /**
+     */
+    default @org.jetbrains.annotations.Nullable java.util.Map<java.lang.String, java.lang.String> getObjectWithTypedAdditionalPropertiesOnly() {
         return null;
     }
 
@@ -247,8 +268,9 @@ public interface Name extends software.amazon.jsii.JsiiSerializable {
         private java.lang.String first;
         private java.lang.String last;
         private java.lang.String middle;
-        private org.myorg.NameObjectWithBooleanAdditionalProperties objectWithBooleanAdditionalProperties;
-        private org.myorg.NameObjectWithTypedAdditionalProperties objectWithTypedAdditionalProperties;
+        private org.myorg.NameObjectWithPropertiesAndBooleanAdditionalProperties objectWithPropertiesAndBooleanAdditionalProperties;
+        private org.myorg.NameObjectWithPropertiesAndTypedAdditionalProperties objectWithPropertiesAndTypedAdditionalProperties;
+        private java.util.Map<java.lang.String, java.lang.String> objectWithTypedAdditionalPropertiesOnly;
 
         /**
          * Sets the value of {@link Name#getFirst}
@@ -281,22 +303,32 @@ public interface Name extends software.amazon.jsii.JsiiSerializable {
         }
 
         /**
-         * Sets the value of {@link Name#getObjectWithBooleanAdditionalProperties}
-         * @param objectWithBooleanAdditionalProperties the value to be set.
+         * Sets the value of {@link Name#getObjectWithPropertiesAndBooleanAdditionalProperties}
+         * @param objectWithPropertiesAndBooleanAdditionalProperties the value to be set.
          * @return {@code this}
          */
-        public Builder objectWithBooleanAdditionalProperties(org.myorg.NameObjectWithBooleanAdditionalProperties objectWithBooleanAdditionalProperties) {
-            this.objectWithBooleanAdditionalProperties = objectWithBooleanAdditionalProperties;
+        public Builder objectWithPropertiesAndBooleanAdditionalProperties(org.myorg.NameObjectWithPropertiesAndBooleanAdditionalProperties objectWithPropertiesAndBooleanAdditionalProperties) {
+            this.objectWithPropertiesAndBooleanAdditionalProperties = objectWithPropertiesAndBooleanAdditionalProperties;
             return this;
         }
 
         /**
-         * Sets the value of {@link Name#getObjectWithTypedAdditionalProperties}
-         * @param objectWithTypedAdditionalProperties the value to be set.
+         * Sets the value of {@link Name#getObjectWithPropertiesAndTypedAdditionalProperties}
+         * @param objectWithPropertiesAndTypedAdditionalProperties the value to be set.
          * @return {@code this}
          */
-        public Builder objectWithTypedAdditionalProperties(org.myorg.NameObjectWithTypedAdditionalProperties objectWithTypedAdditionalProperties) {
-            this.objectWithTypedAdditionalProperties = objectWithTypedAdditionalProperties;
+        public Builder objectWithPropertiesAndTypedAdditionalProperties(org.myorg.NameObjectWithPropertiesAndTypedAdditionalProperties objectWithPropertiesAndTypedAdditionalProperties) {
+            this.objectWithPropertiesAndTypedAdditionalProperties = objectWithPropertiesAndTypedAdditionalProperties;
+            return this;
+        }
+
+        /**
+         * Sets the value of {@link Name#getObjectWithTypedAdditionalPropertiesOnly}
+         * @param objectWithTypedAdditionalPropertiesOnly the value to be set.
+         * @return {@code this}
+         */
+        public Builder objectWithTypedAdditionalPropertiesOnly(java.util.Map<java.lang.String, java.lang.String> objectWithTypedAdditionalPropertiesOnly) {
+            this.objectWithTypedAdditionalPropertiesOnly = objectWithTypedAdditionalPropertiesOnly;
             return this;
         }
 
@@ -307,7 +339,7 @@ public interface Name extends software.amazon.jsii.JsiiSerializable {
          */
         @Override
         public Name build() {
-            return new Jsii$Proxy(first, last, middle, objectWithBooleanAdditionalProperties, objectWithTypedAdditionalProperties);
+            return new Jsii$Proxy(first, last, middle, objectWithPropertiesAndBooleanAdditionalProperties, objectWithPropertiesAndTypedAdditionalProperties, objectWithTypedAdditionalPropertiesOnly);
         }
     }
 
@@ -319,8 +351,9 @@ public interface Name extends software.amazon.jsii.JsiiSerializable {
         private final java.lang.String first;
         private final java.lang.String last;
         private final java.lang.String middle;
-        private final org.myorg.NameObjectWithBooleanAdditionalProperties objectWithBooleanAdditionalProperties;
-        private final org.myorg.NameObjectWithTypedAdditionalProperties objectWithTypedAdditionalProperties;
+        private final org.myorg.NameObjectWithPropertiesAndBooleanAdditionalProperties objectWithPropertiesAndBooleanAdditionalProperties;
+        private final org.myorg.NameObjectWithPropertiesAndTypedAdditionalProperties objectWithPropertiesAndTypedAdditionalProperties;
+        private final java.util.Map<java.lang.String, java.lang.String> objectWithTypedAdditionalPropertiesOnly;
 
         /**
          * Constructor that initializes the object based on values retrieved from the JsiiObject.
@@ -331,20 +364,22 @@ public interface Name extends software.amazon.jsii.JsiiSerializable {
             this.first = software.amazon.jsii.Kernel.get(this, \\"first\\", software.amazon.jsii.NativeType.forClass(java.lang.String.class));
             this.last = software.amazon.jsii.Kernel.get(this, \\"last\\", software.amazon.jsii.NativeType.forClass(java.lang.String.class));
             this.middle = software.amazon.jsii.Kernel.get(this, \\"middle\\", software.amazon.jsii.NativeType.forClass(java.lang.String.class));
-            this.objectWithBooleanAdditionalProperties = software.amazon.jsii.Kernel.get(this, \\"objectWithBooleanAdditionalProperties\\", software.amazon.jsii.NativeType.forClass(org.myorg.NameObjectWithBooleanAdditionalProperties.class));
-            this.objectWithTypedAdditionalProperties = software.amazon.jsii.Kernel.get(this, \\"objectWithTypedAdditionalProperties\\", software.amazon.jsii.NativeType.forClass(org.myorg.NameObjectWithTypedAdditionalProperties.class));
+            this.objectWithPropertiesAndBooleanAdditionalProperties = software.amazon.jsii.Kernel.get(this, \\"objectWithPropertiesAndBooleanAdditionalProperties\\", software.amazon.jsii.NativeType.forClass(org.myorg.NameObjectWithPropertiesAndBooleanAdditionalProperties.class));
+            this.objectWithPropertiesAndTypedAdditionalProperties = software.amazon.jsii.Kernel.get(this, \\"objectWithPropertiesAndTypedAdditionalProperties\\", software.amazon.jsii.NativeType.forClass(org.myorg.NameObjectWithPropertiesAndTypedAdditionalProperties.class));
+            this.objectWithTypedAdditionalPropertiesOnly = software.amazon.jsii.Kernel.get(this, \\"objectWithTypedAdditionalPropertiesOnly\\", software.amazon.jsii.NativeType.mapOf(software.amazon.jsii.NativeType.forClass(java.lang.String.class)));
         }
 
         /**
          * Constructor that initializes the object based on literal property values passed by the {@link Builder}.
          */
-        protected Jsii$Proxy(final java.lang.String first, final java.lang.String last, final java.lang.String middle, final org.myorg.NameObjectWithBooleanAdditionalProperties objectWithBooleanAdditionalProperties, final org.myorg.NameObjectWithTypedAdditionalProperties objectWithTypedAdditionalProperties) {
+        protected Jsii$Proxy(final java.lang.String first, final java.lang.String last, final java.lang.String middle, final org.myorg.NameObjectWithPropertiesAndBooleanAdditionalProperties objectWithPropertiesAndBooleanAdditionalProperties, final org.myorg.NameObjectWithPropertiesAndTypedAdditionalProperties objectWithPropertiesAndTypedAdditionalProperties, final java.util.Map<java.lang.String, java.lang.String> objectWithTypedAdditionalPropertiesOnly) {
             super(software.amazon.jsii.JsiiObject.InitializationMode.JSII);
             this.first = java.util.Objects.requireNonNull(first, \\"first is required\\");
             this.last = java.util.Objects.requireNonNull(last, \\"last is required\\");
             this.middle = middle;
-            this.objectWithBooleanAdditionalProperties = objectWithBooleanAdditionalProperties;
-            this.objectWithTypedAdditionalProperties = objectWithTypedAdditionalProperties;
+            this.objectWithPropertiesAndBooleanAdditionalProperties = objectWithPropertiesAndBooleanAdditionalProperties;
+            this.objectWithPropertiesAndTypedAdditionalProperties = objectWithPropertiesAndTypedAdditionalProperties;
+            this.objectWithTypedAdditionalPropertiesOnly = objectWithTypedAdditionalPropertiesOnly;
         }
 
         @Override
@@ -363,13 +398,18 @@ public interface Name extends software.amazon.jsii.JsiiSerializable {
         }
 
         @Override
-        public final org.myorg.NameObjectWithBooleanAdditionalProperties getObjectWithBooleanAdditionalProperties() {
-            return this.objectWithBooleanAdditionalProperties;
+        public final org.myorg.NameObjectWithPropertiesAndBooleanAdditionalProperties getObjectWithPropertiesAndBooleanAdditionalProperties() {
+            return this.objectWithPropertiesAndBooleanAdditionalProperties;
         }
 
         @Override
-        public final org.myorg.NameObjectWithTypedAdditionalProperties getObjectWithTypedAdditionalProperties() {
-            return this.objectWithTypedAdditionalProperties;
+        public final org.myorg.NameObjectWithPropertiesAndTypedAdditionalProperties getObjectWithPropertiesAndTypedAdditionalProperties() {
+            return this.objectWithPropertiesAndTypedAdditionalProperties;
+        }
+
+        @Override
+        public final java.util.Map<java.lang.String, java.lang.String> getObjectWithTypedAdditionalPropertiesOnly() {
+            return this.objectWithTypedAdditionalPropertiesOnly;
         }
 
         @Override
@@ -383,11 +423,14 @@ public interface Name extends software.amazon.jsii.JsiiSerializable {
             if (this.getMiddle() != null) {
                 data.set(\\"middle\\", om.valueToTree(this.getMiddle()));
             }
-            if (this.getObjectWithBooleanAdditionalProperties() != null) {
-                data.set(\\"objectWithBooleanAdditionalProperties\\", om.valueToTree(this.getObjectWithBooleanAdditionalProperties()));
+            if (this.getObjectWithPropertiesAndBooleanAdditionalProperties() != null) {
+                data.set(\\"objectWithPropertiesAndBooleanAdditionalProperties\\", om.valueToTree(this.getObjectWithPropertiesAndBooleanAdditionalProperties()));
             }
-            if (this.getObjectWithTypedAdditionalProperties() != null) {
-                data.set(\\"objectWithTypedAdditionalProperties\\", om.valueToTree(this.getObjectWithTypedAdditionalProperties()));
+            if (this.getObjectWithPropertiesAndTypedAdditionalProperties() != null) {
+                data.set(\\"objectWithPropertiesAndTypedAdditionalProperties\\", om.valueToTree(this.getObjectWithPropertiesAndTypedAdditionalProperties()));
+            }
+            if (this.getObjectWithTypedAdditionalPropertiesOnly() != null) {
+                data.set(\\"objectWithTypedAdditionalPropertiesOnly\\", om.valueToTree(this.getObjectWithTypedAdditionalPropertiesOnly()));
             }
 
             final com.fasterxml.jackson.databind.node.ObjectNode struct = com.fasterxml.jackson.databind.node.JsonNodeFactory.instance.objectNode();
@@ -410,8 +453,9 @@ public interface Name extends software.amazon.jsii.JsiiSerializable {
             if (!first.equals(that.first)) return false;
             if (!last.equals(that.last)) return false;
             if (this.middle != null ? !this.middle.equals(that.middle) : that.middle != null) return false;
-            if (this.objectWithBooleanAdditionalProperties != null ? !this.objectWithBooleanAdditionalProperties.equals(that.objectWithBooleanAdditionalProperties) : that.objectWithBooleanAdditionalProperties != null) return false;
-            return this.objectWithTypedAdditionalProperties != null ? this.objectWithTypedAdditionalProperties.equals(that.objectWithTypedAdditionalProperties) : that.objectWithTypedAdditionalProperties == null;
+            if (this.objectWithPropertiesAndBooleanAdditionalProperties != null ? !this.objectWithPropertiesAndBooleanAdditionalProperties.equals(that.objectWithPropertiesAndBooleanAdditionalProperties) : that.objectWithPropertiesAndBooleanAdditionalProperties != null) return false;
+            if (this.objectWithPropertiesAndTypedAdditionalProperties != null ? !this.objectWithPropertiesAndTypedAdditionalProperties.equals(that.objectWithPropertiesAndTypedAdditionalProperties) : that.objectWithPropertiesAndTypedAdditionalProperties != null) return false;
+            return this.objectWithTypedAdditionalPropertiesOnly != null ? this.objectWithTypedAdditionalPropertiesOnly.equals(that.objectWithTypedAdditionalPropertiesOnly) : that.objectWithTypedAdditionalPropertiesOnly == null;
         }
 
         @Override
@@ -419,8 +463,9 @@ public interface Name extends software.amazon.jsii.JsiiSerializable {
             int result = this.first.hashCode();
             result = 31 * result + (this.last.hashCode());
             result = 31 * result + (this.middle != null ? this.middle.hashCode() : 0);
-            result = 31 * result + (this.objectWithBooleanAdditionalProperties != null ? this.objectWithBooleanAdditionalProperties.hashCode() : 0);
-            result = 31 * result + (this.objectWithTypedAdditionalProperties != null ? this.objectWithTypedAdditionalProperties.hashCode() : 0);
+            result = 31 * result + (this.objectWithPropertiesAndBooleanAdditionalProperties != null ? this.objectWithPropertiesAndBooleanAdditionalProperties.hashCode() : 0);
+            result = 31 * result + (this.objectWithPropertiesAndTypedAdditionalProperties != null ? this.objectWithPropertiesAndTypedAdditionalProperties.hashCode() : 0);
+            result = 31 * result + (this.objectWithTypedAdditionalPropertiesOnly != null ? this.objectWithTypedAdditionalPropertiesOnly.hashCode() : 0);
             return result;
         }
     }
@@ -437,15 +482,16 @@ type Name struct {
 	First *string \`json:\\"first\\"\`
 	Last *string \`json:\\"last\\"\`
 	Middle *string \`json:\\"middle\\"\`
-	ObjectWithBooleanAdditionalProperties *NameObjectWithBooleanAdditionalProperties \`json:\\"objectWithBooleanAdditionalProperties\\"\`
-	ObjectWithTypedAdditionalProperties *NameObjectWithTypedAdditionalProperties \`json:\\"objectWithTypedAdditionalProperties\\"\`
+	ObjectWithPropertiesAndBooleanAdditionalProperties *NameObjectWithPropertiesAndBooleanAdditionalProperties \`json:\\"objectWithPropertiesAndBooleanAdditionalProperties\\"\`
+	ObjectWithPropertiesAndTypedAdditionalProperties *NameObjectWithPropertiesAndTypedAdditionalProperties \`json:\\"objectWithPropertiesAndTypedAdditionalProperties\\"\`
+	ObjectWithTypedAdditionalPropertiesOnly *map[string]*string \`json:\\"objectWithTypedAdditionalPropertiesOnly\\"\`
 }
 
-type NameObjectWithBooleanAdditionalProperties struct {
+type NameObjectWithPropertiesAndBooleanAdditionalProperties struct {
 	Name *string \`json:\\"name\\"\`
 }
 
-type NameObjectWithTypedAdditionalProperties struct {
+type NameObjectWithPropertiesAndTypedAdditionalProperties struct {
 	Name *string \`json:\\"name\\"\`
 }
 
@@ -497,11 +543,11 @@ namespace myorg
         }
 
         /// <remarks>
-        /// <strong>Schema</strong>: Name#objectWithBooleanAdditionalProperties
+        /// <strong>Schema</strong>: Name#objectWithPropertiesAndBooleanAdditionalProperties
         /// </remarks>
-        [JsiiProperty(name: \\"objectWithBooleanAdditionalProperties\\", typeJson: \\"{\\\\\\"fqn\\\\\\":\\\\\\"1bc04b5291c26a46d918139138b992d2de976d6851d0893b0476b85bfbdfc6e6.NameObjectWithBooleanAdditionalProperties\\\\\\"}\\", isOptional: true)]
+        [JsiiProperty(name: \\"objectWithPropertiesAndBooleanAdditionalProperties\\", typeJson: \\"{\\\\\\"fqn\\\\\\":\\\\\\"1bc04b5291c26a46d918139138b992d2de976d6851d0893b0476b85bfbdfc6e6.NameObjectWithPropertiesAndBooleanAdditionalProperties\\\\\\"}\\", isOptional: true)]
         [Amazon.JSII.Runtime.Deputy.JsiiOptional]
-        myorg.INameObjectWithBooleanAdditionalProperties? ObjectWithBooleanAdditionalProperties
+        myorg.INameObjectWithPropertiesAndBooleanAdditionalProperties? ObjectWithPropertiesAndBooleanAdditionalProperties
         {
             get
             {
@@ -510,11 +556,24 @@ namespace myorg
         }
 
         /// <remarks>
-        /// <strong>Schema</strong>: Name#objectWithTypedAdditionalProperties
+        /// <strong>Schema</strong>: Name#objectWithPropertiesAndTypedAdditionalProperties
         /// </remarks>
-        [JsiiProperty(name: \\"objectWithTypedAdditionalProperties\\", typeJson: \\"{\\\\\\"fqn\\\\\\":\\\\\\"1bc04b5291c26a46d918139138b992d2de976d6851d0893b0476b85bfbdfc6e6.NameObjectWithTypedAdditionalProperties\\\\\\"}\\", isOptional: true)]
+        [JsiiProperty(name: \\"objectWithPropertiesAndTypedAdditionalProperties\\", typeJson: \\"{\\\\\\"fqn\\\\\\":\\\\\\"1bc04b5291c26a46d918139138b992d2de976d6851d0893b0476b85bfbdfc6e6.NameObjectWithPropertiesAndTypedAdditionalProperties\\\\\\"}\\", isOptional: true)]
         [Amazon.JSII.Runtime.Deputy.JsiiOptional]
-        myorg.INameObjectWithTypedAdditionalProperties? ObjectWithTypedAdditionalProperties
+        myorg.INameObjectWithPropertiesAndTypedAdditionalProperties? ObjectWithPropertiesAndTypedAdditionalProperties
+        {
+            get
+            {
+                return null;
+            }
+        }
+
+        /// <remarks>
+        /// <strong>Schema</strong>: Name#objectWithTypedAdditionalPropertiesOnly
+        /// </remarks>
+        [JsiiProperty(name: \\"objectWithTypedAdditionalPropertiesOnly\\", typeJson: \\"{\\\\\\"collection\\\\\\":{\\\\\\"elementtype\\\\\\":{\\\\\\"primitive\\\\\\":\\\\\\"string\\\\\\"},\\\\\\"kind\\\\\\":\\\\\\"map\\\\\\"}}\\", isOptional: true)]
+        [Amazon.JSII.Runtime.Deputy.JsiiOptional]
+        System.Collections.Generic.IDictionary<string, string>? ObjectWithTypedAdditionalPropertiesOnly
         {
             get
             {
@@ -561,23 +620,33 @@ namespace myorg
             }
 
             /// <remarks>
-            /// <strong>Schema</strong>: Name#objectWithBooleanAdditionalProperties
+            /// <strong>Schema</strong>: Name#objectWithPropertiesAndBooleanAdditionalProperties
             /// </remarks>
             [JsiiOptional]
-            [JsiiProperty(name: \\"objectWithBooleanAdditionalProperties\\", typeJson: \\"{\\\\\\"fqn\\\\\\":\\\\\\"1bc04b5291c26a46d918139138b992d2de976d6851d0893b0476b85bfbdfc6e6.NameObjectWithBooleanAdditionalProperties\\\\\\"}\\", isOptional: true)]
-            public myorg.INameObjectWithBooleanAdditionalProperties? ObjectWithBooleanAdditionalProperties
+            [JsiiProperty(name: \\"objectWithPropertiesAndBooleanAdditionalProperties\\", typeJson: \\"{\\\\\\"fqn\\\\\\":\\\\\\"1bc04b5291c26a46d918139138b992d2de976d6851d0893b0476b85bfbdfc6e6.NameObjectWithPropertiesAndBooleanAdditionalProperties\\\\\\"}\\", isOptional: true)]
+            public myorg.INameObjectWithPropertiesAndBooleanAdditionalProperties? ObjectWithPropertiesAndBooleanAdditionalProperties
             {
-                get => GetInstanceProperty<myorg.INameObjectWithBooleanAdditionalProperties?>();
+                get => GetInstanceProperty<myorg.INameObjectWithPropertiesAndBooleanAdditionalProperties?>();
             }
 
             /// <remarks>
-            /// <strong>Schema</strong>: Name#objectWithTypedAdditionalProperties
+            /// <strong>Schema</strong>: Name#objectWithPropertiesAndTypedAdditionalProperties
             /// </remarks>
             [JsiiOptional]
-            [JsiiProperty(name: \\"objectWithTypedAdditionalProperties\\", typeJson: \\"{\\\\\\"fqn\\\\\\":\\\\\\"1bc04b5291c26a46d918139138b992d2de976d6851d0893b0476b85bfbdfc6e6.NameObjectWithTypedAdditionalProperties\\\\\\"}\\", isOptional: true)]
-            public myorg.INameObjectWithTypedAdditionalProperties? ObjectWithTypedAdditionalProperties
+            [JsiiProperty(name: \\"objectWithPropertiesAndTypedAdditionalProperties\\", typeJson: \\"{\\\\\\"fqn\\\\\\":\\\\\\"1bc04b5291c26a46d918139138b992d2de976d6851d0893b0476b85bfbdfc6e6.NameObjectWithPropertiesAndTypedAdditionalProperties\\\\\\"}\\", isOptional: true)]
+            public myorg.INameObjectWithPropertiesAndTypedAdditionalProperties? ObjectWithPropertiesAndTypedAdditionalProperties
             {
-                get => GetInstanceProperty<myorg.INameObjectWithTypedAdditionalProperties?>();
+                get => GetInstanceProperty<myorg.INameObjectWithPropertiesAndTypedAdditionalProperties?>();
+            }
+
+            /// <remarks>
+            /// <strong>Schema</strong>: Name#objectWithTypedAdditionalPropertiesOnly
+            /// </remarks>
+            [JsiiOptional]
+            [JsiiProperty(name: \\"objectWithTypedAdditionalPropertiesOnly\\", typeJson: \\"{\\\\\\"collection\\\\\\":{\\\\\\"elementtype\\\\\\":{\\\\\\"primitive\\\\\\":\\\\\\"string\\\\\\"},\\\\\\"kind\\\\\\":\\\\\\"map\\\\\\"}}\\", isOptional: true)]
+            public System.Collections.Generic.IDictionary<string, string>? ObjectWithTypedAdditionalPropertiesOnly
+            {
+                get => GetInstanceProperty<System.Collections.Generic.IDictionary<string, string>?>();
             }
         }
     }

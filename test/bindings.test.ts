@@ -14,14 +14,20 @@ test('language bindings', async () => {
       first: { type: 'string' },
       middle: { type: 'string' },
       last: { type: 'string' },
-      objectWithBooleanAdditionalProperties: {
+      objectWithTypedAdditionalPropertiesOnly: {
+        type: 'object',
+        additionalProperties: {
+          type: 'string',
+        },
+      },
+      objectWithPropertiesAndBooleanAdditionalProperties: {
         type: 'object',
         properties: {
           name: { type: 'string' },
         },
-        additionalProperties: true,
+        additionalProperties: {},
       },
-      objectWithTypedAdditionalProperties: {
+      objectWithPropertiesAndTypedAdditionalProperties: {
         type: 'object',
         properties: {
           name: { type: 'string' },
