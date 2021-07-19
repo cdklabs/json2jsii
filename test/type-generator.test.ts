@@ -327,6 +327,12 @@ test('forStruct', async () => {
   expect(source).toMatchSnapshot();
 });
 
+test('fails when trying to resolve an undefined $ref', () => {
+  const g = new TypeGenerator();
+  expect(() => g.addType('Foo', { $ref: 'unresolvable' })).toThrow(/invalid \$ref {\"\$ref\":\"unresolvable\"}/);
+  expect(() => g.addType('Foo', { $ref: '#/definitions/unresolvable' })).toThrow(/unable to find a definition for the \$ref \"unresolvable\"/);
+});
+
 function which(name: string, schema: JSONSchema4, definitions?: JSONSchema4) {
   test(name, async () => {
     const gen = new TypeGenerator(definitions);

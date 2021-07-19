@@ -35,7 +35,7 @@ export interface TestType {
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-export function TestType_toJson(obj: TestType | undefined): Record<string, any> | undefined {
+export function TestType$toJson(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'CamelCase1': obj.camelCase1,
@@ -67,7 +67,7 @@ export interface TestType {
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-export function TestType_toJson(obj: TestType | undefined): Record<string, any> | undefined {
+export function TestType$toJson(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'field': obj.field,
@@ -93,7 +93,7 @@ export interface TestType {
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-export function TestType_toJson(obj: TestType | undefined): Record<string, any> | undefined {
+export function TestType$toJson(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'field': obj.field,
@@ -121,7 +121,7 @@ export interface TestType {
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-export function TestType_toJson(obj: TestType | undefined): Record<string, any> | undefined {
+export function TestType$toJson(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'field': obj.field,
@@ -154,11 +154,11 @@ export interface TestType {
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-export function TestType_toJson(obj: TestType | undefined): Record<string, any> | undefined {
+export function TestType$toJson(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'firstEnum': obj.firstEnum,
-    'child': FqnOfTestTypeChild_toJson(obj.child),
+    'child': FqnOfTestTypeChild$toJson(obj.child),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -196,7 +196,7 @@ export interface FqnOfTestTypeChild {
 /**
  * Converts an object of type 'FqnOfTestTypeChild' to JSON representation.
  */
-export function FqnOfTestTypeChild_toJson(obj: FqnOfTestTypeChild | undefined): Record<string, any> | undefined {
+export function FqnOfTestTypeChild$toJson(obj: FqnOfTestTypeChild | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'secondEnum': obj.secondEnum,
@@ -236,7 +236,7 @@ export interface TestType {
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-export function TestType_toJson(obj: TestType | undefined): Record<string, any> | undefined {
+export function TestType$toJson(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'Color': obj.color,
@@ -381,25 +381,25 @@ export interface EksProps {
 /**
  * Converts an object of type 'EksProps' to JSON representation.
  */
-export function EksProps_toJson(obj: EksProps | undefined): Record<string, any> | undefined {
+export function EksProps$toJson(obj: EksProps | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'Name': obj.name,
     'RoleArn': obj.roleArn,
     'LambdaRoleName': obj.lambdaRoleName,
     'Version': obj.version,
-    'KubernetesNetworkConfig': EksPropsKubernetesNetworkConfig_toJson(obj.kubernetesNetworkConfig),
-    'ResourcesVpcConfig': EksPropsResourcesVpcConfig_toJson(obj.resourcesVpcConfig),
+    'KubernetesNetworkConfig': EksPropsKubernetesNetworkConfig$toJson(obj.kubernetesNetworkConfig),
+    'ResourcesVpcConfig': EksPropsResourcesVpcConfig$toJson(obj.resourcesVpcConfig),
     'EnabledClusterLoggingTypes': obj.enabledClusterLoggingTypes?.map(y => y),
-    'EncryptionConfig': obj.encryptionConfig?.map(y => EncryptionConfigEntry_toJson(y)),
-    'KubernetesApiAccess': EksPropsKubernetesApiAccess_toJson(obj.kubernetesApiAccess),
+    'EncryptionConfig': obj.encryptionConfig?.map(y => EncryptionConfigEntry$toJson(y)),
+    'KubernetesApiAccess': EksPropsKubernetesApiAccess$toJson(obj.kubernetesApiAccess),
     'Arn': obj.arn,
     'CertificateAuthorityData': obj.certificateAuthorityData,
     'ClusterSecurityGroupId': obj.clusterSecurityGroupId,
     'Endpoint': obj.endpoint,
     'EncryptionConfigKeyArn': obj.encryptionConfigKeyArn,
     'OIDCIssuerURL': obj.oidcIssuerUrl,
-    'Tags': obj.tags?.map(y => EksPropsTags_toJson(y)),
+    'Tags': obj.tags?.map(y => EksPropsTags$toJson(y)),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -425,7 +425,7 @@ export interface EksPropsKubernetesNetworkConfig {
 /**
  * Converts an object of type 'EksPropsKubernetesNetworkConfig' to JSON representation.
  */
-export function EksPropsKubernetesNetworkConfig_toJson(obj: EksPropsKubernetesNetworkConfig | undefined): Record<string, any> | undefined {
+export function EksPropsKubernetesNetworkConfig$toJson(obj: EksPropsKubernetesNetworkConfig | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'ServiceIpv4Cidr': obj.serviceIpv4Cidr,
@@ -480,7 +480,7 @@ export interface EksPropsResourcesVpcConfig {
 /**
  * Converts an object of type 'EksPropsResourcesVpcConfig' to JSON representation.
  */
-export function EksPropsResourcesVpcConfig_toJson(obj: EksPropsResourcesVpcConfig | undefined): Record<string, any> | undefined {
+export function EksPropsResourcesVpcConfig$toJson(obj: EksPropsResourcesVpcConfig | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'SecurityGroupIds': obj.securityGroupIds?.map(y => y),
@@ -516,11 +516,11 @@ export interface EncryptionConfigEntry {
 /**
  * Converts an object of type 'EncryptionConfigEntry' to JSON representation.
  */
-export function EncryptionConfigEntry_toJson(obj: EncryptionConfigEntry | undefined): Record<string, any> | undefined {
+export function EncryptionConfigEntry$toJson(obj: EncryptionConfigEntry | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'Resources': obj.resources?.map(y => y),
-    'Provider': Provider_toJson(obj.provider),
+    'Provider': Provider$toJson(obj.provider),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -545,11 +545,11 @@ export interface EksPropsKubernetesApiAccess {
 /**
  * Converts an object of type 'EksPropsKubernetesApiAccess' to JSON representation.
  */
-export function EksPropsKubernetesApiAccess_toJson(obj: EksPropsKubernetesApiAccess | undefined): Record<string, any> | undefined {
+export function EksPropsKubernetesApiAccess$toJson(obj: EksPropsKubernetesApiAccess | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
-    'Roles': obj.roles?.map(y => KubernetesApiAccessEntry_toJson(y)),
-    'Users': obj.users?.map(y => KubernetesApiAccessEntry_toJson(y)),
+    'Roles': obj.roles?.map(y => KubernetesApiAccessEntry$toJson(y)),
+    'Users': obj.users?.map(y => KubernetesApiAccessEntry$toJson(y)),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -574,7 +574,7 @@ export interface EksPropsTags {
 /**
  * Converts an object of type 'EksPropsTags' to JSON representation.
  */
-export function EksPropsTags_toJson(obj: EksPropsTags | undefined): Record<string, any> | undefined {
+export function EksPropsTags$toJson(obj: EksPropsTags | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'Value': obj.value,
@@ -602,7 +602,7 @@ export interface Provider {
 /**
  * Converts an object of type 'Provider' to JSON representation.
  */
-export function Provider_toJson(obj: Provider | undefined): Record<string, any> | undefined {
+export function Provider$toJson(obj: Provider | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'KeyArn': obj.keyArn,
@@ -635,7 +635,7 @@ export interface KubernetesApiAccessEntry {
 /**
  * Converts an object of type 'KubernetesApiAccessEntry' to JSON representation.
  */
-export function KubernetesApiAccessEntry_toJson(obj: KubernetesApiAccessEntry | undefined): Record<string, any> | undefined {
+export function KubernetesApiAccessEntry$toJson(obj: KubernetesApiAccessEntry | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'Arn': obj.arn,
@@ -698,7 +698,7 @@ export interface TestType {
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-export function TestType_toJson(obj: TestType | undefined): Record<string, any> | undefined {
+export function TestType$toJson(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'stringValue': obj.stringValue,
@@ -741,12 +741,12 @@ export interface TestType {
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-export function TestType_toJson(obj: TestType | undefined): Record<string, any> | undefined {
+export function TestType$toJson(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
-    'shouldBeRequired': ItemType_toJson(obj.shouldBeRequired),
-    'mapShouldBeOptional': ((obj.mapShouldBeOptional) === undefined) ? undefined : (Object.entries(obj.mapShouldBeOptional).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: ItemType_toJson(i[1]) }), {})),
-    'arrayShouldBeOptional': obj.arrayShouldBeOptional?.map(y => ItemType_toJson(y)),
+    'shouldBeRequired': ItemType$toJson(obj.shouldBeRequired),
+    'mapShouldBeOptional': ((obj.mapShouldBeOptional) === undefined) ? undefined : (Object.entries(obj.mapShouldBeOptional).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: ItemType$toJson(i[1]) }), {})),
+    'arrayShouldBeOptional': obj.arrayShouldBeOptional?.map(y => ItemType$toJson(y)),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -766,7 +766,7 @@ export interface ItemType {
 /**
  * Converts an object of type 'ItemType' to JSON representation.
  */
-export function ItemType_toJson(obj: ItemType | undefined): Record<string, any> | undefined {
+export function ItemType$toJson(obj: ItemType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'requiredField': obj.requiredField,
@@ -792,10 +792,10 @@ export interface TestType {
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-export function TestType_toJson(obj: TestType | undefined): Record<string, any> | undefined {
+export function TestType$toJson(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
-    'other': Other_toJson(obj.other),
+    'other': Other$toJson(obj.other),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -815,7 +815,7 @@ export interface Other {
 /**
  * Converts an object of type 'Other' to JSON representation.
  */
-export function Other_toJson(obj: Other | undefined): Record<string, any> | undefined {
+export function Other$toJson(obj: Other | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'stringValue': obj.stringValue,
@@ -861,7 +861,7 @@ export interface TestType {
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-export function TestType_toJson(obj: TestType | undefined): Record<string, any> | undefined {
+export function TestType$toJson(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'stringValue': obj.stringValue,
@@ -891,7 +891,7 @@ export interface TestType {
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-export function TestType_toJson(obj: TestType | undefined): Record<string, any> | undefined {
+export function TestType$toJson(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'foo': obj.foo,
@@ -956,7 +956,7 @@ export interface TestType {
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-export function TestType_toJson(obj: TestType | undefined): Record<string, any> | undefined {
+export function TestType$toJson(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'minReadySeconds': obj.minReadySeconds,
@@ -987,10 +987,10 @@ export interface TestType {
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-export function TestType_toJson(obj: TestType | undefined): Record<string, any> | undefined {
+export function TestType$toJson(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
-    'entrypoint': MyType_toJson(obj.entrypoint),
+    'entrypoint': MyType$toJson(obj.entrypoint),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -1010,10 +1010,10 @@ export interface MyType {
 /**
  * Converts an object of type 'MyType' to JSON representation.
  */
-export function MyType_toJson(obj: MyType | undefined): Record<string, any> | undefined {
+export function MyType$toJson(obj: MyType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
-    'self': MyType_toJson(obj.self),
+    'self': MyType$toJson(obj.self),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -1038,10 +1038,10 @@ export interface TypeB {
 /**
  * Converts an object of type 'TypeB' to JSON representation.
  */
-export function TypeB_toJson(obj: TypeB | undefined): Record<string, any> | undefined {
+export function TypeB$toJson(obj: TypeB | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
-    'refToTypeA': NewType_toJson(obj.refToTypeA),
+    'refToTypeA': NewType$toJson(obj.refToTypeA),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -1064,10 +1064,10 @@ export interface TypeA {
 /**
  * Converts an object of type 'TypeA' to JSON representation.
  */
-export function TypeA_toJson(obj: TypeA | undefined): Record<string, any> | undefined {
+export function TypeA$toJson(obj: TypeA | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
-    'ref': TypeC_toJson(obj.ref),
+    'ref': TypeC$toJson(obj.ref),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -1087,7 +1087,7 @@ export interface TypeC {
 /**
  * Converts an object of type 'TypeC' to JSON representation.
  */
-export function TypeC_toJson(obj: TypeC | undefined): Record<string, any> | undefined {
+export function TypeC$toJson(obj: TypeC | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'field': obj.field,
@@ -1116,10 +1116,10 @@ export interface TestType {
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-export function TestType_toJson(obj: TestType | undefined): Record<string, any> | undefined {
+export function TestType$toJson(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
-    'fault': TestTypeFault_toJson(obj.fault),
+    'fault': TestTypeFault$toJson(obj.fault),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -1142,10 +1142,10 @@ export interface TestTypeFault {
 /**
  * Converts an object of type 'TestTypeFault' to JSON representation.
  */
-export function TestTypeFault_toJson(obj: TestTypeFault | undefined): Record<string, any> | undefined {
+export function TestTypeFault$toJson(obj: TestTypeFault | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
-    'delay': TestTypeFaultDelay_toJson(obj.delay),
+    'delay': TestTypeFaultDelay$toJson(obj.delay),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -1188,13 +1188,13 @@ export interface TestTypeFaultDelay {
 /**
  * Converts an object of type 'TestTypeFaultDelay' to JSON representation.
  */
-export function TestTypeFaultDelay_toJson(obj: TestTypeFaultDelay | undefined): Record<string, any> | undefined {
+export function TestTypeFaultDelay$toJson(obj: TestTypeFaultDelay | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'exponentialDelay': obj.exponentialDelay,
     'fixedDelay': obj.fixedDelay,
     'percent': obj.percent,
-    'percentage': TestTypeFaultDelayPercentage_toJson(obj.percentage),
+    'percentage': TestTypeFaultDelayPercentage$toJson(obj.percentage),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -1217,7 +1217,7 @@ export interface TestTypeFaultDelayPercentage {
 /**
  * Converts an object of type 'TestTypeFaultDelayPercentage' to JSON representation.
  */
-export function TestTypeFaultDelayPercentage_toJson(obj: TestTypeFaultDelayPercentage | undefined): Record<string, any> | undefined {
+export function TestTypeFaultDelayPercentage$toJson(obj: TestTypeFaultDelayPercentage | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'value': obj.value,

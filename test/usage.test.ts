@@ -1,26 +1,23 @@
 import { TypeGenerator } from '../src';
 
-test('example with $ref', async () => {
-  const g = new TypeGenerator({
+test('readme example', () => {
+  const g = TypeGenerator.forStruct('Person', {
     definitions: {
       Name: {
         description: 'Represents a name of a person',
-        required: ['firstName', 'lastName'],
+        required: ['FirstName', 'last_name'],
         properties: {
-          firstName: {
+          FirstName: {
             type: 'string',
             description: 'The first name of the person',
           },
-          lastName: {
+          last_name: {
             type: 'string',
             description: 'The last name of the person',
           },
         },
       },
     },
-  });
-
-  g.addType('Person', {
     required: ['name'],
     properties: {
       name: {
@@ -34,11 +31,5 @@ test('example with $ref', async () => {
     },
   });
 
-  expect(await g.render()).toMatchSnapshot();
-});
-
-test('fails when trying to resolve an undefined $ref', () => {
-  const g = new TypeGenerator();
-  expect(() => g.addType('Foo', { $ref: 'unresolvable' })).toThrow(/invalid \$ref {\"\$ref\":\"unresolvable\"}/);
-  expect(() => g.addType('Foo', { $ref: '#/definitions/unresolvable' })).toThrow(/unable to find a definition for the \$ref \"unresolvable\"/);
+  expect(g.render()).toMatchSnapshot();
 });

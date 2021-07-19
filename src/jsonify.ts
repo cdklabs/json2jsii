@@ -1,9 +1,13 @@
 import { Code } from './code';
 
 export class toJsonFunction {
+  public static nameOf(typeName: string) {
+    return `${typeName}$toJson`;
+  }
+
   private readonly fields: Record<string, string> = {};
 
-  constructor(private readonly functionName: string, private readonly baseType: string) {
+  constructor(private readonly baseType: string) {
 
   }
 
@@ -12,11 +16,12 @@ export class toJsonFunction {
   }
 
   public emit(code: Code) {
+    const functionName = toJsonFunction.nameOf(this.baseType);
     code.line();
     code.line('/**');
     code.line(` * Converts an object of type '${this.baseType}' to JSON representation.`);
     code.line(' */');
-    code.openBlock(`export function ${this.functionName}(obj: ${this.baseType} | undefined): Record<string, any> | undefined`);
+    code.openBlock(`export function ${functionName}(obj: ${this.baseType} | undefined): Record<string, any> | undefined`);
     code.line('if (obj === undefined) { return undefined; }');
     code.open('const result = {');
     for (const [k, v] of Object.entries(this.fields)) {

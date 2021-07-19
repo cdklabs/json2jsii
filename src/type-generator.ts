@@ -178,7 +178,7 @@ export class TypeGenerator {
       }
 
       this.emitStruct(typeName, def, structFqn);
-      return { type: typeName, toJson: x => `${typeName}_toJson(${x})` };
+      return { type: typeName, toJson: x => `${toJsonFunction.nameOf(typeName)}(${x})` };
     }
 
     // map
@@ -313,7 +313,7 @@ export class TypeGenerator {
 
   private emitStruct(typeName: string, structDef: JSONSchema4, structFqn: string) {
     this.addCode(typeName, code => {
-      const toJson = new toJsonFunction(`${typeName}_toJson`, typeName);
+      const toJson = new toJsonFunction(typeName);
 
       this.emitDescription(code, structFqn, structDef.description);
       code.openBlock(`export interface ${typeName}`);
@@ -438,7 +438,7 @@ export class TypeGenerator {
 
     // if we already emitted a type with this type name, just return it
     if (this.emittedTypes.has(typeName)) {
-      return { type: typeName, toJson: x => `${typeName}_toJson(${x})` };
+      return { type: typeName, toJson: x => `${toJsonFunction.nameOf(typeName)}(${x})` };
     }
 
     const schema = this.resolveReference(def);

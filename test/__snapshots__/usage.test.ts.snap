@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`example with $ref 1`] = `
+exports[`readme example 1`] = `
 "/**
  * @schema Person
  */
@@ -25,10 +25,10 @@ export interface Person {
 /**
  * Converts an object of type 'Person' to JSON representation.
  */
-export function Person_toJson(obj: Person | undefined): Record<string, any> | undefined {
+export function Person$toJson(obj: Person | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
-    'name': Name_toJson(obj.name),
+    'name': Name$toJson(obj.name),
     'color': obj.color,
   };
   // filter undefined values
@@ -44,14 +44,14 @@ export interface Name {
   /**
    * The first name of the person
    *
-   * @schema Name#firstName
+   * @schema Name#FirstName
    */
   readonly firstName: string;
 
   /**
    * The last name of the person
    *
-   * @schema Name#lastName
+   * @schema Name#last_name
    */
   readonly lastName: string;
 
@@ -60,11 +60,11 @@ export interface Name {
 /**
  * Converts an object of type 'Name' to JSON representation.
  */
-export function Name_toJson(obj: Name | undefined): Record<string, any> | undefined {
+export function Name$toJson(obj: Name | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
-    'firstName': obj.firstName,
-    'lastName': obj.lastName,
+    'FirstName': obj.firstName,
+    'last_name': obj.lastName,
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});

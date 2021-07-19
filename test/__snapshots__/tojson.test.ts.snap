@@ -15,7 +15,7 @@ export interface MyStruct {
 /**
  * Converts an object of type 'MyStruct' to JSON representation.
  */
-export function MyStruct_toJson(obj: MyStruct | undefined): Record<string, any> | undefined {
+export function MyStruct$toJson(obj: MyStruct | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'MyAny': obj.myAny,
@@ -41,10 +41,10 @@ export interface MyStruct {
 /**
  * Converts an object of type 'MyStruct' to JSON representation.
  */
-export function MyStruct_toJson(obj: MyStruct | undefined): Record<string, any> | undefined {
+export function MyStruct$toJson(obj: MyStruct | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
-    'Array_Of_complex': obj.arrayOfComplex?.map(y => MyType_toJson(y)),
+    'Array_Of_complex': obj.arrayOfComplex?.map(y => MyType$toJson(y)),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -69,7 +69,7 @@ export interface MyType {
 /**
  * Converts an object of type 'MyType' to JSON representation.
  */
-export function MyType_toJson(obj: MyType | undefined): Record<string, any> | undefined {
+export function MyType$toJson(obj: MyType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'Foo': obj.foo,
@@ -96,7 +96,7 @@ export interface MyStruct {
 /**
  * Converts an object of type 'MyStruct' to JSON representation.
  */
-export function MyStruct_toJson(obj: MyStruct | undefined): Record<string, any> | undefined {
+export function MyStruct$toJson(obj: MyStruct | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'ArrayProp': obj.arrayProp?.map(y => y),
@@ -122,10 +122,10 @@ export interface MyStruct {
 /**
  * Converts an object of type 'MyStruct' to JSON representation.
  */
-export function MyStruct_toJson(obj: MyStruct | undefined): Record<string, any> | undefined {
+export function MyStruct$toJson(obj: MyStruct | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
-    'ComplexType': MyType_toJson(obj.complexType),
+    'ComplexType': MyType$toJson(obj.complexType),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -155,12 +155,12 @@ export interface MyType {
 /**
  * Converts an object of type 'MyType' to JSON representation.
  */
-export function MyType_toJson(obj: MyType | undefined): Record<string, any> | undefined {
+export function MyType$toJson(obj: MyType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'Foo': obj.foo,
     'Bar': obj.bar,
-    'Nested': YourType_toJson(obj.nested),
+    'Nested': YourType$toJson(obj.nested),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -180,7 +180,7 @@ export interface YourType {
 /**
  * Converts an object of type 'YourType' to JSON representation.
  */
-export function YourType_toJson(obj: YourType | undefined): Record<string, any> | undefined {
+export function YourType$toJson(obj: YourType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'John': obj.john?.map(y => y),
@@ -206,7 +206,7 @@ export interface MyStruct {
 /**
  * Converts an object of type 'MyStruct' to JSON representation.
  */
-export function MyStruct_toJson(obj: MyStruct | undefined): Record<string, any> | undefined {
+export function MyStruct$toJson(obj: MyStruct | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'DateTime': obj.dateTime?.toISOString(),
@@ -237,7 +237,7 @@ export interface MyStruct {
 /**
  * Converts an object of type 'MyStruct' to JSON representation.
  */
-export function MyStruct_toJson(obj: MyStruct | undefined): Record<string, any> | undefined {
+export function MyStruct$toJson(obj: MyStruct | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'MyEnum': obj.myEnum,
@@ -286,10 +286,10 @@ export interface MyStruct {
 /**
  * Converts an object of type 'MyStruct' to JSON representation.
  */
-export function MyStruct_toJson(obj: MyStruct | undefined): Record<string, any> | undefined {
+export function MyStruct$toJson(obj: MyStruct | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
-    'ComplexMap': ((obj.complexMap) === undefined) ? undefined : (Object.entries(obj.complexMap).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: MyType_toJson(i[1]) }), {})),
+    'ComplexMap': ((obj.complexMap) === undefined) ? undefined : (Object.entries(obj.complexMap).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: MyType$toJson(i[1]) }), {})),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -314,7 +314,7 @@ export interface MyType {
 /**
  * Converts an object of type 'MyType' to JSON representation.
  */
-export function MyType_toJson(obj: MyType | undefined): Record<string, any> | undefined {
+export function MyType$toJson(obj: MyType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'Foo': obj.foo,
@@ -346,7 +346,7 @@ export interface MyStruct {
 /**
  * Converts an object of type 'MyStruct' to JSON representation.
  */
-export function MyStruct_toJson(obj: MyStruct | undefined): Record<string, any> | undefined {
+export function MyStruct$toJson(obj: MyStruct | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'StringMap': ((obj.stringMap) === undefined) ? undefined : (Object.entries(obj.stringMap).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {})),
@@ -383,7 +383,7 @@ export interface MyStruct {
 /**
  * Converts an object of type 'MyStruct' to JSON representation.
  */
-export function MyStruct_toJson(obj: MyStruct | undefined): Record<string, any> | undefined {
+export function MyStruct$toJson(obj: MyStruct | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'hyphen-name': obj.hyphenName,
@@ -426,7 +426,7 @@ export interface MyStruct {
 /**
  * Converts an object of type 'MyStruct' to JSON representation.
  */
-export function MyStruct_toJson(obj: MyStruct | undefined): Record<string, any> | undefined {
+export function MyStruct$toJson(obj: MyStruct | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'StringProperty': obj.stringProperty,

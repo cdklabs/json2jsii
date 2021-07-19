@@ -5,7 +5,7 @@
 ## Usage
 
 ```ts
-const g = new TypeGenerator({
+const g = TypeGenerator.forStruct('Person', {
   definitions: {
     Name: {
       description: 'Represents a name of a person',
@@ -22,10 +22,6 @@ const g = new TypeGenerator({
       },
     },
   },
-});
-
-// definitions can also be added like this:
-g.addDefinition('Person', {
   required: [ 'name' ],
   properties: {
     name: {
@@ -39,10 +35,7 @@ g.addDefinition('Person', {
   },
 });
 
-// this will emit the specified type & recursively all the referenced types.
-g.emitType('Person');
-
-fs.writeFileSync('gen/ts/person.ts', await g.render());
+fs.writeFileSync('gen/ts/person.ts', g.render());
 ```
 
 Then, `gen/ts/person.ts` will look like this;
@@ -65,7 +58,21 @@ export interface Person {
    * @default green
    * @schema Person#color
    */
-  readonly color?: any;
+  readonly color?: PersonColor;
+
+}
+
+/**
+ * Converts an object of type 'Person' to JSON representation.
+ */
+export function Person$toJson(obj: Person | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'name': Name$toJson(obj.name),
+    'color': obj.color,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 
 /**
@@ -77,16 +84,70 @@ export interface Name {
   /**
    * The first name of the person
    *
-   * @schema Name#firstName
+   * @schema Name#FirstName
    */
   readonly firstName: string;
 
   /**
    * The last name of the person
    *
-   * @schema Name#lastName
+   * @schema Name#last_name
    */
   readonly lastName: string;
+
+}
+
+/**
+ * Converts an object of type 'Name' to JSON representation.
+ */
+export function Name$toJson(obj: Name | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'FirstName': obj.firstName,
+    'last_name': obj.lastName,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+
+/**
+ * Favorite color. Default is green
+ *
+ * @default green
+ * @schema PersonColor
+ */
+export enum PersonColor {
+  /** red */
+  RED = \\"red\\",
+  /** green */
+  GREEN = \\"green\\",
+  /** blue */
+  BLUE = \\"blue\\",
+  /** yellow */
+  YELLOW = \\"yellow\\",
+}
+```
+
+Since property names of generated structs are converted to camel case in order
+to comply with JSII requirements, json2jsii will also generate a `$toJson`
+function for each generated struct. These functions can be used to convert back
+a data type to the schema format.
+
+For example:
+
+```ts
+Name$toJson({
+  firstName: 'Boom',
+  lastName: 'Bam'
+})
+```
+
+Will return:
+
+```json
+{
+  "FirstName": "Boom",
+  "last_name": "Bam"
 }
 ```
 

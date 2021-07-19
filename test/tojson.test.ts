@@ -5,6 +5,7 @@ import { tmpdir } from 'os';
 import { join } from 'path';
 import { JSONSchema4 } from 'json-schema';
 import { TypeGenerator } from '../src';
+import { toJsonFunction } from '../src/jsonify';
 
 test('primitives', () => {
   const f = compile({
@@ -258,8 +259,10 @@ function compile(schema: JSONSchema4): (x: any) => any {
     // import the compiled javascript code into this process (wow)
     const source = join(workdir, 'index.js');
 
+    const fnName = toJsonFunction.nameOf('MyStruct');
+
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    return require(source).MyStruct_toJson;
+    return require(source)[fnName];
   } catch (e) {
     throw new Error(`Compilation error: ${e}. Workdir: ${workdir}`);
   }
