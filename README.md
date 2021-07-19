@@ -65,10 +65,10 @@ export interface Person {
 /**
  * Converts an object of type 'Person' to JSON representation.
  */
-export function Person$toJson(obj: Person | undefined): Record<string, any> | undefined {
+export function toJson_Person(obj: Person | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
-    'name': Name$toJson(obj.name),
+    'name': toJson_Name(obj.name),
     'color': obj.color,
   };
   // filter undefined values
@@ -100,7 +100,7 @@ export interface Name {
 /**
  * Converts an object of type 'Name' to JSON representation.
  */
-export function Name$toJson(obj: Name | undefined): Record<string, any> | undefined {
+export function toJson_Name(obj: Name | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'FirstName': obj.firstName,
@@ -129,14 +129,14 @@ export enum PersonColor {
 ```
 
 Since property names of generated structs are converted to camel case in order
-to comply with JSII requirements, json2jsii will also generate a `$toJson`
+to comply with JSII requirements, json2jsii will also generate a `toJson_Xxx`
 function for each generated struct. These functions can be used to convert back
 a data type to the schema format.
 
 For example:
 
 ```ts
-Name$toJson({
+toJson_Name({
   firstName: 'Boom',
   lastName: 'Bam'
 })
