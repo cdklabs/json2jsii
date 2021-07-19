@@ -43,7 +43,7 @@ test('language bindings', async () => {
 
   const workdir = fs.mkdtempSync(path.join(os.tmpdir(), 'json2jsii'));
 
-  const src = path.join(workdir, 'tyepscript');
+  const src = path.join(workdir, 'typescript');
   fs.mkdirSync(src);
   fs.writeFileSync(path.join(src, 'index.ts'), await g.render());
 
@@ -67,10 +67,11 @@ test('language bindings', async () => {
     },
   });
 
+  expect(readFile(path.join(workdir, 'typescript/index.ts'))).toMatchSnapshot();
   expect(readFile(path.join(workdir, 'python/myorg/__init__.py'))).toMatchSnapshot();
   expect(readFile(path.join(workdir, 'java/src/main/java/org/myorg/Name.java'), ['@javax.annotation.Generated'])).toMatchSnapshot();
   expect(readFile(path.join(workdir, 'golang/myorg/myorg.go'))).toMatchSnapshot();
-  expect(readFile(path.join(workdir, 'csharp/myorg/myorg/IName.cs'))).toMatchSnapshot();
+  expect(readFile(path.join(workdir, 'csharp/myorg/myorg/Name.cs'))).toMatchSnapshot();
 });
 
 function readFile(filePath: string, ignoreLines: string[] = []) {
