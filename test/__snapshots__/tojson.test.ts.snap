@@ -439,3 +439,94 @@ export function MyStruct$toJson(obj: MyStruct | undefined): Record<string, any> 
 }
 "
 `;
+
+exports[`union types 1`] = `
+"/**
+ * @schema MyStruct
+ */
+export interface MyStruct {
+  /**
+   * @schema MyStruct#ref_to_complex
+   */
+  readonly refToComplex?: ComplexType;
+
+  /**
+   * @schema MyStruct#ReusedType
+   */
+  readonly reusedType?: IntOrString;
+
+  /**
+   * @schema MyStruct#Haver
+   */
+  readonly haver?: MyStructHaver;
+
+}
+
+/**
+ * Converts an object of type 'MyStruct' to JSON representation.
+ */
+export function MyStruct$toJson(obj: MyStruct | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'ref_to_complex': ComplexType$toJson(obj.refToComplex),
+    'ReusedType': obj.reusedType?.value,
+    'Haver': obj.haver?.value,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+
+/**
+ * @schema ComplexType
+ */
+export interface ComplexType {
+  /**
+   * @schema ComplexType#Ref_to_union
+   */
+  readonly refToUnion?: IntOrString;
+
+}
+
+/**
+ * Converts an object of type 'ComplexType' to JSON representation.
+ */
+export function ComplexType$toJson(obj: ComplexType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'Ref_to_union': obj.refToUnion?.value,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+
+/**
+ * @schema IntOrString
+ */
+export class IntOrString {
+  public static fromNumber(value: number): IntOrString {
+    return new IntOrString(value);
+  }
+  public static fromString(value: string): IntOrString {
+    return new IntOrString(value);
+  }
+  private constructor(public readonly value: any) {
+    Object.defineProperty(this, 'resolve', { value: () => value });
+  }
+}
+
+/**
+ * @schema MyStructHaver
+ */
+export class MyStructHaver {
+  public static fromNumber(value: number): MyStructHaver {
+    return new MyStructHaver(value);
+  }
+  public static fromString(value: string): MyStructHaver {
+    return new MyStructHaver(value);
+  }
+  private constructor(public readonly value: any) {
+    Object.defineProperty(this, 'resolve', { value: () => value });
+  }
+}
+"
+`;

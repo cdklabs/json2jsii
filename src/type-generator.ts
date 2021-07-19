@@ -2,7 +2,7 @@ import * as camelCase from 'camelcase';
 import { JSONSchema4 } from 'json-schema';
 import { snakeCase } from 'snake-case';
 import { Code } from './code';
-import { toJsonFunction } from './jsonify';
+import { toJsonFunction } from './tojson';
 
 
 const PRIMITIVE_TYPES = ['string', 'number', 'integer', 'boolean'];
@@ -59,15 +59,13 @@ export class TypeGenerator {
    * struct and all other types.
    */
   public static forStruct(structName: string, schema: JSONSchema4) {
-    const gen = new TypeGenerator({
-      definitions: schema.definitions,
-    });
+    const gen = new TypeGenerator({ definitions: schema.definitions });
     gen.emitType(structName, schema);
     return gen;
   }
 
-  private readonly typesToEmit: { [name: string]: (code: Code) => void } = { };
-  private readonly emittedTypes = new Set<string>();
+  private readonly typesToEmit: { [name: string]: Emitter } = { };
+  private readonly emittedTypes: Record<string, EmittedType> = {};
   private readonly exclude: string[];
   private readonly definitions: { [def: string]: JSONSchema4 };
 
@@ -117,7 +115,22 @@ export class TypeGenerator {
    * @param structFqn FQN for the type (defaults to `typeName`)
    * @returns The resolved type (not always the same as `typeName`)
    */
-  public emitType(typeName: string, def?: JSONSchema4, structFqn: string = typeName): EmittedType {
+  public emitType(typeName: string, def?: JSONSchema4, structFqn: string = typeName): string {
+    return this.emitTypeInternal(typeName, def, structFqn).type;
+  }
+
+  /**
+   * Emit a type based on a JSON schema. If `def` is not specified, the
+   * definition of the type will be looked up in the `definitions` provided
+   * during initialization or via `addDefinition()`.
+   *
+   * @param typeName The name of th type
+   * @param def JSON schema. If not specified, the schema is looked up from
+   * `definitions` based on the type name
+   * @param structFqn FQN for the type (defaults to `typeName`)
+   * @returns The resolved type (not always the same as `typeName`)
+   */
+  private emitTypeInternal(typeName: string, def?: JSONSchema4, structFqn: string = typeName): EmittedType {
     if (!def) {
       def = this.definitions[typeName];
       if (!def) {
@@ -146,8 +159,10 @@ export class TypeGenerator {
 
     // unions (unless this is a struct, and then we just ignore the constraints)
     if (def.oneOf || def.anyOf) {
-      if (this.emitUnion(typeName, def, structFqn)) {
-        return { type: typeName, toJson: x => `${x}?.value` };
+
+      const asUnion = this.tryEmitUnion(typeName, def, structFqn);
+      if (asUnion) {
+        return asUnion;
       }
 
       // carry on, we can't represent this schema as a union (yet?)
@@ -168,7 +183,7 @@ export class TypeGenerator {
         throw new Error('only "string" enums are supported');
       }
 
-      return { type: this.emitEnum(typeName, def, structFqn), toJson: x => x };
+      return this.emitEnum(typeName, def, structFqn);
     }
 
     // struct
@@ -177,8 +192,7 @@ export class TypeGenerator {
         throw new Error('for "properties", if "type" is specified it as to be an "object"');
       }
 
-      this.emitStruct(typeName, def, structFqn);
-      return { type: typeName, toJson: x => `${toJsonFunction.nameOf(typeName)}(${x})` };
+      return this.emitStruct(typeName, def, structFqn);
     }
 
     // map
@@ -204,8 +218,7 @@ export class TypeGenerator {
         return { type: 'boolean', toJson: (x) => x };
 
       case 'array': {
-        const et = this.typeForArray(typeName, def);
-        return { type: `${et.type}[]`, toJson: x => `${x}?.map(y => ${et.toJson('y')})` };
+        return this.emitArray(typeName, def);
       }
     }
 
@@ -219,8 +232,8 @@ export class TypeGenerator {
    * @param typeName The name of the type emitted by this handler.
    * @param emitter A function that will be called to emit the code.
    */
-  public emitCustomType(typeName: string, emitter: (code: Code) => void) {
-    if (this.emittedTypes.has(typeName)) {
+  public emitCustomType(typeName: string, emitter: Emitter) {
+    if (typeName in this.emittedTypes) {
       return;
     }
 
@@ -230,8 +243,8 @@ export class TypeGenerator {
   /**
    * @deprecated use `emitCustomType()`
    */
-  public addCode(typeName: string, codeEmitter: (code: Code) => void) {
-    return this.emitCustomType(typeName, codeEmitter);
+  public addCode(typeName: string, emitter: Emitter) {
+    return this.emitCustomType(typeName, emitter);
   }
 
   /**
@@ -254,10 +267,10 @@ export class TypeGenerator {
     while (Object.keys(this.typesToEmit).length) {
       const name = Object.keys(this.typesToEmit)[0];
       const emitter = this.typesToEmit[name];
-      emitter(code);
+      const emittedType = emitter(code);
       code.line();
       delete this.typesToEmit[name];
-      this.emittedTypes.add(name);
+      this.emittedTypes[name] = emittedType;
     }
   }
 
@@ -272,22 +285,32 @@ export class TypeGenerator {
    * @deprecated use `emitType()`
    */
   public addType(typeName: string, def?: JSONSchema4, structFqn: string = typeName): EmittedType {
-    return this.emitType(typeName, def, structFqn);
+    return this.emitTypeInternal(typeName, def, structFqn);
+  }
+
+  /**
+   * Emits an array.
+   */
+  private emitArray(typeName: string, def: JSONSchema4): EmittedType {
+    const et = this.typeForArray(typeName, def);
+    return { type: `${et.type}[]`, toJson: x => `${x}?.map(y => ${et.toJson('y')})` };
   }
 
   /**
    * @returns true if this definition can be represented as a union or false if it cannot
    */
-  private emitUnion(typeName: string, def: JSONSchema4, fqn: string) {
+  private tryEmitUnion(typeName: string, def: JSONSchema4, fqn: string): EmittedType | undefined {
     const options = new Array<string>();
     for (const option of def.oneOf || def.anyOf || []) {
       if (!supportedUnionOptionType(option.type)) {
-        return false;
+        return undefined;
       }
 
       const type = option.type === 'integer' ? 'number' : option.type;
       options.push(type);
     }
+
+    const emitted: EmittedType = { type: typeName, toJson: x => `${x}?.value` };
 
     this.addCode(typeName, code => {
       this.emitDescription(code, fqn, def.description);
@@ -301,18 +324,25 @@ export class TypeGenerator {
         code.closeBlock();
       }
 
-      code.openBlock('private constructor(value: any)');
+      code.openBlock('private constructor(public readonly value: any)');
       code.line('Object.defineProperty(this, \'resolve\', { value: () => value });');
       code.closeBlock();
 
       code.closeBlock();
+
+      return emitted;
     });
 
-    return true;
+    return emitted;
   }
 
-  private emitStruct(typeName: string, structDef: JSONSchema4, structFqn: string) {
-    this.addCode(typeName, code => {
+  private emitStruct(typeName: string, structDef: JSONSchema4, structFqn: string): EmittedType {
+    const emitted: EmittedType = {
+      type: typeName,
+      toJson: x => `${toJsonFunction.nameOf(typeName)}(${x})`,
+    };
+
+    this.emitCustomType(typeName, code => {
       const toJson = new toJsonFunction(typeName);
 
       this.emitDescription(code, structFqn, structDef.description);
@@ -330,7 +360,11 @@ export class TypeGenerator {
       code.closeBlock();
 
       toJson.emit(code);
+
+      return emitted;
     });
+
+    return emitted;
   }
 
   private emitProperty(code: Code, name: string, propDef: JSONSchema4, structFqn: string, structDef: JSONSchema4, toJson: toJsonFunction) {
@@ -356,9 +390,13 @@ export class TypeGenerator {
     toJson.addField(originalName, name, propertyType.toJson);
   }
 
-  private emitEnum(typeName: string, def: JSONSchema4, structFqn: string) {
+  private emitEnum(typeName: string, def: JSONSchema4, structFqn: string): EmittedType {
+    const emitted: EmittedType = {
+      type: typeName,
+      toJson: x => x,
+    };
 
-    this.addCode(typeName, code => {
+    this.emitCustomType(typeName, code => {
 
       if (!def.enum || def.enum.length === 0) {
         throw new Error(`definition is not an enum: ${JSON.stringify(def)}`);
@@ -385,9 +423,11 @@ export class TypeGenerator {
       }
 
       code.closeBlock();
+
+      return emitted;
     });
 
-    return typeName;
+    return emitted;
   }
 
   private emitDescription(code: Code, fqn: string, description?: string, annotations: { [type: string]: string } = { }) {
@@ -420,7 +460,7 @@ export class TypeGenerator {
 
   private typeForProperty(propertyFqn: string, def: JSONSchema4): EmittedType {
     const subtype = TypeGenerator.normalizeTypeName(propertyFqn.split('.').map(x => pascalCase(x)).join(''));
-    return this.emitType(subtype, def, subtype);
+    return this.emitTypeInternal(subtype, def, subtype);
   }
 
   private typeForRef(def: JSONSchema4): EmittedType {
@@ -437,12 +477,13 @@ export class TypeGenerator {
     const typeName = TypeGenerator.normalizeTypeName(comps[comps.length - 1]);
 
     // if we already emitted a type with this type name, just return it
-    if (this.emittedTypes.has(typeName)) {
-      return { type: typeName, toJson: x => `${toJsonFunction.nameOf(typeName)}(${x})` };
+    const emitted = this.emittedTypes[typeName];
+    if (emitted) {
+      return emitted;
     }
 
     const schema = this.resolveReference(def);
-    return this.emitType(typeName, schema, def.$ref);
+    return this.emitTypeInternal(typeName, schema, def.$ref);
   }
 
   private typeForArray(propertyFqn: string, def: JSONSchema4): EmittedType {
@@ -503,3 +544,5 @@ interface EmittedType {
    */
   readonly toJson: (code: string) => string;
 }
+
+type Emitter = (code: Code) => EmittedType;

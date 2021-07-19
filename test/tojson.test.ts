@@ -5,10 +5,10 @@ import { tmpdir } from 'os';
 import { join } from 'path';
 import { JSONSchema4 } from 'json-schema';
 import { TypeGenerator } from '../src';
-import { toJsonFunction } from '../src/jsonify';
+import { toJsonFunction } from '../src/tojson';
 
 test('primitives', () => {
-  const f = compile({
+  const toJson = generateToJson({
     properties: {
       StringProperty: { type: 'string' },
       BooleanProperty: { type: 'boolean' },
@@ -20,13 +20,13 @@ test('primitives', () => {
     ],
   });
 
-  expect(f({
+  expect(toJson({
     stringProperty: 'hello', booleanProperty: false, numberProperty: 1234, withUnderScore: 8989,
   })).toStrictEqual({
     StringProperty: 'hello', BooleanProperty: false, NumberProperty: 1234, With_UnderScore: 8989,
   });
 
-  expect(f({
+  expect(toJson({
     stringProperty: 'hello, world', numberProperty: undefined,
   })).toStrictEqual({
     StringProperty: 'hello, world',
@@ -34,7 +34,7 @@ test('primitives', () => {
 });
 
 test('names can get crazy', () => {
-  const f = compile({
+  const toJson = generateToJson({
     properties: {
       'hyphen-name': { type: 'string' },
       '$nameWithDolar': { type: 'string' },
@@ -42,7 +42,7 @@ test('names can get crazy', () => {
     },
   });
 
-  expect(f({
+  expect(toJson({
     hyphenName: 'boomboom',
     nameWithDolar: 'hey',
     nameWithSpaces: 'glow',
@@ -54,7 +54,7 @@ test('names can get crazy', () => {
 });
 
 test('complex types', () => {
-  const f = compile({
+  const toJson = generateToJson({
     definitions: {
       YourType: {
         properties: {
@@ -75,7 +75,7 @@ test('complex types', () => {
     },
   });
 
-  expect(f({
+  expect(toJson({
     complexType: { foo: 1234, bar: 'hey there', nested: { john: ['foo'] } },
   })).toStrictEqual({
     ComplexType: { Foo: 1234, Bar: 'hey there', Nested: { John: ['foo'] } },
@@ -85,13 +85,13 @@ test('complex types', () => {
 describe('arrays', () => {
 
   test('of primitives', () => {
-    const f = compile({
+    const toJson = generateToJson({
       properties: {
         ArrayProp: { type: 'array', items: { type: 'string' } },
       },
     });
 
-    expect(f({
+    expect(toJson({
       arrayProp: ['bello', 'aoll'],
     })).toStrictEqual({
       ArrayProp: ['bello', 'aoll'],
@@ -99,7 +99,7 @@ describe('arrays', () => {
   });
 
   test('of complex types', () => {
-    const f = compile({
+    const toJson = generateToJson({
       definitions: {
         MyType: {
           properties: {
@@ -113,7 +113,7 @@ describe('arrays', () => {
       },
     });
 
-    expect(f({
+    expect(toJson({
       arrayOfComplex: [{ foo: 122 }, { bar: 'hello' }, { foo: 88, bar: 'world' }],
     })).toStrictEqual({
       Array_Of_complex: [{ Foo: 122 }, { Bar: 'hello' }, { Foo: 88, Bar: 'world' }],
@@ -123,28 +123,28 @@ describe('arrays', () => {
 });
 
 test('any', () => {
-  const f = compile({
+  const toJson = generateToJson({
     properties: {
       MyAny: { type: 'object' },
     },
   });
 
-  expect(f({ myAny: 177 })).toStrictEqual({ MyAny: 177 });
-  expect(f({ myAny: 'hello' })).toStrictEqual({ MyAny: 'hello' });
-  expect(f({ myAny: ['hello', 889] })).toStrictEqual({ MyAny: ['hello', 889] });
+  expect(toJson({ myAny: 177 })).toStrictEqual({ MyAny: 177 });
+  expect(toJson({ myAny: 'hello' })).toStrictEqual({ MyAny: 'hello' });
+  expect(toJson({ myAny: ['hello', 889] })).toStrictEqual({ MyAny: ['hello', 889] });
 });
 
 
 describe('maps', () => {
   test('of primitives', () => {
-    const f = compile({
+    const toJson = generateToJson({
       properties: {
         StringMap: { additionalProperties: { type: 'string' } },
         NumberMap: { additionalProperties: { type: 'number' } },
       },
     });
 
-    expect(f({
+    expect(toJson({
       stringMap: {
         hello: 'string',
         world: 'strong',
@@ -164,7 +164,7 @@ describe('maps', () => {
       },
     });
 
-    expect(f({
+    expect(toJson({
       stringMap: undefined,
       numberMap: {
         hello: undefined,
@@ -178,7 +178,7 @@ describe('maps', () => {
   });
 
   test('of complex', () => {
-    const f = compile({
+    const toJson = generateToJson({
       definitions: {
         MyType: {
           properties: {
@@ -192,7 +192,7 @@ describe('maps', () => {
       },
     });
 
-    expect(f({
+    expect(toJson({
       complexMap: {
         foya: { foo: 123, bar: 'barbar' },
         hello_world: { foo: 3333 },
@@ -207,14 +207,14 @@ describe('maps', () => {
 });
 
 test('enums', () => {
-  const f = compile({
+  const toJson = generateToJson({
     properties: {
       MyEnum: { enum: ['one', 'two', 'three'] },
       YourEnum: { enum: ['jo', 'shmo'] },
     },
   });
 
-  expect(f({
+  expect(toJson({
     myEnum: 'two',
     yourEnum: undefined,
   })).toStrictEqual({
@@ -223,29 +223,84 @@ test('enums', () => {
 });
 
 test('date', () => {
-  const f = compile({
+  const toJson = generateToJson({
     properties: {
       DateTime: { type: 'string', format: 'date-time' },
     },
   });
 
-  expect(f({
+  expect(toJson({
     dateTime: new Date('2021-07-19T12:08:52.210Z'),
   })).toStrictEqual({
     DateTime: '2021-07-19T12:08:52.210Z',
   });
 
-  expect(f({ dateTime: undefined })).toStrictEqual({});
+  expect(toJson({ dateTime: undefined })).toStrictEqual({});
+});
+
+test('union types', () => {
+  const module = generateModule('MyStruct', {
+    definitions: {
+      ComplexType: {
+        properties: {
+          Ref_to_union: { $ref: '#/definitions/IntOrString' },
+        },
+      },
+      IntOrString: {
+        oneOf: [
+          { type: 'integer' },
+          { type: 'string' },
+        ],
+      },
+    },
+    properties: {
+      ref_to_complex: { $ref: '#/definitions/ComplexType' },
+      ReusedType: { $ref: '#/definitions/IntOrString' },
+      Haver: {
+        anyOf: [
+          { type: 'integer' },
+          { type: 'string' },
+        ],
+      },
+    },
+  });
+
+  const toJson = module.MyStruct$toJson;
+  const MyStructHaver = module.MyStructHaver;
+  const IntOrString = module.IntOrString;
+
+  expect(toJson({
+    haver: MyStructHaver.fromString('hello'),
+    refToComplex: {
+      refToUnion: IntOrString.fromNumber(1234),
+    },
+  })).toStrictEqual({
+    Haver: 'hello',
+    ref_to_complex: {
+      Ref_to_union: 1234,
+    },
+  });
 });
 
 /**
  * Generates structs from this JSON schema and returns a compiled versio of the
  * toJson method for the top-level struct.
  */
-function compile(schema: JSONSchema4): (x: any) => any {
+function generateToJson(schema: JSONSchema4): (x: any) => any {
+  const fnName = toJsonFunction.nameOf('MyStruct');
+  return generateModule('MyStruct', schema)[fnName];
+}
+
+/**
+ * Generates structs from this JSON schema and returns a compiled versio of the
+ * toJson method for the top-level struct.
+ */
+function generateModule(structName: string, schema: JSONSchema4): any {
   // generate code into workdir
   const workdir = mkdtempSync(join(tmpdir(), 'tojson.'));
-  const gen = TypeGenerator.forStruct('MyStruct', schema);
+  console.log(workdir);
+
+  const gen = TypeGenerator.forStruct(structName, schema);
   const code = gen.render();
   expect(code).toMatchSnapshot();
 
@@ -259,10 +314,9 @@ function compile(schema: JSONSchema4): (x: any) => any {
     // import the compiled javascript code into this process (wow)
     const source = join(workdir, 'index.js');
 
-    const fnName = toJsonFunction.nameOf('MyStruct');
 
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    return require(source)[fnName];
+    return require(source);
   } catch (e) {
     throw new Error(`Compilation error: ${e}. Workdir: ${workdir}`);
   }
