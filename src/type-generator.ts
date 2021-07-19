@@ -64,7 +64,7 @@ export class TypeGenerator {
     return gen;
   }
 
-  private readonly typesToEmit: { [name: string]: Emitter } = { };
+  private readonly typesToEmit: { [name: string]: TypeEmitter } = { };
   private readonly emittedTypes: Record<string, EmittedType> = {};
   private readonly exclude: string[];
   private readonly definitions: { [def: string]: JSONSchema4 };
@@ -230,20 +230,28 @@ export class TypeGenerator {
    * definitions for this type name.
    *
    * @param typeName The name of the type emitted by this handler.
-   * @param emitter A function that will be called to emit the code.
+   * @param emitter A function that will be called to emit the code and returns
+   * information about the emitted type.
    */
-  public emitCustomType(typeName: string, emitter: Emitter) {
+  public emitCustomType(typeName: string, emitter: TypeEmitter | CodeEmitter) {
     if (typeName in this.emittedTypes) {
       return;
     }
 
-    this.typesToEmit[typeName] = emitter;
+    this.typesToEmit[typeName] = code => {
+      const result = emitter(code);
+      if (typeof(result) === 'object') {
+        return result;
+      } else {
+        return { type: typeName, toJson: x => x };
+      }
+    };
   }
 
   /**
    * @deprecated use `emitCustomType()`
    */
-  public addCode(typeName: string, emitter: Emitter) {
+  public addCode(typeName: string, emitter: TypeEmitter) {
     return this.emitCustomType(typeName, emitter);
   }
 
@@ -349,10 +357,6 @@ export class TypeGenerator {
       code.openBlock(`export interface ${typeName}`);
 
       for (const [propName, propSpec] of Object.entries(structDef.properties || {})) {
-        if (propName.startsWith('x-')) {
-          continue; // skip extensions for now
-        }
-
         this.emitProperty(code, propName, propSpec, structFqn, structDef, toJson);
       }
 
@@ -502,7 +506,7 @@ export class TypeGenerator {
     const lookup = ref.substr(DEFINITIONS_PREFIX.length);
     const found = this.definitions[lookup];
     if (!found) {
-      throw new Error(`unable to find a definition for the $ref ${lookup}"`);
+      throw new Error(`unable to find a definition for the $ref "${lookup}"`);
     }
 
     return found;
@@ -544,4 +548,5 @@ interface EmittedType {
   readonly toJson: (code: string) => string;
 }
 
-type Emitter = (code: Code) => EmittedType;
+type TypeEmitter = (code: Code) => EmittedType;
+type CodeEmitter = (code: Code) => void;

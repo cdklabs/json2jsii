@@ -46,7 +46,7 @@ test('names can get crazy', () => {
     hyphenName: 'boomboom',
     nameWithDolar: 'hey',
     nameWithSpaces: 'glow',
-    xExtention: 'booom',
+    xExtension: 'booom',
   })).toStrictEqual({
     'hyphen-name': 'boomboom',
     '$nameWithDolar': 'hey',
@@ -267,7 +267,7 @@ test('union types', () => {
     },
   });
 
-  const toJson = module.MyStruct$toJson;
+  const toJson = module.toJson_MyStruct;
   const MyStructHaver = module.MyStructHaver;
   const IntOrString = module.IntOrString;
 
@@ -299,7 +299,6 @@ function generateToJson(schema: JSONSchema4): (x: any) => any {
 function generateModule(structName: string, schema: JSONSchema4): any {
   // generate code into workdir
   const workdir = mkdtempSync(join(tmpdir(), 'tojson.'));
-  console.log(workdir);
 
   const gen = TypeGenerator.forStruct(structName, schema);
   const code = gen.render();

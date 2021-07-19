@@ -35,7 +35,8 @@ export interface TestType {
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-export function TestType$toJson(obj: TestType | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'CamelCase1': obj.camelCase1,
@@ -47,6 +48,7 @@ export function TestType$toJson(obj: TestType | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 "
 `;
 
@@ -67,7 +69,8 @@ export interface TestType {
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-export function TestType$toJson(obj: TestType | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'field': obj.field,
@@ -75,6 +78,7 @@ export function TestType$toJson(obj: TestType | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 "
 `;
 
@@ -93,7 +97,8 @@ export interface TestType {
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-export function TestType$toJson(obj: TestType | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'field': obj.field,
@@ -101,6 +106,7 @@ export function TestType$toJson(obj: TestType | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 "
 `;
 
@@ -121,7 +127,8 @@ export interface TestType {
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-export function TestType$toJson(obj: TestType | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'field': obj.field,
@@ -129,6 +136,7 @@ export function TestType$toJson(obj: TestType | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 "
 `;
 
@@ -154,15 +162,17 @@ export interface TestType {
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-export function TestType$toJson(obj: TestType | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'firstEnum': obj.firstEnum,
-    'child': FqnOfTestTypeChild$toJson(obj.child),
+    'child': toJson_FqnOfTestTypeChild(obj.child),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 
 /**
  * description of first enum
@@ -171,13 +181,13 @@ export function TestType$toJson(obj: TestType | undefined): Record<string, any> 
  */
 export enum FqnOfTestTypeFirstEnum {
   /** value1 */
-  VALUE1 = \\"value1\\",
+  VALUE1 = 'value1',
   /** value2 */
-  VALUE2 = \\"value2\\",
+  VALUE2 = 'value2',
   /** value-of-three */
-  VALUE_OF_THREE = \\"value-of-three\\",
+  VALUE_OF_THREE = 'value-of-three',
   /** valueOfFour */
-  VALUE_OF_FOUR = \\"valueOfFour\\",
+  VALUE_OF_FOUR = 'valueOfFour',
 }
 
 /**
@@ -196,7 +206,8 @@ export interface FqnOfTestTypeChild {
 /**
  * Converts an object of type 'FqnOfTestTypeChild' to JSON representation.
  */
-export function FqnOfTestTypeChild$toJson(obj: FqnOfTestTypeChild | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_FqnOfTestTypeChild(obj: FqnOfTestTypeChild | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'secondEnum': obj.secondEnum,
@@ -204,6 +215,7 @@ export function FqnOfTestTypeChild$toJson(obj: FqnOfTestTypeChild | undefined): 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 
 /**
  * description of second enum
@@ -212,11 +224,11 @@ export function FqnOfTestTypeChild$toJson(obj: FqnOfTestTypeChild | undefined): 
  */
 export enum FqnOfTestTypeChildSecondEnum {
   /** hey */
-  HEY = \\"hey\\",
+  HEY = 'hey',
   /** enum values can be crazy */
-  ENUM_VALUES_CAN_BE_CRAZY = \\"enum values can be crazy\\",
+  ENUM_VALUES_CAN_BE_CRAZY = 'enum values can be crazy',
   /** yes>>123 */
-  YES_123 = \\"yes>>123\\",
+  YES_123 = 'yes>>123',
 }
 "
 `;
@@ -236,7 +248,8 @@ export interface TestType {
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-export function TestType$toJson(obj: TestType | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'Color': obj.color,
@@ -244,17 +257,18 @@ export function TestType$toJson(obj: TestType | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 
 /**
  * @schema FqnOfTestTypeColor
  */
 export enum FqnOfTestTypeColor {
   /** red */
-  RED = \\"red\\",
+  RED = 'red',
   /** green */
-  GREEN = \\"green\\",
+  GREEN = 'green',
   /** blue */
-  BLUE = \\"blue\\",
+  BLUE = 'blue',
 }
 "
 `;
@@ -296,8 +310,8 @@ export interface EksProps {
 
   /**
    * Network configuration for Amazon EKS cluster.
-   * 
-   * 
+   *
+   *
    *
    * @schema EksProps#KubernetesNetworkConfig
    */
@@ -381,34 +395,36 @@ export interface EksProps {
 /**
  * Converts an object of type 'EksProps' to JSON representation.
  */
-export function EksProps$toJson(obj: EksProps | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_EksProps(obj: EksProps | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'Name': obj.name,
     'RoleArn': obj.roleArn,
     'LambdaRoleName': obj.lambdaRoleName,
     'Version': obj.version,
-    'KubernetesNetworkConfig': EksPropsKubernetesNetworkConfig$toJson(obj.kubernetesNetworkConfig),
-    'ResourcesVpcConfig': EksPropsResourcesVpcConfig$toJson(obj.resourcesVpcConfig),
+    'KubernetesNetworkConfig': toJson_EksPropsKubernetesNetworkConfig(obj.kubernetesNetworkConfig),
+    'ResourcesVpcConfig': toJson_EksPropsResourcesVpcConfig(obj.resourcesVpcConfig),
     'EnabledClusterLoggingTypes': obj.enabledClusterLoggingTypes?.map(y => y),
-    'EncryptionConfig': obj.encryptionConfig?.map(y => EncryptionConfigEntry$toJson(y)),
-    'KubernetesApiAccess': EksPropsKubernetesApiAccess$toJson(obj.kubernetesApiAccess),
+    'EncryptionConfig': obj.encryptionConfig?.map(y => toJson_EncryptionConfigEntry(y)),
+    'KubernetesApiAccess': toJson_EksPropsKubernetesApiAccess(obj.kubernetesApiAccess),
     'Arn': obj.arn,
     'CertificateAuthorityData': obj.certificateAuthorityData,
     'ClusterSecurityGroupId': obj.clusterSecurityGroupId,
     'Endpoint': obj.endpoint,
     'EncryptionConfigKeyArn': obj.encryptionConfigKeyArn,
     'OIDCIssuerURL': obj.oidcIssuerUrl,
-    'Tags': obj.tags?.map(y => EksPropsTags$toJson(y)),
+    'Tags': obj.tags?.map(y => toJson_EksPropsTags(y)),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 
 /**
  * Network configuration for Amazon EKS cluster.
- * 
- * 
+ *
+ *
  *
  * @schema EksPropsKubernetesNetworkConfig
  */
@@ -425,7 +441,8 @@ export interface EksPropsKubernetesNetworkConfig {
 /**
  * Converts an object of type 'EksPropsKubernetesNetworkConfig' to JSON representation.
  */
-export function EksPropsKubernetesNetworkConfig$toJson(obj: EksPropsKubernetesNetworkConfig | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_EksPropsKubernetesNetworkConfig(obj: EksPropsKubernetesNetworkConfig | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'ServiceIpv4Cidr': obj.serviceIpv4Cidr,
@@ -433,6 +450,7 @@ export function EksPropsKubernetesNetworkConfig$toJson(obj: EksPropsKubernetesNe
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 
 /**
  * An object that represents the virtual private cloud (VPC) configuration to use for an Amazon EKS cluster.
@@ -480,7 +498,8 @@ export interface EksPropsResourcesVpcConfig {
 /**
  * Converts an object of type 'EksPropsResourcesVpcConfig' to JSON representation.
  */
-export function EksPropsResourcesVpcConfig$toJson(obj: EksPropsResourcesVpcConfig | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_EksPropsResourcesVpcConfig(obj: EksPropsResourcesVpcConfig | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'SecurityGroupIds': obj.securityGroupIds?.map(y => y),
@@ -492,6 +511,7 @@ export function EksPropsResourcesVpcConfig$toJson(obj: EksPropsResourcesVpcConfi
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 
 /**
  * The encryption configuration for the cluster.
@@ -516,15 +536,17 @@ export interface EncryptionConfigEntry {
 /**
  * Converts an object of type 'EncryptionConfigEntry' to JSON representation.
  */
-export function EncryptionConfigEntry$toJson(obj: EncryptionConfigEntry | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_EncryptionConfigEntry(obj: EncryptionConfigEntry | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'Resources': obj.resources?.map(y => y),
-    'Provider': Provider$toJson(obj.provider),
+    'Provider': toJson_Provider(obj.provider),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 
 /**
  * @schema EksPropsKubernetesApiAccess
@@ -545,15 +567,17 @@ export interface EksPropsKubernetesApiAccess {
 /**
  * Converts an object of type 'EksPropsKubernetesApiAccess' to JSON representation.
  */
-export function EksPropsKubernetesApiAccess$toJson(obj: EksPropsKubernetesApiAccess | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_EksPropsKubernetesApiAccess(obj: EksPropsKubernetesApiAccess | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
-    'Roles': obj.roles?.map(y => KubernetesApiAccessEntry$toJson(y)),
-    'Users': obj.users?.map(y => KubernetesApiAccessEntry$toJson(y)),
+    'Roles': obj.roles?.map(y => toJson_KubernetesApiAccessEntry(y)),
+    'Users': obj.users?.map(y => toJson_KubernetesApiAccessEntry(y)),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 
 /**
  * @schema EksPropsTags
@@ -574,7 +598,8 @@ export interface EksPropsTags {
 /**
  * Converts an object of type 'EksPropsTags' to JSON representation.
  */
-export function EksPropsTags$toJson(obj: EksPropsTags | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_EksPropsTags(obj: EksPropsTags | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'Value': obj.value,
@@ -583,6 +608,7 @@ export function EksPropsTags$toJson(obj: EksPropsTags | undefined): Record<strin
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 
 /**
  * AWS Key Management Service (AWS KMS) customer master key (CMK). Either the ARN or the alias can be used.
@@ -602,7 +628,8 @@ export interface Provider {
 /**
  * Converts an object of type 'Provider' to JSON representation.
  */
-export function Provider$toJson(obj: Provider | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_Provider(obj: Provider | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'KeyArn': obj.keyArn,
@@ -610,6 +637,7 @@ export function Provider$toJson(obj: Provider | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 
 /**
  * @schema KubernetesApiAccessEntry
@@ -635,7 +663,8 @@ export interface KubernetesApiAccessEntry {
 /**
  * Converts an object of type 'KubernetesApiAccessEntry' to JSON representation.
  */
-export function KubernetesApiAccessEntry$toJson(obj: KubernetesApiAccessEntry | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_KubernetesApiAccessEntry(obj: KubernetesApiAccessEntry | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'Arn': obj.arn,
@@ -645,6 +674,7 @@ export function KubernetesApiAccessEntry$toJson(obj: KubernetesApiAccessEntry | 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 "
 `;
 
@@ -698,7 +728,8 @@ export interface TestType {
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-export function TestType$toJson(obj: TestType | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'stringValue': obj.stringValue,
@@ -713,6 +744,7 @@ export function TestType$toJson(obj: TestType | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 "
 `;
 
@@ -741,16 +773,18 @@ export interface TestType {
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-export function TestType$toJson(obj: TestType | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
-    'shouldBeRequired': ItemType$toJson(obj.shouldBeRequired),
-    'mapShouldBeOptional': ((obj.mapShouldBeOptional) === undefined) ? undefined : (Object.entries(obj.mapShouldBeOptional).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: ItemType$toJson(i[1]) }), {})),
-    'arrayShouldBeOptional': obj.arrayShouldBeOptional?.map(y => ItemType$toJson(y)),
+    'shouldBeRequired': toJson_ItemType(obj.shouldBeRequired),
+    'mapShouldBeOptional': ((obj.mapShouldBeOptional) === undefined) ? undefined : (Object.entries(obj.mapShouldBeOptional).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: toJson_ItemType(i[1]) }), {})),
+    'arrayShouldBeOptional': obj.arrayShouldBeOptional?.map(y => toJson_ItemType(y)),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 
 /**
  * @schema ItemType
@@ -766,7 +800,8 @@ export interface ItemType {
 /**
  * Converts an object of type 'ItemType' to JSON representation.
  */
-export function ItemType$toJson(obj: ItemType | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_ItemType(obj: ItemType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'requiredField': obj.requiredField,
@@ -774,6 +809,7 @@ export function ItemType$toJson(obj: ItemType | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 "
 `;
 
@@ -792,14 +828,16 @@ export interface TestType {
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-export function TestType$toJson(obj: TestType | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
-    'other': Other$toJson(obj.other),
+    'other': toJson_Other(obj.other),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 
 /**
  * @schema Other
@@ -815,7 +853,8 @@ export interface Other {
 /**
  * Converts an object of type 'Other' to JSON representation.
  */
-export function Other$toJson(obj: Other | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_Other(obj: Other | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'stringValue': obj.stringValue,
@@ -823,6 +862,7 @@ export function Other$toJson(obj: Other | undefined): Record<string, any> | unde
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 "
 `;
 
@@ -861,7 +901,8 @@ export interface TestType {
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-export function TestType$toJson(obj: TestType | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'stringValue': obj.stringValue,
@@ -873,6 +914,7 @@ export function TestType$toJson(obj: TestType | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 "
 `;
 
@@ -891,7 +933,8 @@ export interface TestType {
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-export function TestType$toJson(obj: TestType | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'foo': obj.foo,
@@ -899,6 +942,7 @@ export function TestType$toJson(obj: TestType | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 "
 `;
 
@@ -956,7 +1000,8 @@ export interface TestType {
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-export function TestType$toJson(obj: TestType | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'minReadySeconds': obj.minReadySeconds,
@@ -969,6 +1014,7 @@ export function TestType$toJson(obj: TestType | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 "
 `;
 
@@ -987,14 +1033,16 @@ export interface TestType {
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-export function TestType$toJson(obj: TestType | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
-    'entrypoint': MyType$toJson(obj.entrypoint),
+    'entrypoint': toJson_MyType(obj.entrypoint),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 
 /**
  * @schema MyType
@@ -1010,14 +1058,16 @@ export interface MyType {
 /**
  * Converts an object of type 'MyType' to JSON representation.
  */
-export function MyType$toJson(obj: MyType | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_MyType(obj: MyType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
-    'self': MyType$toJson(obj.self),
+    'self': toJson_MyType(obj.self),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 "
 `;
 
@@ -1038,14 +1088,16 @@ export interface TypeB {
 /**
  * Converts an object of type 'TypeB' to JSON representation.
  */
-export function TypeB$toJson(obj: TypeB | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_TypeB(obj: TypeB | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
-    'refToTypeA': NewType$toJson(obj.refToTypeA),
+    'refToTypeA': obj.refToTypeA,
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 "
 `;
 
@@ -1064,14 +1116,16 @@ export interface TypeA {
 /**
  * Converts an object of type 'TypeA' to JSON representation.
  */
-export function TypeA$toJson(obj: TypeA | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_TypeA(obj: TypeA | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
-    'ref': TypeC$toJson(obj.ref),
+    'ref': toJson_TypeC(obj.ref),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 
 /**
  * @schema TypeC
@@ -1087,7 +1141,8 @@ export interface TypeC {
 /**
  * Converts an object of type 'TypeC' to JSON representation.
  */
-export function TypeC$toJson(obj: TypeC | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_TypeC(obj: TypeC | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'field': obj.field,
@@ -1095,6 +1150,7 @@ export function TypeC$toJson(obj: TypeC | undefined): Record<string, any> | unde
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 "
 `;
 
@@ -1116,14 +1172,16 @@ export interface TestType {
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-export function TestType$toJson(obj: TestType | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
-    'fault': TestTypeFault$toJson(obj.fault),
+    'fault': toJson_TestTypeFault(obj.fault),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 
 /**
  * Fault injection policy to apply on HTTP traffic at
@@ -1142,14 +1200,16 @@ export interface TestTypeFault {
 /**
  * Converts an object of type 'TestTypeFault' to JSON representation.
  */
-export function TestTypeFault$toJson(obj: TestTypeFault | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_TestTypeFault(obj: TestTypeFault | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
-    'delay': TestTypeFaultDelay$toJson(obj.delay),
+    'delay': toJson_TestTypeFaultDelay(obj.delay),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 
 /**
  * @schema TestTypeFaultDelay
@@ -1188,17 +1248,19 @@ export interface TestTypeFaultDelay {
 /**
  * Converts an object of type 'TestTypeFaultDelay' to JSON representation.
  */
-export function TestTypeFaultDelay$toJson(obj: TestTypeFaultDelay | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_TestTypeFaultDelay(obj: TestTypeFaultDelay | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'exponentialDelay': obj.exponentialDelay,
     'fixedDelay': obj.fixedDelay,
     'percent': obj.percent,
-    'percentage': TestTypeFaultDelayPercentage$toJson(obj.percentage),
+    'percentage': toJson_TestTypeFaultDelayPercentage(obj.percentage),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 
 /**
  * Percentage of requests on which the delay
@@ -1217,7 +1279,8 @@ export interface TestTypeFaultDelayPercentage {
 /**
  * Converts an object of type 'TestTypeFaultDelayPercentage' to JSON representation.
  */
-export function TestTypeFaultDelayPercentage$toJson(obj: TestTypeFaultDelayPercentage | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_TestTypeFaultDelayPercentage(obj: TestTypeFaultDelayPercentage | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'value': obj.value,
@@ -1225,6 +1288,7 @@ export function TestTypeFaultDelayPercentage$toJson(obj: TestTypeFaultDelayPerce
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 "
 `;
 

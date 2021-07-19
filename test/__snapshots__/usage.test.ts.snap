@@ -25,15 +25,17 @@ export interface Person {
 /**
  * Converts an object of type 'Person' to JSON representation.
  */
-export function Person$toJson(obj: Person | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_Person(obj: Person | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
-    'name': Name$toJson(obj.name),
+    'name': toJson_Name(obj.name),
     'color': obj.color,
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 
 /**
  * Represents a name of a person
@@ -60,7 +62,8 @@ export interface Name {
 /**
  * Converts an object of type 'Name' to JSON representation.
  */
-export function Name$toJson(obj: Name | undefined): Record<string, any> | undefined {
+/* eslint-disable max-len, quote-props */
+export function toJson_Name(obj: Name | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'FirstName': obj.firstName,
@@ -69,6 +72,7 @@ export function Name$toJson(obj: Name | undefined): Record<string, any> | undefi
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
+/* eslint-enable max-len, quote-props */
 
 /**
  * Favorite color. Default is green
@@ -78,13 +82,13 @@ export function Name$toJson(obj: Name | undefined): Record<string, any> | undefi
  */
 export enum PersonColor {
   /** red */
-  RED = \\"red\\",
+  RED = 'red',
   /** green */
-  GREEN = \\"green\\",
+  GREEN = 'green',
   /** blue */
-  BLUE = \\"blue\\",
+  BLUE = 'blue',
   /** yellow */
-  YELLOW = \\"yellow\\",
+  YELLOW = 'yellow',
 }
 "
 `;
