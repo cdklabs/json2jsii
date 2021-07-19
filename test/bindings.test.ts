@@ -14,7 +14,24 @@ test('language bindings', async () => {
       first: { type: 'string' },
       middle: { type: 'string' },
       last: { type: 'string' },
+      objectWithBooleanAdditionalProperties: {
+        type: 'object',
+        properties: {
+          name: { type: 'string' },
+        },
+        additionalProperties: true,
+      },
+      objectWithTypedAdditionalProperties: {
+        type: 'object',
+        properties: {
+          name: { type: 'string' },
+        },
+        additionalProperties: {
+          type: 'string',
+        },
+      },
     },
+    additionalProperties: true,
     required: ['first', 'last'],
   });
 
@@ -33,10 +50,21 @@ test('language bindings', async () => {
       outdir: path.join(workdir, 'python'),
       moduleName: 'myorg',
     },
+    golang: {
+      outdir: path.join(workdir, 'golang'),
+      packageName: 'myorg',
+      moduleName: 'myorg',
+    },
+    csharp: {
+      outdir: path.join(workdir, 'csharp'),
+      namespace: 'myorg',
+    },
   });
 
   expect(readFile(path.join(workdir, 'python/myorg/__init__.py'))).toMatchSnapshot();
   expect(readFile(path.join(workdir, 'java/src/main/java/org/myorg/Name.java'), ['@javax.annotation.Generated'])).toMatchSnapshot();
+  expect(readFile(path.join(workdir, 'golang/myorg/myorg.go'))).toMatchSnapshot();
+  expect(readFile(path.join(workdir, 'csharp/myorg/myorg/IName.cs'))).toMatchSnapshot();
 });
 
 function readFile(filePath: string, ignoreLines: string[] = []) {
