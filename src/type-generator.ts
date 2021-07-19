@@ -292,8 +292,8 @@ export class TypeGenerator {
   /**
    * @deprecated use `emitType()`
    */
-  public addType(typeName: string, def?: JSONSchema4, structFqn: string = typeName): EmittedType {
-    return this.emitTypeInternal(typeName, def, structFqn);
+  public addType(typeName: string, def?: JSONSchema4, structFqn: string = typeName) {
+    return this.emitType(typeName, def, structFqn);
   }
 
   /**
