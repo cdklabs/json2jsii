@@ -12,7 +12,10 @@ export class ToJsonFunction {
     this.functionName = `toJson_${baseType}`;
   }
 
-  public addField(schemaName: string, propertyName: string, toJson: toJson) {
+  /**
+   * Adds a field to the struct.
+   */
+  public addField(schemaName: string, propertyName: string, toJson: ToJson) {
     this.fields[schemaName] = toJson(`obj.${propertyName}`);
   }
 
@@ -24,6 +27,7 @@ export class ToJsonFunction {
     code.line('/* eslint-disable max-len, quote-props */');
     code.openBlock(`export function ${this.functionName}(obj: ${this.baseType} | undefined): Record<string, any> | undefined`);
     code.line('if (obj === undefined) { return undefined; }');
+
     code.open('const result = {');
     for (const [k, v] of Object.entries(this.fields)) {
       code.line(`'${k}': ${v},`);
@@ -38,4 +42,4 @@ export class ToJsonFunction {
   }
 }
 
-export type toJson = (x: string) => string;
+export type ToJson = (x: string) => string;
