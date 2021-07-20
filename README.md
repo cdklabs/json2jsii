@@ -39,7 +39,7 @@ fs.writeFileSync('person.ts', g.render());
 ```
 
 <details>
-<summary>`person.ts`</summary>
+<summary>person.ts</summary>
 
 ```ts
 /**
