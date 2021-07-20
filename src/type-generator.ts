@@ -2,6 +2,7 @@ import * as camelCase from 'camelcase';
 import { JSONSchema4 } from 'json-schema';
 import { snakeCase } from 'snake-case';
 import { Code } from './code';
+import { ToJsonFunction } from './tojson';
 
 
 const PRIMITIVE_TYPES = ['string', 'number', 'integer', 'boolean'];
@@ -19,6 +20,19 @@ export interface TypeGeneratorOptions {
    * @default - $refs are not supported
    */
   readonly definitions?: { [def: string]: JSONSchema4 };
+
+  /**
+   * Generate `toJson_Xyz` functions for all types which convert data objects
+   * back to schema-compatible JSON.
+   *
+   * These functions are required since property names in generated structs are
+   * camel cased in order to be compatible with JSII, and this is a lossy
+   * conversion, so the toJson functions are required to convert the data back
+   * to a schema-compatible data objects.
+   *
+   * @default true
+   */
+  readonly toJson?: boolean;
 }
 
 /**
@@ -49,10 +63,28 @@ export class TypeGenerator {
     return result;
   }
 
-  private readonly typesToEmit: { [name: string]: (code: Code) => void } = { };
-  private readonly emittedTypes = new Set<string>();
+  /**
+   * Renders a JSII struct (and accompanying types) from a JSON schema.
+   *
+   * If you wish to render multiple top-level structs or include custom types,
+   * create a new instance of `TypeGenerator` manually.
+   *
+   * @param structName The name of the JSII struct (TypeScript interface).
+   * @param schema The JSON schema (top level schema must include "properties")
+   * @returns Generated TypeScript source code that includes the top-level
+   * struct and all other types.
+   */
+  public static forStruct(structName: string, schema: JSONSchema4, options: TypeGeneratorOptions = {}) {
+    const gen = new TypeGenerator({ definitions: schema.definitions, ...options });
+    gen.emitType(structName, schema);
+    return gen;
+  }
+
+  private readonly typesToEmit: { [name: string]: TypeEmitter } = { };
+  private readonly emittedTypes: Record<string, EmittedType> = {};
   private readonly exclude: string[];
   private readonly definitions: { [def: string]: JSONSchema4 };
+  private readonly toJson: boolean;
 
   /**
    *
@@ -62,6 +94,7 @@ export class TypeGenerator {
   constructor(options: TypeGeneratorOptions = { }) {
     this.exclude = options.exclude ?? [];
     this.definitions = {};
+    this.toJson = options.toJson ?? true;
 
     for (const [typeName, def] of Object.entries(options.definitions ?? {})) {
       this.addDefinition(typeName, def);
@@ -101,6 +134,21 @@ export class TypeGenerator {
    * @returns The resolved type (not always the same as `typeName`)
    */
   public emitType(typeName: string, def?: JSONSchema4, structFqn: string = typeName): string {
+    return this.emitTypeInternal(typeName, def, structFqn).type;
+  }
+
+  /**
+   * Emit a type based on a JSON schema. If `def` is not specified, the
+   * definition of the type will be looked up in the `definitions` provided
+   * during initialization or via `addDefinition()`.
+   *
+   * @param typeName The name of th type
+   * @param def JSON schema. If not specified, the schema is looked up from
+   * `definitions` based on the type name
+   * @param structFqn FQN for the type (defaults to `typeName`)
+   * @returns The resolved type (not always the same as `typeName`)
+   */
+  private emitTypeInternal(typeName: string, def?: JSONSchema4, structFqn: string = typeName): EmittedType {
     if (!def) {
       def = this.definitions[typeName];
       if (!def) {
@@ -122,58 +170,77 @@ export class TypeGenerator {
       throw new Error(`Type ${structFqn} cannot be added since it matches one of the exclusion patterns`);
     }
 
+    // complex type
     if (def.$ref) {
       return this.typeForRef(def);
     }
 
     // unions (unless this is a struct, and then we just ignore the constraints)
     if (def.oneOf || def.anyOf) {
-      if (this.emitUnion(typeName, def, structFqn)) {
-        return typeName;
+
+      const asUnion = this.tryEmitUnion(typeName, def, structFqn);
+      if (asUnion) {
+        return asUnion;
       }
 
       // carry on, we can't represent this schema as a union (yet?)
     }
 
-    if (def.type === 'string' && def.format === 'date-time') {
-      return 'Date';
-    }
-
-    switch (def.type) {
-      case 'boolean': return 'boolean';
-      case 'array': return `${this.typeForArray(typeName, def)}[]`;
-      case 'any': return 'any';
-      case 'null': return 'any';
-    }
-
-    if (def.type === 'number' || def.type === 'integer') {
-      return 'number';
-    }
-
-    if (def.type === 'string') {
-      if (def.format === 'date-time') {
-        return 'Date';
+    // dates
+    if (def.format === 'date-time') {
+      if (def.type && def.type !== 'string') {
+        throw new Error('date-time must be a string');
       }
 
-      if (Array.isArray(def.enum) && def.enum.length > 0 && !def.enum.find(x => typeof(x) !== 'string')) {
-        return this.emitEnum(typeName, def, structFqn);
-      }
-
-      return 'string';
+      return { type: 'Date', toJson: x => `${x}?.toISOString()` };
     }
 
-    // map
-    if (!def.properties && def.additionalProperties && typeof(def.additionalProperties) === 'object') {
-      return `{ [key: string]: ${this.typeForProperty(typeName, def.additionalProperties)} }`;
+    // enums
+    if (def.enum && Array.isArray(def.enum) && def.enum.length > 0 && !def.enum.find(x => typeof(x) !== 'string')) {
+      if (def.type && def.type !== 'string') {
+        throw new Error('only "string" enums are supported');
+      }
+
+      return this.emitEnum(typeName, def, structFqn);
     }
 
     // struct
     if (def.properties) {
-      this.emitStruct(typeName, def, structFqn);
-      return typeName;
+      if (def.type && def.type !== 'object') {
+        throw new Error('for "properties", if "type" is specified it has to be an "object"');
+      }
+
+      return this.emitStruct(typeName, def, structFqn);
     }
 
-    return 'any';
+    // map
+    if (def.additionalProperties && typeof(def.additionalProperties) === 'object') {
+      if (def.type && def.type !== 'object') {
+        throw new Error('for "additionalProperties", if "type" is specified it has to be an "object"');
+      }
+
+      const et = this.typeForProperty(typeName, def.additionalProperties);
+      const toJson = (x: string) => `((${x}) === undefined) ? undefined : (Object.entries(${x}).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: ${et.toJson('i[1]') } }), {}))`;
+      return { type: `{ [key: string]: ${et.type} }`, toJson };
+    }
+
+    switch (def.type) {
+      case 'string':
+        return { type: 'string', toJson: x => x };
+
+      case 'number':
+      case 'integer':
+        return { type: 'number', toJson: x => x };
+
+      case 'boolean':
+        return { type: 'boolean', toJson: (x) => x };
+
+      case 'array': {
+        return this.emitArray(typeName, def);
+      }
+    }
+
+    return { type: 'any', toJson: x => x };
   }
 
   /**
@@ -181,21 +248,29 @@ export class TypeGenerator {
    * definitions for this type name.
    *
    * @param typeName The name of the type emitted by this handler.
-   * @param emitter A function that will be called to emit the code.
+   * @param emitter A function that will be called to emit the code and returns
+   * information about the emitted type.
    */
-  public emitCustomType(typeName: string, emitter: (code: Code) => void) {
-    if (this.emittedTypes.has(typeName)) {
+  public emitCustomType(typeName: string, emitter: TypeEmitter | CodeEmitter) {
+    if (typeName in this.emittedTypes) {
       return;
     }
 
-    this.typesToEmit[typeName] = emitter;
+    this.typesToEmit[typeName] = code => {
+      const result = emitter(code);
+      if (typeof(result) === 'object') {
+        return result;
+      } else {
+        return { type: typeName, toJson: x => x };
+      }
+    };
   }
 
   /**
    * @deprecated use `emitCustomType()`
    */
-  public addCode(typeName: string, codeEmitter: (code: Code) => void) {
-    return this.emitCustomType(typeName, codeEmitter);
+  public addCode(typeName: string, emitter: TypeEmitter | CodeEmitter) {
+    return this.emitCustomType(typeName, emitter);
   }
 
   /**
@@ -218,10 +293,10 @@ export class TypeGenerator {
     while (Object.keys(this.typesToEmit).length) {
       const name = Object.keys(this.typesToEmit)[0];
       const emitter = this.typesToEmit[name];
-      emitter(code);
+      const emittedType = emitter(code);
       code.line();
       delete this.typesToEmit[name];
-      this.emittedTypes.add(name);
+      this.emittedTypes[name] = emittedType;
     }
   }
 
@@ -235,23 +310,33 @@ export class TypeGenerator {
   /**
    * @deprecated use `emitType()`
    */
-  public addType(typeName: string, def?: JSONSchema4, structFqn: string = typeName): string {
+  public addType(typeName: string, def?: JSONSchema4, structFqn: string = typeName) {
     return this.emitType(typeName, def, structFqn);
+  }
+
+  /**
+   * Emits an array.
+   */
+  private emitArray(typeName: string, def: JSONSchema4): EmittedType {
+    const et = this.typeForArray(typeName, def);
+    return { type: `${et.type}[]`, toJson: x => `${x}?.map(y => ${et.toJson('y')})` };
   }
 
   /**
    * @returns true if this definition can be represented as a union or false if it cannot
    */
-  private emitUnion(typeName: string, def: JSONSchema4, fqn: string) {
+  private tryEmitUnion(typeName: string, def: JSONSchema4, fqn: string): EmittedType | undefined {
     const options = new Array<string>();
     for (const option of def.oneOf || def.anyOf || []) {
       if (!supportedUnionOptionType(option.type)) {
-        return false;
+        return undefined;
       }
 
       const type = option.type === 'integer' ? 'number' : option.type;
       options.push(type);
     }
+
+    const emitted: EmittedType = { type: typeName, toJson: x => `${x}?.value` };
 
     this.addCode(typeName, code => {
       this.emitDescription(code, fqn, def.description);
@@ -265,47 +350,48 @@ export class TypeGenerator {
         code.closeBlock();
       }
 
-      code.openBlock('private constructor(value: any)');
+      code.openBlock('private constructor(public readonly value: any)');
       code.line('Object.defineProperty(this, \'resolve\', { value: () => value });');
       code.closeBlock();
 
       code.closeBlock();
+
+      return emitted;
     });
 
-    return true;
+    return emitted;
   }
 
-  private emitStruct(typeName: string, structDef: JSONSchema4, structFqn: string) {
-    this.addCode(typeName, code => {
+  private emitStruct(typeName: string, structDef: JSONSchema4, structFqn: string): EmittedType {
+    const toJson = new ToJsonFunction(typeName);
+    const emitted: EmittedType = {
+      type: typeName,
+      toJson: x => `${toJson.functionName}(${x})`,
+    };
+
+    this.emitCustomType(typeName, code => {
+
       this.emitDescription(code, structFqn, structDef.description);
       code.openBlock(`export interface ${typeName}`);
 
       for (const [propName, propSpec] of Object.entries(structDef.properties || {})) {
-
-        if (propName.startsWith('x-')) {
-          continue; // skip extensions for now
-        }
-
-        if (propName.includes('_')) {
-          console.error(`warning: property ${structFqn}.${propName} omitted since it includes an underscore`);
-          continue; // skip
-        }
-
-        this.emitProperty(code, propName, propSpec, structFqn, structDef);
+        this.emitProperty(code, propName, propSpec, structFqn, structDef, toJson);
       }
 
       code.closeBlock();
+
+      if (this.toJson) {
+        toJson.emit(code);
+      }
+
+      return emitted;
     });
+
+    return emitted;
   }
 
-  private emitProperty(code: Code, name: string, propDef: JSONSchema4, structFqn: string, structDef: JSONSchema4) {
+  private emitProperty(code: Code, name: string, propDef: JSONSchema4, structFqn: string, structDef: JSONSchema4, toJson: ToJsonFunction) {
     const originalName = name;
-
-    // if name is not camelCase, convert it to camel case, but this is likely to
-    // produce invalid output during synthesis, so add some annotation to the docs.
-    if (name[0] === name[0].toUpperCase()) {
-      name = camelCase(name);
-    }
 
     // if the name starts with '$' (like $ref or $schema), we remove the "$"
     // and it's the same deal - will produce invalid output
@@ -313,24 +399,33 @@ export class TypeGenerator {
       name = name.substring(1);
     }
 
+    // convert the name to camel case so it's compatible with JSII
+    name = camelCase(name);
+
     this.emitDescription(code, `${structFqn}#${originalName}`, propDef.description);
     const propertyType = this.typeForProperty(`${structFqn}.${name}`, propDef);
-    const required = this.isPropertyRequired(name, structDef);
+    const required = this.isPropertyRequired(originalName, structDef);
     const optional = required ? '' : '?';
 
-    code.line(`readonly ${name}${optional}: ${propertyType};`);
+    code.line(`readonly ${name}${optional}: ${propertyType.type};`);
     code.line();
+
+    toJson.addField(originalName, name, propertyType.toJson);
   }
 
-  private emitEnum(typeName: string, def: JSONSchema4, structFqn: string) {
+  private emitEnum(typeName: string, def: JSONSchema4, structFqn: string): EmittedType {
+    const emitted: EmittedType = {
+      type: typeName,
+      toJson: x => x,
+    };
 
-    this.addCode(typeName, code => {
+    this.emitCustomType(typeName, code => {
 
       if (!def.enum || def.enum.length === 0) {
         throw new Error(`definition is not an enum: ${JSON.stringify(def)}`);
       }
 
-      if (def.type !== 'string') {
+      if (def.type && def.type !== 'string') {
         throw new Error('can only generate string enums');
       }
 
@@ -347,13 +442,15 @@ export class TypeGenerator {
         const memberName = snakeCase(value.replace(/[^a-z0-9]/gi, '_')).split('_').filter(x => x).join('_').toUpperCase();
 
         code.line(`/** ${value} */`);
-        code.line(`${memberName} = "${value}",`);
+        code.line(`${memberName} = '${value}',`);
       }
 
       code.closeBlock();
+
+      return emitted;
     });
 
-    return typeName;
+    return emitted;
   }
 
   private emitDescription(code: Code, fqn: string, description?: string, annotations: { [type: string]: string } = { }) {
@@ -362,10 +459,12 @@ export class TypeGenerator {
     if (description) {
       description = description.replace(/\*\//g, '_/');
 
+      for (const dline of description.split('\n').map(x => x.trim())) {
+        code.line(` * ${dline}`);
+      }
+
       const extractDefault = /Defaults?\W+(to|is)\W+(.+)/g.exec(description);
       const def = extractDefault && extractDefault[2];
-
-      code.line(` * ${description}`);
       if (def) {
         annotations.default = def;
       }
@@ -382,34 +481,35 @@ export class TypeGenerator {
     code.line(' */');
   }
 
-  private typeForProperty(propertyFqn: string, def: JSONSchema4): string {
+  private typeForProperty(propertyFqn: string, def: JSONSchema4): EmittedType {
     const subtype = TypeGenerator.normalizeTypeName(propertyFqn.split('.').map(x => pascalCase(x)).join(''));
-    return this.emitType(subtype, def, subtype);
+    return this.emitTypeInternal(subtype, def, subtype);
   }
 
-  private typeForRef(def: JSONSchema4): string {
+  private typeForRef(def: JSONSchema4): EmittedType {
     const prefix = '#/definitions/';
     if (!def.$ref || !def.$ref.startsWith(prefix)) {
       throw new Error(`invalid $ref ${JSON.stringify(def)}`);
     }
 
     if (this.isExcluded(def.$ref)) {
-      return 'any';
+      return { type: 'any', toJson: x => x };
     }
 
     const comps = def.$ref.substring(prefix.length).split('.');
     const typeName = TypeGenerator.normalizeTypeName(comps[comps.length - 1]);
 
     // if we already emitted a type with this type name, just return it
-    if (this.emittedTypes.has(typeName)) {
-      return typeName;
+    const emitted = this.emittedTypes[typeName];
+    if (emitted) {
+      return emitted;
     }
 
     const schema = this.resolveReference(def);
-    return this.emitType(typeName, schema, def.$ref);
+    return this.emitTypeInternal(typeName, schema, def.$ref);
   }
 
-  private typeForArray(propertyFqn: string, def: JSONSchema4): string {
+  private typeForArray(propertyFqn: string, def: JSONSchema4): EmittedType {
     if (!def.items || typeof(def.items) !== 'object') {
       throw new Error(`unsupported array type ${def.items}`);
     }
@@ -455,3 +555,18 @@ function supportedUnionOptionType(type: any): type is string {
 function pascalCase(s: string): string {
   return camelCase(s, { pascalCase: true });
 }
+
+interface EmittedType {
+  /**
+   * The JavaScript type to emit.
+   */
+  readonly type: string;
+
+  /**
+   * Returns the code to convert a statement `s` back to JSON.
+   */
+  readonly toJson: (code: string) => string;
+}
+
+type TypeEmitter = (code: Code) => EmittedType;
+type CodeEmitter = (code: Code) => void;

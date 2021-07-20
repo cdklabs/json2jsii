@@ -1,4 +1,4 @@
-import { promises as fs } from 'fs';
+import { promises as fs, readFileSync } from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 import { srcmak } from 'jsii-srcmak';
@@ -156,6 +156,7 @@ describe('structs', () => {
     required: [
       'minReadySeconds',
       'revisionHistoryLimit',
+      'NonCamelCaseRequired',
     ],
     type: 'object',
     properties: {
@@ -182,6 +183,9 @@ describe('structs', () => {
         description: 'The number of old ReplicaSets to retain to allow rollback. This is a pointer to distinguish between explicit zero and not specified. Defaults to 10.',
         format: 'int32',
         type: 'integer',
+      },
+      NonCamelCaseRequired: {
+        type: 'string',
       },
     },
   });
@@ -254,6 +258,11 @@ describe('enums', () => {
     },
   });
 
+  which('without type implies "string"', {
+    properties: {
+      Color: { enum: ['red', 'green', 'blue'] },
+    },
+  });
 });
 
 which('primitives', {
@@ -262,10 +271,21 @@ which('primitives', {
     stringValue: { type: 'string' },
     booleanValue: { type: 'boolean' },
     dateValue: { type: 'string', format: 'date-time' },
+    dateValueImplicitType: { format: 'date-time' },
     anyValue: { type: 'any' },
     nullValue: { type: 'null' },
     numberValue: { type: 'number' },
     integerValue: { type: 'integer' },
+  },
+});
+
+which('camel casing', {
+  properties: {
+    'CamelCase1': { type: 'string' },
+    'Camel_Case2': { type: 'string' },
+    'camel_case_3': { type: 'string' },
+    'CAMEL_CASE_4': { type: 'string' },
+    'camel-case-5': { type: 'string' },
   },
 });
 
@@ -298,9 +318,34 @@ describe('type aliases', () => {
     gen.emitType('TypeA');
     expect(gen.render()).toMatchSnapshot();
   });
-
 });
 
+test('forStruct', async () => {
+  const schema = JSON.parse(readFileSync(path.join(__dirname, 'fixtures', 'eks.json'), 'utf-8'));
+  const gen = TypeGenerator.forStruct('EksProps', schema);
+  const source = await generate(gen);
+  expect(source).toMatchSnapshot();
+});
+
+test('fails when trying to resolve an undefined $ref', () => {
+  const g = new TypeGenerator();
+  expect(() => g.addType('Foo', { $ref: 'unresolvable' })).toThrow(/invalid \$ref {\"\$ref\":\"unresolvable\"}/);
+  expect(() => g.addType('Foo', { $ref: '#/definitions/unresolvable' })).toThrow(/unable to find a definition for the \$ref \"unresolvable\"/);
+});
+
+test('if "toJson" is disabled, toJson functions are not generated', async () => {
+  const schema: JSONSchema4 = {
+    properties: {
+      bar: { type: 'string' },
+    },
+  };
+
+  const gen = TypeGenerator.forStruct('Foo', schema, {
+    toJson: false,
+  });
+
+  expect(await generate(gen)).toMatchSnapshot();
+});
 
 function which(name: string, schema: JSONSchema4, definitions?: JSONSchema4) {
   test(name, async () => {

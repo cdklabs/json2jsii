@@ -5,47 +5,41 @@
 ## Usage
 
 ```ts
-const g = new TypeGenerator({
+const g = TypeGenerator.forStruct('Person', {
   definitions: {
     Name: {
       description: 'Represents a name of a person',
-      required: [ 'firstName', 'lastName' ],
+      required: ['FirstName', 'last_name'],
       properties: {
-        firstName: {
+        FirstName: {
           type: 'string',
           description: 'The first name of the person',
         },
-        lastName: {
+        last_name: {
           type: 'string',
           description: 'The last name of the person',
         },
       },
     },
   },
-});
-
-// definitions can also be added like this:
-g.addDefinition('Person', {
-  required: [ 'name' ],
+  required: ['name'],
   properties: {
     name: {
       description: 'The person\'s name',
       $ref: '#/definitions/Name',
     },
-    color: {
+    favorite_color: {
       description: 'Favorite color. Default is green',
-      enum: [ 'red', 'green', 'blue', 'yellow' ],
+      enum: ['red', 'green', 'blue', 'yellow'],
     },
   },
 });
 
-// this will emit the specified type & recursively all the referenced types.
-g.emitType('Person');
-
-fs.writeFileSync('gen/ts/person.ts', await g.render());
+fs.writeFileSync('person.ts', g.render());
 ```
 
-Then, `gen/ts/person.ts` will look like this;
+<details>
+<summary>person.ts</summary>
 
 ```ts
 /**
@@ -63,10 +57,26 @@ export interface Person {
    * Favorite color. Default is green
    *
    * @default green
-   * @schema Person#color
+   * @schema Person#favorite_color
    */
-  readonly color?: any;
+  readonly favoriteColor?: PersonFavoriteColor;
+
 }
+
+/**
+ * Converts an object of type 'Person' to JSON representation.
+ */
+/* eslint-disable max-len, quote-props */
+export function toJson_Person(obj: Person | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'name': toJson_Name(obj.name),
+    'favorite_color': obj.favoriteColor,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, quote-props */
 
 /**
  * Represents a name of a person
@@ -77,16 +87,82 @@ export interface Name {
   /**
    * The first name of the person
    *
-   * @schema Name#firstName
+   * @schema Name#FirstName
    */
   readonly firstName: string;
 
   /**
    * The last name of the person
    *
-   * @schema Name#lastName
+   * @schema Name#last_name
    */
   readonly lastName: string;
+
+}
+
+/**
+ * Converts an object of type 'Name' to JSON representation.
+ */
+/* eslint-disable max-len, quote-props */
+export function toJson_Name(obj: Name | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'FirstName': obj.firstName,
+    'last_name': obj.lastName,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, quote-props */
+
+/**
+ * Favorite color. Default is green
+ *
+ * @default green
+ * @schema PersonFavoriteColor
+ */
+export enum PersonFavoriteColor {
+  /** red */
+  RED = 'red',
+  /** green */
+  GREEN = 'green',
+  /** blue */
+  BLUE = 'blue',
+  /** yellow */
+  YELLOW = 'yellow',
+}
+```
+
+</details>
+
+The generated code includes JSII structs (TypeScript interfaces) and enums based
+on the schema (`Person`, `Name` and `PersonFavoriteColor`) as well as a function
+`toJson_Xyz()` for each struct.
+
+The `toJson()` functions are required in order to serialize objects back to their
+original schema format.
+
+For example, the following expression:
+
+```ts
+toJson_Person({
+  name: {
+    firstName: 'Jordan',
+    lastName: 'McJordan'
+  },
+  favoriteColor: PersonFavoriteColor.GREEN
+})
+```
+
+Will return:
+
+```json
+{
+  "name": {
+    "FirstName": "Jordan",
+    "last_name": "McJordan"
+  },
+  "favorite_color": "green"
 }
 ```
 
