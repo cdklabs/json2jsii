@@ -24,7 +24,7 @@ test('readme example', () => {
         description: 'The person\'s name',
         $ref: '#/definitions/Name',
       },
-      color: {
+      favorite_color: {
         description: 'Favorite color. Default is green',
         enum: ['red', 'green', 'blue', 'yellow'],
       },

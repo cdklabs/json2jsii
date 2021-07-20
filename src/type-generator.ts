@@ -189,7 +189,7 @@ export class TypeGenerator {
     // struct
     if (def.properties) {
       if (def.type && def.type !== 'object') {
-        throw new Error('for "properties", if "type" is specified it as to be an "object"');
+        throw new Error('for "properties", if "type" is specified it has to be an "object"');
       }
 
       return this.emitStruct(typeName, def, structFqn);
@@ -198,7 +198,7 @@ export class TypeGenerator {
     // map
     if (def.additionalProperties && typeof(def.additionalProperties) === 'object') {
       if (def.type && def.type !== 'object') {
-        throw new Error('for "additionalProperties", if "type" is specified it as to be an "object"');
+        throw new Error('for "additionalProperties", if "type" is specified it has to be an "object"');
       }
 
       const et = this.typeForProperty(typeName, def.additionalProperties);

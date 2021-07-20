@@ -14,6 +14,11 @@ export class ToJsonFunction {
 
   /**
    * Adds a field to the struct.
+   *
+   * @param schemaName The name of the property in the schema ("to")
+   * @param propertyName The name of the TypeScript property ("from")
+   * @param toJson A function used to convert a value from JavaScript to schema
+   * format. This could be `x => x` if no conversion is required.
    */
   public addField(schemaName: string, propertyName: string, toJson: ToJson) {
     this.fields[schemaName] = toJson(`obj.${propertyName}`);
@@ -42,4 +47,10 @@ export class ToJsonFunction {
   }
 }
 
-export type ToJson = (x: string) => string;
+/**
+ * A function that converts an expression from JavaScript to schema format.
+ *
+ * @example x => x
+ * @example x => x?.map(y => toJson_Foo(y))
+ */
+export type ToJson = (expression: string) => string;
