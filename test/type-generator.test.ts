@@ -333,6 +333,20 @@ test('fails when trying to resolve an undefined $ref', () => {
   expect(() => g.addType('Foo', { $ref: '#/definitions/unresolvable' })).toThrow(/unable to find a definition for the \$ref \"unresolvable\"/);
 });
 
+test('if "toJson" is disabled, toJson functions are not generated', async () => {
+  const schema: JSONSchema4 = {
+    properties: {
+      bar: { type: 'string' },
+    },
+  };
+
+  const gen = TypeGenerator.forStruct('Foo', schema, {
+    toJson: false,
+  });
+
+  expect(await generate(gen)).toMatchSnapshot();
+});
+
 function which(name: string, schema: JSONSchema4, definitions?: JSONSchema4) {
   test(name, async () => {
     const gen = new TypeGenerator(definitions);

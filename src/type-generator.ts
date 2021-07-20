@@ -20,6 +20,19 @@ export interface TypeGeneratorOptions {
    * @default - $refs are not supported
    */
   readonly definitions?: { [def: string]: JSONSchema4 };
+
+  /**
+   * Generate `toJson_Xyz` functions for all types which convert data objects
+   * back to schema-compatible JSON.
+   *
+   * These functions are required since property names in generated structs are
+   * camel cased in order to be compatible with JSII, and this is a lossy
+   * conversion, so the toJson functions are required to convert the data back
+   * to a schema-compatible data objects.
+   *
+   * @default true
+   */
+  readonly toJson?: boolean;
 }
 
 /**
@@ -53,13 +66,16 @@ export class TypeGenerator {
   /**
    * Renders a JSII struct (and accompanying types) from a JSON schema.
    *
+   * If you wish to render multiple top-level structs or include custom types,
+   * create a new instance of `TypeGenerator` manually.
+   *
    * @param structName The name of the JSII struct (TypeScript interface).
    * @param schema The JSON schema (top level schema must include "properties")
    * @returns Generated TypeScript source code that includes the top-level
    * struct and all other types.
    */
-  public static forStruct(structName: string, schema: JSONSchema4) {
-    const gen = new TypeGenerator({ definitions: schema.definitions });
+  public static forStruct(structName: string, schema: JSONSchema4, options: TypeGeneratorOptions = {}) {
+    const gen = new TypeGenerator({ definitions: schema.definitions, ...options });
     gen.emitType(structName, schema);
     return gen;
   }
@@ -68,6 +84,7 @@ export class TypeGenerator {
   private readonly emittedTypes: Record<string, EmittedType> = {};
   private readonly exclude: string[];
   private readonly definitions: { [def: string]: JSONSchema4 };
+  private readonly toJson: boolean;
 
   /**
    *
@@ -77,6 +94,7 @@ export class TypeGenerator {
   constructor(options: TypeGeneratorOptions = { }) {
     this.exclude = options.exclude ?? [];
     this.definitions = {};
+    this.toJson = options.toJson ?? true;
 
     for (const [typeName, def] of Object.entries(options.definitions ?? {})) {
       this.addDefinition(typeName, def);
@@ -362,7 +380,9 @@ export class TypeGenerator {
 
       code.closeBlock();
 
-      toJson.emit(code);
+      if (this.toJson) {
+        toJson.emit(code);
+      }
 
       return emitted;
     });

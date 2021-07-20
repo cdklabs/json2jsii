@@ -678,6 +678,20 @@ export function toJson_KubernetesApiAccessEntry(obj: KubernetesApiAccessEntry | 
 "
 `;
 
+exports[`if "toJson" is disabled, toJson functions are not generated 1`] = `
+"/**
+ * @schema Foo
+ */
+export interface Foo {
+  /**
+   * @schema Foo#bar
+   */
+  readonly bar?: string;
+
+}
+"
+`;
+
 exports[`primitives 1`] = `
 "/**
  * @schema fqn.of.TestType
