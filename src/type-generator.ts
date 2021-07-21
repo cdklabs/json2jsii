@@ -385,9 +385,9 @@ export class TypeGenerator {
           let propertyType = 'any';
           if (Object.keys(structDef.additionalProperties).length > 0) {
             const emittedType = this.typeForProperty(typeName, structDef.additionalProperties);
-            propertyType = `${emittedType.type} | undefined`;
+            propertyType = `${emittedType.type} | undefined`; // Other properties might be optional
           }
-          code.line(`[key: string]: ${propertyType}`);
+          code.line(`[key: string]: ${propertyType};`);
         }
       }
 
