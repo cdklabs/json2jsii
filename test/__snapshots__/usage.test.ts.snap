@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`example with $ref 1`] = `
+exports[`readme example 1`] = `
 "/**
  * @schema Person
  */
@@ -16,11 +16,26 @@ export interface Person {
    * Favorite color. Default is green
    *
    * @default green
-   * @schema Person#color
+   * @schema Person#favorite_color
    */
-  readonly color?: any;
+  readonly favoriteColor?: PersonFavoriteColor;
 
 }
+
+/**
+ * Converts an object of type 'Person' to JSON representation.
+ */
+/* eslint-disable max-len, quote-props */
+export function toJson_Person(obj: Person | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'name': toJson_Name(obj.name),
+    'favorite_color': obj.favoriteColor,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, quote-props */
 
 /**
  * Represents a name of a person
@@ -31,17 +46,49 @@ export interface Name {
   /**
    * The first name of the person
    *
-   * @schema Name#firstName
+   * @schema Name#FirstName
    */
   readonly firstName: string;
 
   /**
    * The last name of the person
    *
-   * @schema Name#lastName
+   * @schema Name#last_name
    */
   readonly lastName: string;
 
+}
+
+/**
+ * Converts an object of type 'Name' to JSON representation.
+ */
+/* eslint-disable max-len, quote-props */
+export function toJson_Name(obj: Name | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'FirstName': obj.firstName,
+    'last_name': obj.lastName,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, quote-props */
+
+/**
+ * Favorite color. Default is green
+ *
+ * @default green
+ * @schema PersonFavoriteColor
+ */
+export enum PersonFavoriteColor {
+  /** red */
+  RED = 'red',
+  /** green */
+  GREEN = 'green',
+  /** blue */
+  BLUE = 'blue',
+  /** yellow */
+  YELLOW = 'yellow',
 }
 "
 `;

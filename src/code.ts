@@ -24,7 +24,7 @@ export class Code {
     const line = text.length > 0
       ? ' '.repeat(this.indent) + text // only indent if line has content
       : text;
-    this.lines.push(line);
+    this.lines.push(line.trimEnd());
   }
 
   public render(): string {

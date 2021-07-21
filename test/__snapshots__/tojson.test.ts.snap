@@ -1,0 +1,570 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`any 1`] = `
+"/**
+ * @schema MyStruct
+ */
+export interface MyStruct {
+  /**
+   * @schema MyStruct#MyAny
+   */
+  readonly myAny?: any;
+
+}
+
+/**
+ * Converts an object of type 'MyStruct' to JSON representation.
+ */
+/* eslint-disable max-len, quote-props */
+export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'MyAny': obj.myAny,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, quote-props */
+"
+`;
+
+exports[`arrays of complex types 1`] = `
+"/**
+ * @schema MyStruct
+ */
+export interface MyStruct {
+  /**
+   * @schema MyStruct#Array_Of_complex
+   */
+  readonly arrayOfComplex?: MyType[];
+
+}
+
+/**
+ * Converts an object of type 'MyStruct' to JSON representation.
+ */
+/* eslint-disable max-len, quote-props */
+export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'Array_Of_complex': obj.arrayOfComplex?.map(y => toJson_MyType(y)),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, quote-props */
+
+/**
+ * @schema MyType
+ */
+export interface MyType {
+  /**
+   * @schema MyType#Foo
+   */
+  readonly foo?: number;
+
+  /**
+   * @schema MyType#Bar
+   */
+  readonly bar?: string;
+
+}
+
+/**
+ * Converts an object of type 'MyType' to JSON representation.
+ */
+/* eslint-disable max-len, quote-props */
+export function toJson_MyType(obj: MyType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'Foo': obj.foo,
+    'Bar': obj.bar,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, quote-props */
+"
+`;
+
+exports[`arrays of primitives 1`] = `
+"/**
+ * @schema MyStruct
+ */
+export interface MyStruct {
+  /**
+   * @schema MyStruct#ArrayProp
+   */
+  readonly arrayProp?: string[];
+
+}
+
+/**
+ * Converts an object of type 'MyStruct' to JSON representation.
+ */
+/* eslint-disable max-len, quote-props */
+export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'ArrayProp': obj.arrayProp?.map(y => y),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, quote-props */
+"
+`;
+
+exports[`complex types 1`] = `
+"/**
+ * @schema MyStruct
+ */
+export interface MyStruct {
+  /**
+   * @schema MyStruct#ComplexType
+   */
+  readonly complexType?: MyType;
+
+}
+
+/**
+ * Converts an object of type 'MyStruct' to JSON representation.
+ */
+/* eslint-disable max-len, quote-props */
+export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'ComplexType': toJson_MyType(obj.complexType),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, quote-props */
+
+/**
+ * @schema MyType
+ */
+export interface MyType {
+  /**
+   * @schema MyType#Foo
+   */
+  readonly foo?: number;
+
+  /**
+   * @schema MyType#Bar
+   */
+  readonly bar?: string;
+
+  /**
+   * @schema MyType#Nested
+   */
+  readonly nested: YourType;
+
+}
+
+/**
+ * Converts an object of type 'MyType' to JSON representation.
+ */
+/* eslint-disable max-len, quote-props */
+export function toJson_MyType(obj: MyType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'Foo': obj.foo,
+    'Bar': obj.bar,
+    'Nested': toJson_YourType(obj.nested),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, quote-props */
+
+/**
+ * @schema YourType
+ */
+export interface YourType {
+  /**
+   * @schema YourType#John
+   */
+  readonly john?: string[];
+
+}
+
+/**
+ * Converts an object of type 'YourType' to JSON representation.
+ */
+/* eslint-disable max-len, quote-props */
+export function toJson_YourType(obj: YourType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'John': obj.john?.map(y => y),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, quote-props */
+"
+`;
+
+exports[`date 1`] = `
+"/**
+ * @schema MyStruct
+ */
+export interface MyStruct {
+  /**
+   * @schema MyStruct#DateTime
+   */
+  readonly dateTime?: Date;
+
+}
+
+/**
+ * Converts an object of type 'MyStruct' to JSON representation.
+ */
+/* eslint-disable max-len, quote-props */
+export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'DateTime': obj.dateTime?.toISOString(),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, quote-props */
+"
+`;
+
+exports[`enums 1`] = `
+"/**
+ * @schema MyStruct
+ */
+export interface MyStruct {
+  /**
+   * @schema MyStruct#MyEnum
+   */
+  readonly myEnum?: MyStructMyEnum;
+
+  /**
+   * @schema MyStruct#YourEnum
+   */
+  readonly yourEnum?: MyStructYourEnum;
+
+}
+
+/**
+ * Converts an object of type 'MyStruct' to JSON representation.
+ */
+/* eslint-disable max-len, quote-props */
+export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'MyEnum': obj.myEnum,
+    'YourEnum': obj.yourEnum,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, quote-props */
+
+/**
+ * @schema MyStructMyEnum
+ */
+export enum MyStructMyEnum {
+  /** one */
+  ONE = 'one',
+  /** two */
+  TWO = 'two',
+  /** three */
+  THREE = 'three',
+}
+
+/**
+ * @schema MyStructYourEnum
+ */
+export enum MyStructYourEnum {
+  /** jo */
+  JO = 'jo',
+  /** shmo */
+  SHMO = 'shmo',
+}
+"
+`;
+
+exports[`maps of complex 1`] = `
+"/**
+ * @schema MyStruct
+ */
+export interface MyStruct {
+  /**
+   * @schema MyStruct#ComplexMap
+   */
+  readonly complexMap?: { [key: string]: MyType };
+
+}
+
+/**
+ * Converts an object of type 'MyStruct' to JSON representation.
+ */
+/* eslint-disable max-len, quote-props */
+export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'ComplexMap': ((obj.complexMap) === undefined) ? undefined : (Object.entries(obj.complexMap).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: toJson_MyType(i[1]) }), {})),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, quote-props */
+
+/**
+ * @schema MyType
+ */
+export interface MyType {
+  /**
+   * @schema MyType#Foo
+   */
+  readonly foo?: number;
+
+  /**
+   * @schema MyType#Bar
+   */
+  readonly bar?: string;
+
+}
+
+/**
+ * Converts an object of type 'MyType' to JSON representation.
+ */
+/* eslint-disable max-len, quote-props */
+export function toJson_MyType(obj: MyType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'Foo': obj.foo,
+    'Bar': obj.bar,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, quote-props */
+"
+`;
+
+exports[`maps of primitives 1`] = `
+"/**
+ * @schema MyStruct
+ */
+export interface MyStruct {
+  /**
+   * @schema MyStruct#StringMap
+   */
+  readonly stringMap?: { [key: string]: string };
+
+  /**
+   * @schema MyStruct#NumberMap
+   */
+  readonly numberMap?: { [key: string]: number };
+
+}
+
+/**
+ * Converts an object of type 'MyStruct' to JSON representation.
+ */
+/* eslint-disable max-len, quote-props */
+export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'StringMap': ((obj.stringMap) === undefined) ? undefined : (Object.entries(obj.stringMap).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {})),
+    'NumberMap': ((obj.numberMap) === undefined) ? undefined : (Object.entries(obj.numberMap).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {})),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, quote-props */
+"
+`;
+
+exports[`names can get crazy 1`] = `
+"/**
+ * @schema MyStruct
+ */
+export interface MyStruct {
+  /**
+   * @schema MyStruct#hyphen-name
+   */
+  readonly hyphenName?: string;
+
+  /**
+   * @schema MyStruct#$nameWithDolar
+   */
+  readonly nameWithDolar?: string;
+
+  /**
+   * @schema MyStruct#name with spaces
+   */
+  readonly nameWithSpaces?: string;
+
+  /**
+   * @schema MyStruct#x-extension
+   */
+  readonly xExtension?: string;
+
+}
+
+/**
+ * Converts an object of type 'MyStruct' to JSON representation.
+ */
+/* eslint-disable max-len, quote-props */
+export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'hyphen-name': obj.hyphenName,
+    '$nameWithDolar': obj.nameWithDolar,
+    'name with spaces': obj.nameWithSpaces,
+    'x-extension': obj.xExtension,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, quote-props */
+"
+`;
+
+exports[`primitives 1`] = `
+"/**
+ * @schema MyStruct
+ */
+export interface MyStruct {
+  /**
+   * @schema MyStruct#StringProperty
+   */
+  readonly stringProperty: string;
+
+  /**
+   * @schema MyStruct#BooleanProperty
+   */
+  readonly booleanProperty?: boolean;
+
+  /**
+   * @schema MyStruct#NumberProperty
+   */
+  readonly numberProperty?: number;
+
+  /**
+   * @schema MyStruct#With_UnderScore
+   */
+  readonly withUnderScore?: number;
+
+}
+
+/**
+ * Converts an object of type 'MyStruct' to JSON representation.
+ */
+/* eslint-disable max-len, quote-props */
+export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'StringProperty': obj.stringProperty,
+    'BooleanProperty': obj.booleanProperty,
+    'NumberProperty': obj.numberProperty,
+    'With_UnderScore': obj.withUnderScore,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, quote-props */
+"
+`;
+
+exports[`union types 1`] = `
+"/**
+ * @schema MyStruct
+ */
+export interface MyStruct {
+  /**
+   * @schema MyStruct#ref_to_complex
+   */
+  readonly refToComplex?: ComplexType;
+
+  /**
+   * @schema MyStruct#ReusedType
+   */
+  readonly reusedType?: IntOrString;
+
+  /**
+   * @schema MyStruct#Haver
+   */
+  readonly haver?: MyStructHaver;
+
+}
+
+/**
+ * Converts an object of type 'MyStruct' to JSON representation.
+ */
+/* eslint-disable max-len, quote-props */
+export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'ref_to_complex': toJson_ComplexType(obj.refToComplex),
+    'ReusedType': obj.reusedType?.value,
+    'Haver': obj.haver?.value,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, quote-props */
+
+/**
+ * @schema ComplexType
+ */
+export interface ComplexType {
+  /**
+   * @schema ComplexType#Ref_to_union
+   */
+  readonly refToUnion?: IntOrString;
+
+}
+
+/**
+ * Converts an object of type 'ComplexType' to JSON representation.
+ */
+/* eslint-disable max-len, quote-props */
+export function toJson_ComplexType(obj: ComplexType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'Ref_to_union': obj.refToUnion?.value,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, quote-props */
+
+/**
+ * @schema IntOrString
+ */
+export class IntOrString {
+  public static fromNumber(value: number): IntOrString {
+    return new IntOrString(value);
+  }
+  public static fromString(value: string): IntOrString {
+    return new IntOrString(value);
+  }
+  private constructor(public readonly value: any) {
+    Object.defineProperty(this, 'resolve', { value: () => value });
+  }
+}
+
+/**
+ * @schema MyStructHaver
+ */
+export class MyStructHaver {
+  public static fromNumber(value: number): MyStructHaver {
+    return new MyStructHaver(value);
+  }
+  public static fromString(value: string): MyStructHaver {
+    return new MyStructHaver(value);
+  }
+  private constructor(public readonly value: any) {
+    Object.defineProperty(this, 'resolve', { value: () => value });
+  }
+}
+"
+`;
