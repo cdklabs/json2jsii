@@ -2139,9 +2139,9 @@ ecc-jsbn@~0.1.1:
     safer-buffer "^2.1.0"
 
 electron-to-chromium@^1.3.723:
-  version "1.3.785"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.785.tgz#79f546c69a6be4f30913aaace361bc746f26df48"
-  integrity sha512-WmCgAeURsMFiyoJ646eUaJQ7GNfvMRLXo+GamUyKVNEM4MqTAsXyC0f38JEB4N3BtbD0tlAKozGP5E2T9K3YGg==
+  version "1.3.786"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.786.tgz#1fc572abc77e2f474725f8a61acf7e25ced9fbe2"
+  integrity sha512-AmvbLBj3hepRk8v/DHrFF8gINxOFfDbrn6Ts3PcK46/FBdQb5OMmpamSpZQXSkfi77FfBzYtQtAk+00LCLYMVw==
 
 emittery@^0.7.1:
   version "0.7.2"
@@ -4094,7 +4094,7 @@ jsesc@^2.5.1:
   resolved "https://registry.yarnpkg.com/jsesc/-/jsesc-2.5.2.tgz#80564d2e483dacf6e8ef209650a67df3f0c283a4"
   integrity sha512-OYu7XEzjkCQ3C5Ps3QIZsQfNpqoJyZZA99wd9aWd05NCtC5pWOkShK2mkL6HXQR6/Cy2lbNdPlZBpuQHXE63gA==
 
-jsii-pacmak@^1.31.0:
+jsii-pacmak@^1.32.0:
   version "1.32.0"
   resolved "https://registry.yarnpkg.com/jsii-pacmak/-/jsii-pacmak-1.32.0.tgz#380075bde0935907fb4be50e001ecab1575e0482"
   integrity sha512-zH+5ys4w9rSz7ZbfDTX0XZ8zhqpoygikuAppiWWVqjMmdk8qqZUgY9fLncZliMnI42YCXSz7q43g4tVL7dd3ng==
@@ -4135,18 +4135,18 @@ jsii-rosetta@^1.32.0:
     xmldom "^0.6.0"
     yargs "^16.2.0"
 
-jsii-srcmak@^0.1.303:
-  version "0.1.303"
-  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.303.tgz#0da00a121c59825565d5a837225a10a3495eacb7"
-  integrity sha512-2sRMsJrLszI7SFcVrhueIbqKLR0/jA5O9Ag/uOKhPqEJszCkhRvM4u18Zw3e6XBZQq0731yhJ4q0gOE+Vkh1dQ==
+jsii-srcmak@^0.1.304:
+  version "0.1.304"
+  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.304.tgz#677db83da6760b67f4ded7bef74c49200c9f8720"
+  integrity sha512-AVT+aBQ1fawkicV4KTvTOSC6mCIdDoD5ZQNOfhK4baM3J4+sBVlcWMYt0UzgP8fkVisxbe3dW0HMRAt3Ujif9Q==
   dependencies:
     fs-extra "^9.1.0"
-    jsii "^1.31.0"
-    jsii-pacmak "^1.31.0"
+    jsii "^1.32.0"
+    jsii-pacmak "^1.32.0"
     ncp "^2.0.0"
     yargs "^15.4.1"
 
-jsii@^1.31.0:
+jsii@^1.32.0:
   version "1.32.0"
   resolved "https://registry.yarnpkg.com/jsii/-/jsii-1.32.0.tgz#3fd7c33bebc140f44db81e74b83bd3ce26405b68"
   integrity sha512-Vw/xjiRgMdb+wbSSUaA7DTvVfSYfCR0k8Gdei43xSOOqmRfyLsmrWkN4ypnsbfaWfEYLpTj/HXGc4rJmw9Vnrw==
@@ -6359,9 +6359,9 @@ table@^5.2.3:
     string-width "^3.0.0"
 
 tar@^6.0.2, tar@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/tar/-/tar-6.1.0.tgz#d1724e9bcc04b977b18d5c573b333a2207229a83"
-  integrity sha512-DUCttfhsnLCjwoDoFcI+B2iJgYa93vBnDUATYEeRx6sntCTdN01VnqsIuTlALXla/LWooNg0yEGeB+Y8WdFxGA==
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/tar/-/tar-6.1.1.tgz#4d7da4b132b334bb8c175ed1de466fe9157ea0eb"
+  integrity sha512-GG0R7yt/CQkvG4fueXDi52Zskqxe2AyRJ+Wm54yqarnBgcX3qRIWh10qLVAAN+mlPFGTfP5UxvD3Fbi11UOTUQ==
   dependencies:
     chownr "^2.0.0"
     fs-minipass "^2.0.0"
