@@ -9,6 +9,7 @@
 .cache
 .eslintcache
 .nyc_output
+.vscode/
 .yarn-integrity
 /coverage
 /dist
