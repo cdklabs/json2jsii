@@ -109,7 +109,11 @@ export class TypeGenerator {
    * @param def The JSON schema definition for this type
    */
   public addDefinition(typeName: string, def: JSONSchema4) {
-    this.definitions[typeName] = def;
+    const normalize = (s: string) => TypeGenerator.normalizeTypeName(s.split('.').map(x => pascalCase(x)).join(''));
+    this.definitions[normalize(typeName)] = {
+      ...def,
+      $ref: def.$ref ? `#/definitions/${normalize(def.$ref.replace('#/definitions/', ''))}` : undefined,
+    };
   }
 
   /**
@@ -375,7 +379,7 @@ export class TypeGenerator {
       code.openBlock(`export interface ${typeName}`);
 
       for (const [propName, propSpec] of Object.entries(structDef.properties || {})) {
-        this.emitProperty(code, propName, propSpec, structFqn, structDef, toJson);
+        this.emitProperty(code, propName, propSpec, structFqn, structDef, toJson, typeName);
       }
 
       code.closeBlock();
@@ -390,7 +394,8 @@ export class TypeGenerator {
     return emitted;
   }
 
-  private emitProperty(code: Code, name: string, propDef: JSONSchema4, structFqn: string, structDef: JSONSchema4, toJson: ToJsonFunction) {
+  private emitProperty(code: Code, name: string, propDef: JSONSchema4, structFqn: string, structDef: JSONSchema4,
+    toJson: ToJsonFunction, parentTypeName: string) {
     const originalName = name;
 
     // if the name starts with '$' (like $ref or $schema), we remove the "$"
@@ -403,7 +408,7 @@ export class TypeGenerator {
     name = camelCase(name);
 
     this.emitDescription(code, `${structFqn}#${originalName}`, propDef.description);
-    const propertyType = this.typeForProperty(`${structFqn}.${name}`, propDef);
+    const propertyType = this.typeForProperty(`${parentTypeName}${pascalCase(name)}`, propDef);
     const required = this.isPropertyRequired(originalName, structDef);
     const optional = required ? '' : '?';
 
@@ -482,8 +487,7 @@ export class TypeGenerator {
   }
 
   private typeForProperty(propertyFqn: string, def: JSONSchema4): EmittedType {
-    const subtype = TypeGenerator.normalizeTypeName(propertyFqn.split('.').map(x => pascalCase(x)).join(''));
-    return this.emitTypeInternal(subtype, def, subtype);
+    return this.emitTypeInternal(propertyFqn, def, propertyFqn);
   }
 
   private typeForRef(def: JSONSchema4): EmittedType {
@@ -496,8 +500,7 @@ export class TypeGenerator {
       return { type: 'any', toJson: x => x };
     }
 
-    const comps = def.$ref.substring(prefix.length).split('.');
-    const typeName = TypeGenerator.normalizeTypeName(comps[comps.length - 1]);
+    const typeName = def.$ref.substring(prefix.length);
 
     // if we already emitted a type with this type name, just return it
     const emitted = this.emittedTypes[typeName];
