@@ -36,7 +36,9 @@ export interface TypeGeneratorOptions {
   readonly toJson?: boolean;
 
   /**
-   * Normalization function to apply to references which are used to create
+   * Normalization function to apply to references when they are used as type names.
+   *
+   * @default - Only dot namespacing is handled by default. Elements between dots are pascal cased and concatenated.
    */
   readonly normalizeRef?: (s: string) => string;
 }
