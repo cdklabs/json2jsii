@@ -19,4 +19,6 @@ const project = new TypeScriptLibraryProject({
   autoApproveUpgrades: true,
 });
 
+project.gitignore.exclude('.vscode/');
+
 project.synth();
