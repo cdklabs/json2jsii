@@ -7,7 +7,7 @@ import { ToJsonFunction } from './tojson';
 
 const PRIMITIVE_TYPES = ['string', 'number', 'integer', 'boolean'];
 const DEFINITIONS_PREFIX = '#/definitions/';
-const DEFAULT_NORMALIZER = (s: string) => s.split('.').map(x => pascalCase(x)).join('');
+const DEFAULT_RENDER_TYPE_NAME = (s: string) => s.split('.').map(x => pascalCase(x)).join('');
 
 export interface TypeGeneratorOptions {
   /**
@@ -36,11 +36,20 @@ export interface TypeGeneratorOptions {
   readonly toJson?: boolean;
 
   /**
-   * Normalization function to apply to references when they are used as type names.
+   * Given a definition name, render the type name to be emitted by that definition.
+   *
+   * When `emitType` is invoked, the type name to be emitted is provided by the caller.
+   * However, for complex types containing references to other types, we infer the type name of the reference
+   * by looking at the definition name of the `$ref` attribute.
+   *
+   * This function provides a way to control how those definition names translate into type name.
+   *
+   * For example, if a complex type references a namespaced definition like `api.group.Foo`, we'd like to control
+   * how to translate `api.group.Foo`, which is an illegal typename, into a legal one.
    *
    * @default - Only dot namespacing is handled by default. Elements between dots are pascal cased and concatenated.
    */
-  readonly normalizeRef?: (s: string) => string;
+  readonly renderTypeName?: (def: string) => string;
 }
 
 /**
@@ -93,7 +102,7 @@ export class TypeGenerator {
   private readonly exclude: string[];
   private readonly definitions: { [def: string]: JSONSchema4 };
   private readonly toJson: boolean;
-  private readonly normalizeRef: (s: string) => string;
+  private readonly renderTypeName: (def: string) => string;
 
   /**
    *
@@ -104,7 +113,7 @@ export class TypeGenerator {
     this.exclude = options.exclude ?? [];
     this.definitions = {};
     this.toJson = options.toJson ?? true;
-    this.normalizeRef = options.normalizeRef ?? DEFAULT_NORMALIZER;
+    this.renderTypeName = options.renderTypeName ?? DEFAULT_RENDER_TYPE_NAME;
 
     for (const [typeName, def] of Object.entries(options.definitions ?? {})) {
       this.addDefinition(typeName, def);
@@ -413,7 +422,8 @@ export class TypeGenerator {
     name = camelCase(name);
 
     this.emitDescription(code, `${structFqn}#${originalName}`, propDef.description);
-    const propertyType = this.typeForProperty(`${structFqn}.${name}`, propDef);
+    const propertyTypeName = TypeGenerator.normalizeTypeName(DEFAULT_RENDER_TYPE_NAME(`${structFqn}.${name}`));
+    const propertyType = this.typeForProperty(propertyTypeName, propDef);
     const required = this.isPropertyRequired(originalName, structDef);
     const optional = required ? '' : '?';
 
@@ -492,7 +502,7 @@ export class TypeGenerator {
   }
 
   private typeForProperty(propertyFqn: string, def: JSONSchema4): EmittedType {
-    const subtype = normalize(propertyFqn, DEFAULT_NORMALIZER);
+    const subtype = TypeGenerator.normalizeTypeName(DEFAULT_RENDER_TYPE_NAME(propertyFqn));
     return this.emitTypeInternal(subtype, def, subtype);
   }
 
@@ -506,7 +516,7 @@ export class TypeGenerator {
       return { type: 'any', toJson: x => x };
     }
 
-    const typeName = normalize(def.$ref.substring(prefix.length), this.normalizeRef);
+    const typeName = TypeGenerator.normalizeTypeName(this.renderTypeName(def.$ref.substring(prefix.length)));
 
     // if we already emitted a type with this type name, just return it
     const emitted = this.emittedTypes[typeName];
@@ -556,10 +566,6 @@ export class TypeGenerator {
     return false;
   }
 
-}
-
-function normalize(s: string, pre: (s: string) => string) {
-  return TypeGenerator.normalizeTypeName(pre(s));
 }
 
 function supportedUnionOptionType(type: any): type is string {

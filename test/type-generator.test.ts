@@ -353,8 +353,8 @@ test('custom ref normalization', async () => {
   const bar = 'Bar';
 
   const gen = new TypeGenerator({
-    normalizeRef: (s: string) => {
-      return s.split('.').slice(2, 4).join('');
+    renderTypeName: (def: string) => {
+      return def.split('.').slice(2, 4).join('');
     },
   });
 
