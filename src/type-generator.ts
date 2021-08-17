@@ -422,8 +422,7 @@ export class TypeGenerator {
     name = camelCase(name);
 
     this.emitDescription(code, `${structFqn}#${originalName}`, propDef.description);
-    const propertyTypeName = TypeGenerator.normalizeTypeName(DEFAULT_RENDER_TYPE_NAME(`${structFqn}.${name}`));
-    const propertyType = this.typeForProperty(propertyTypeName, propDef);
+    const propertyType = this.typeForProperty(`${structFqn}.${name}`, propDef);
     const required = this.isPropertyRequired(originalName, structDef);
     const optional = required ? '' : '?';
 
