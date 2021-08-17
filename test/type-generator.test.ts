@@ -347,6 +347,55 @@ test('if "toJson" is disabled, toJson functions are not generated', async () => 
   expect(await generate(gen)).toMatchSnapshot();
 });
 
+test('custom ref normalization', async () => {
+
+  const foo = 'io.k8s.v1beta1.Foo';
+  const bar = 'Bar';
+
+  const gen = new TypeGenerator({
+    normalizeRef: (s: string) => {
+      return s.split('.').slice(2, 4).join('');
+    },
+  });
+
+  gen.addDefinition(foo, { properties: { props: { type: 'number' } } });
+
+  // two structs, each referencing a different version
+  gen.addDefinition(bar, { properties: { prop: { $ref: `#/definitions/${foo}` } } });
+  gen.emitType(bar);
+
+  const code = await generate(gen);
+  expect(code).toMatchSnapshot();
+
+});
+
+test('shared namespace references', async () => {
+
+  const foo1 = 'io.k8s.v1beta1.Foo';
+  const foo2 = 'io.k8s.v1.Foo';
+  const bar1 = 'Bar1';
+  const bar2 = 'Bar2';
+
+  const gen = new TypeGenerator();
+
+  // two versions of the same struct
+  gen.addDefinition(foo1, { properties: { props: { type: 'number' } } });
+  gen.addDefinition(foo2, { properties: { props: { type: 'string' } } });
+
+  // two structs, each referencing a different version
+  gen.addDefinition(bar1, { properties: { prop: { $ref: `#/definitions/${foo1}` } } });
+  gen.addDefinition(bar2, { properties: { prop: { $ref: `#/definitions/${foo2}` } } });
+
+  gen.emitType(bar1);
+  gen.emitType(bar2);
+
+  const code = await generate(gen);
+
+  // we expect the code to contain Bar1 and Bar2 that reference foo1 and
+  // foo2 respectively
+  expect(code).toMatchSnapshot();
+});
+
 function which(name: string, schema: JSONSchema4, definitions?: JSONSchema4) {
   test(name, async () => {
     const gen = new TypeGenerator(definitions);

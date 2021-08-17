@@ -7,6 +7,7 @@ import { ToJsonFunction } from './tojson';
 
 const PRIMITIVE_TYPES = ['string', 'number', 'integer', 'boolean'];
 const DEFINITIONS_PREFIX = '#/definitions/';
+const DEFAULT_NORMALIZER = (s: string) => s.split('.').map(x => pascalCase(x)).join('');
 
 export interface TypeGeneratorOptions {
   /**
@@ -33,6 +34,11 @@ export interface TypeGeneratorOptions {
    * @default true
    */
   readonly toJson?: boolean;
+
+  /**
+   * Normalization function to apply to references which are used to create
+   */
+  readonly normalizeRef?: (s: string) => string;
 }
 
 /**
@@ -85,6 +91,7 @@ export class TypeGenerator {
   private readonly exclude: string[];
   private readonly definitions: { [def: string]: JSONSchema4 };
   private readonly toJson: boolean;
+  private readonly normalizeRef: (s: string) => string;
 
   /**
    *
@@ -95,6 +102,7 @@ export class TypeGenerator {
     this.exclude = options.exclude ?? [];
     this.definitions = {};
     this.toJson = options.toJson ?? true;
+    this.normalizeRef = options.normalizeRef ?? DEFAULT_NORMALIZER;
 
     for (const [typeName, def] of Object.entries(options.definitions ?? {})) {
       this.addDefinition(typeName, def);
@@ -109,15 +117,7 @@ export class TypeGenerator {
    * @param def The JSON schema definition for this type
    */
   public addDefinition(typeName: string, def: JSONSchema4) {
-
-    if (def.$ref && !def.$ref.startsWith(DEFINITIONS_PREFIX)) {
-      throw new Error(`invalid $ref ${JSON.stringify(def)}`);
-    }
-
-    this.definitions[this.normalize(typeName)] = {
-      ...def,
-      $ref: def.$ref ? `${DEFINITIONS_PREFIX}${this.normalize(def.$ref.substring(DEFINITIONS_PREFIX.length))}` : undefined,
-    };
+    this.definitions[typeName] = def;
   }
 
   /**
@@ -490,7 +490,7 @@ export class TypeGenerator {
   }
 
   private typeForProperty(propertyFqn: string, def: JSONSchema4): EmittedType {
-    const subtype = this.normalize(propertyFqn);
+    const subtype = normalize(propertyFqn, DEFAULT_NORMALIZER);
     return this.emitTypeInternal(subtype, def, subtype);
   }
 
@@ -504,7 +504,7 @@ export class TypeGenerator {
       return { type: 'any', toJson: x => x };
     }
 
-    const typeName = def.$ref.substring(prefix.length);
+    const typeName = normalize(def.$ref.substring(prefix.length), this.normalizeRef);
 
     // if we already emitted a type with this type name, just return it
     const emitted = this.emittedTypes[typeName];
@@ -554,9 +554,10 @@ export class TypeGenerator {
     return false;
   }
 
-  private normalize(s: string) {
-    return TypeGenerator.normalizeTypeName(s.split('.').map(x => pascalCase(x)).join(''));
-  }
+}
+
+function normalize(s: string, pre: (s: string) => string) {
+  return TypeGenerator.normalizeTypeName(pre(s));
 }
 
 function supportedUnionOptionType(type: any): type is string {
