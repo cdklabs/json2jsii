@@ -109,10 +109,14 @@ export class TypeGenerator {
    * @param def The JSON schema definition for this type
    */
   public addDefinition(typeName: string, def: JSONSchema4) {
-    const normalize = (s: string) => TypeGenerator.normalizeTypeName(s.split('.').map(x => pascalCase(x)).join(''));
-    this.definitions[normalize(typeName)] = {
+
+    if (def.$ref && !def.$ref.startsWith(DEFINITIONS_PREFIX)) {
+      throw new Error(`invalid $ref ${JSON.stringify(def)}`);
+    }
+
+    this.definitions[this.normalize(typeName)] = {
       ...def,
-      $ref: def.$ref ? `#/definitions/${normalize(def.$ref.replace('#/definitions/', ''))}` : undefined,
+      $ref: def.$ref ? `${DEFINITIONS_PREFIX}${this.normalize(def.$ref.substring(DEFINITIONS_PREFIX.length))}` : undefined,
     };
   }
 
@@ -379,7 +383,7 @@ export class TypeGenerator {
       code.openBlock(`export interface ${typeName}`);
 
       for (const [propName, propSpec] of Object.entries(structDef.properties || {})) {
-        this.emitProperty(code, propName, propSpec, structFqn, structDef, toJson, typeName);
+        this.emitProperty(code, propName, propSpec, structFqn, structDef, toJson);
       }
 
       code.closeBlock();
@@ -394,8 +398,7 @@ export class TypeGenerator {
     return emitted;
   }
 
-  private emitProperty(code: Code, name: string, propDef: JSONSchema4, structFqn: string, structDef: JSONSchema4,
-    toJson: ToJsonFunction, parentTypeName: string) {
+  private emitProperty(code: Code, name: string, propDef: JSONSchema4, structFqn: string, structDef: JSONSchema4, toJson: ToJsonFunction) {
     const originalName = name;
 
     // if the name starts with '$' (like $ref or $schema), we remove the "$"
@@ -408,7 +411,7 @@ export class TypeGenerator {
     name = camelCase(name);
 
     this.emitDescription(code, `${structFqn}#${originalName}`, propDef.description);
-    const propertyType = this.typeForProperty(`${parentTypeName}${pascalCase(name)}`, propDef);
+    const propertyType = this.typeForProperty(`${structFqn}.${name}`, propDef);
     const required = this.isPropertyRequired(originalName, structDef);
     const optional = required ? '' : '?';
 
@@ -487,7 +490,8 @@ export class TypeGenerator {
   }
 
   private typeForProperty(propertyFqn: string, def: JSONSchema4): EmittedType {
-    return this.emitTypeInternal(propertyFqn, def, propertyFqn);
+    const subtype = this.normalize(propertyFqn);
+    return this.emitTypeInternal(subtype, def, subtype);
   }
 
   private typeForRef(def: JSONSchema4): EmittedType {
@@ -548,6 +552,10 @@ export class TypeGenerator {
     }
 
     return false;
+  }
+
+  private normalize(s: string) {
+    return TypeGenerator.normalizeTypeName(s.split('.').map(x => pascalCase(x)).join(''));
   }
 }
 

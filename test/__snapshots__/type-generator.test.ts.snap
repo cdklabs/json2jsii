@@ -150,12 +150,12 @@ export interface TestType {
    *
    * @schema fqn.of.TestType#firstEnum
    */
-  readonly firstEnum: TestTypeFirstEnum;
+  readonly firstEnum: FqnOfTestTypeFirstEnum;
 
   /**
    * @schema fqn.of.TestType#child
    */
-  readonly child?: TestTypeChild;
+  readonly child?: FqnOfTestTypeChild;
 
 }
 
@@ -167,7 +167,7 @@ export function toJson_TestType(obj: TestType | undefined): Record<string, any> 
   if (obj === undefined) { return undefined; }
   const result = {
     'firstEnum': obj.firstEnum,
-    'child': toJson_TestTypeChild(obj.child),
+    'child': toJson_FqnOfTestTypeChild(obj.child),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -177,9 +177,9 @@ export function toJson_TestType(obj: TestType | undefined): Record<string, any> 
 /**
  * description of first enum
  *
- * @schema TestTypeFirstEnum
+ * @schema FqnOfTestTypeFirstEnum
  */
-export enum TestTypeFirstEnum {
+export enum FqnOfTestTypeFirstEnum {
   /** value1 */
   VALUE1 = 'value1',
   /** value2 */
@@ -191,23 +191,23 @@ export enum TestTypeFirstEnum {
 }
 
 /**
- * @schema TestTypeChild
+ * @schema FqnOfTestTypeChild
  */
-export interface TestTypeChild {
+export interface FqnOfTestTypeChild {
   /**
    * description of second enum
    *
-   * @schema TestTypeChild#secondEnum
+   * @schema FqnOfTestTypeChild#secondEnum
    */
-  readonly secondEnum?: TestTypeChildSecondEnum;
+  readonly secondEnum?: FqnOfTestTypeChildSecondEnum;
 
 }
 
 /**
- * Converts an object of type 'TestTypeChild' to JSON representation.
+ * Converts an object of type 'FqnOfTestTypeChild' to JSON representation.
  */
 /* eslint-disable max-len, quote-props */
-export function toJson_TestTypeChild(obj: TestTypeChild | undefined): Record<string, any> | undefined {
+export function toJson_FqnOfTestTypeChild(obj: FqnOfTestTypeChild | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'secondEnum': obj.secondEnum,
@@ -220,9 +220,9 @@ export function toJson_TestTypeChild(obj: TestTypeChild | undefined): Record<str
 /**
  * description of second enum
  *
- * @schema TestTypeChildSecondEnum
+ * @schema FqnOfTestTypeChildSecondEnum
  */
-export enum TestTypeChildSecondEnum {
+export enum FqnOfTestTypeChildSecondEnum {
   /** hey */
   HEY = 'hey',
   /** enum values can be crazy */
@@ -241,7 +241,7 @@ export interface TestType {
   /**
    * @schema fqn.of.TestType#Color
    */
-  readonly color?: TestTypeColor;
+  readonly color?: FqnOfTestTypeColor;
 
 }
 
@@ -260,9 +260,9 @@ export function toJson_TestType(obj: TestType | undefined): Record<string, any> 
 /* eslint-enable max-len, quote-props */
 
 /**
- * @schema TestTypeColor
+ * @schema FqnOfTestTypeColor
  */
-export enum TestTypeColor {
+export enum FqnOfTestTypeColor {
   /** red */
   RED = 'red',
   /** green */
