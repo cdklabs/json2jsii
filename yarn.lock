@@ -2146,9 +2146,9 @@ ecc-jsbn@~0.1.1:
     safer-buffer "^2.1.0"
 
 electron-to-chromium@^1.3.793:
-  version "1.3.807"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.807.tgz#c2eb803f4f094869b1a24151184ffbbdbf688b1f"
-  integrity sha512-p8uxxg2a23zRsvQ2uwA/OOI+O4BQxzaR7YKMIGGGQCpYmkFX2CVF5f0/hxLMV7yCr7nnJViCwHLhPfs52rIYCA==
+  version "1.3.809"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.809.tgz#86db795c41c97f252ee1c849a2f70d0739710776"
+  integrity sha512-bZoXTEhEe8o10dHX2gNY9KkCSwz1AFk4c0GbmzlTD5WAkUpDb/zY7JjvLvJ/y1wUsURiVmlGdnIeU+gFyTeaXA==
 
 emittery@^0.7.1:
   version "0.7.2"
@@ -3339,9 +3339,9 @@ is-ci@^2.0.0:
     ci-info "^2.0.0"
 
 is-core-module@^2.2.0, is-core-module@^2.4.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/is-core-module/-/is-core-module-2.5.0.tgz#f754843617c70bfd29b7bd87327400cda5c18491"
-  integrity sha512-TXCMSDsEHMEEZ6eCA8rwRDbLu55MRGmrctljsBX/2v1d9/GzqHOxW5c5oPSgrUt2vBFXebu9rGqckXGPWOlYpg==
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/is-core-module/-/is-core-module-2.6.0.tgz#d7553b2526fe59b92ba3e40c8df757ec8a709e19"
+  integrity sha512-wShG8vs60jKfPWpF2KZRaAtvt3a20OAn7+IJ6hLPECpSABLcKtFKTTI4ZtH5QcBruBHlq+WsdHWyz0BCZW7svQ==
   dependencies:
     has "^1.0.3"
 
@@ -4128,7 +4128,7 @@ jsesc@^2.5.1:
   resolved "https://registry.yarnpkg.com/jsesc/-/jsesc-2.5.2.tgz#80564d2e483dacf6e8ef209650a67df3f0c283a4"
   integrity sha512-OYu7XEzjkCQ3C5Ps3QIZsQfNpqoJyZZA99wd9aWd05NCtC5pWOkShK2mkL6HXQR6/Cy2lbNdPlZBpuQHXE63gA==
 
-jsii-pacmak@^1.32.0:
+jsii-pacmak@^1.33.0:
   version "1.33.0"
   resolved "https://registry.yarnpkg.com/jsii-pacmak/-/jsii-pacmak-1.33.0.tgz#d0aa96cab380cfc084830e09a04de3b3494d5268"
   integrity sha512-STcsk5wmAlJSCEzl5nTPAJ5emSZLIPJYoYjBCMcwv62MI1B4zozSSsmbpI/4oPQWh9c2fD2CJIEbwyct4KTPKQ==
@@ -4172,18 +4172,18 @@ jsii-rosetta@^1.33.0:
     xmldom "github:xmldom/xmldom#0.7.0"
     yargs "^16.2.0"
 
-jsii-srcmak@^0.1.326:
-  version "0.1.326"
-  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.326.tgz#98535c7b82fdd734759fbaa61218aad976a1c9b2"
-  integrity sha512-euZGdUcdZHI/cycrBZ7AVDea7Du2qu7TIzctEXUDuubtZ/n66rxWCQnlo/NsaQYx4HXkY47xaoVlRg69lhciZA==
+jsii-srcmak@^0.1.327:
+  version "0.1.327"
+  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.327.tgz#b3f3c673ba34b641f3a96b4b89caf5c8cbf106d4"
+  integrity sha512-ur7gwDTs7eTRSxjGvYz9Yw63g2pT8ONy5RSnoeqO/6rSqVt9v6B5u9BpF/+Ros+vpOltQvdSbL5ulta0uDQzow==
   dependencies:
     fs-extra "^9.1.0"
-    jsii "^1.32.0"
-    jsii-pacmak "^1.32.0"
+    jsii "^1.33.0"
+    jsii-pacmak "^1.33.0"
     ncp "^2.0.0"
     yargs "^15.4.1"
 
-jsii@^1.32.0:
+jsii@^1.33.0:
   version "1.33.0"
   resolved "https://registry.yarnpkg.com/jsii/-/jsii-1.33.0.tgz#b6086e31799583c91b86802fe627a0865123004b"
   integrity sha512-0WIWlrRtoQNrp7iyEyNMoPRzvjd2EK8/Zgn/tWyzpjaMZur9HevZuk4lduCthTly/Gs9A7u1Ajdyp1cBrALeBQ==
