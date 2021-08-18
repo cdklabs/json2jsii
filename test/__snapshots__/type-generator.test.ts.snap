@@ -1474,7 +1474,6 @@ export class TestType {
     return new TestType(value);
   }
   private constructor(public readonly value: any) {
-    Object.defineProperty(this, 'resolve', { value: () => value });
   }
 }
 "
