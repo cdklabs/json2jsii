@@ -370,7 +370,6 @@ export class TypeGenerator {
       }
 
       code.openBlock('private constructor(public readonly value: any)');
-      code.line('Object.defineProperty(this, \'resolve\', { value: () => value });');
       code.closeBlock();
 
       code.closeBlock();

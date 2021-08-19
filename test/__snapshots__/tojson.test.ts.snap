@@ -548,7 +548,6 @@ export class IntOrString {
     return new IntOrString(value);
   }
   private constructor(public readonly value: any) {
-    Object.defineProperty(this, 'resolve', { value: () => value });
   }
 }
 
@@ -563,7 +562,6 @@ export class MyStructHaver {
     return new MyStructHaver(value);
   }
   private constructor(public readonly value: any) {
-    Object.defineProperty(this, 'resolve', { value: () => value });
   }
 }
 "
