@@ -2171,9 +2171,9 @@ ecc-jsbn@~0.1.1:
     safer-buffer "^2.1.0"
 
 electron-to-chromium@^1.3.846:
-  version "1.3.849"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.849.tgz#45a65a392565abc5b864624b9753393336426f4b"
-  integrity sha512-RweyW60HPOqIcxoKTGr38Yvtf2aliSUqX8dB3e9geJ0Bno0YLjcOX5F7/DPVloBkJWaPZ7xOM1A0Yme2T1A34w==
+  version "1.3.850"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.850.tgz#c56c72abfeab051b4b328beb894461c5912d0456"
+  integrity sha512-ZzkDcdzePeF4dhoGZQT77V2CyJOpwfTZEOg4h0x6R/jQhGt/rIRpbRyVreWLtD7B/WsVxo91URm2WxMKR9JQZA==
 
 emittery@^0.7.1:
   version "0.7.2"
@@ -4206,10 +4206,10 @@ jsii-rosetta@^1.34.0:
     typescript "~3.9.10"
     yargs "^16.2.0"
 
-jsii-srcmak@^0.1.352:
-  version "0.1.352"
-  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.352.tgz#e8ef229baa0ea47adfcf2080edc2d40de153bdb8"
-  integrity sha512-I6Ley3i2Vh1lebAD2bRLJKC/qxpiEjaUvpnlG7zkm1QLwbEL79wzoLD3evXXHUjeOnj9DGUvKjEkiRx+yWDLZw==
+jsii-srcmak@^0.1.353:
+  version "0.1.353"
+  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.353.tgz#5416c90292926ee035e200a680e62d1089da4b2e"
+  integrity sha512-XA4N72CqPEvdjD3SCRsCWhJIFZt+/8ekhDq8a/7k5t/9vGzdU1a79AvekqaP3tv4V1CGZqDgdyFeKvwcqEr6cw==
   dependencies:
     fs-extra "^9.1.0"
     jsii "^1.34.0"
