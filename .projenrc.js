@@ -9,7 +9,7 @@ const project = new TypeScriptLibraryProject({
   deps: ['json-schema', 'camelcase', 'snake-case'],
   devDeps: ['@types/json-schema', 'jsii-srcmak', 'prettier'],
   releaseToNpm: true,
-  minNodeVersion: '10.17.0',
+  minNodeVersion: '12.7.0',
   projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
   defaultReleaseBranch: 'main',
   autoApproveOptions: {
