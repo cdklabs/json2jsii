@@ -17,12 +17,12 @@
     "unbump": "npx projen unbump",
     "publish:github": "npx projen publish:github",
     "publish:npm": "npx projen publish:npm",
-    "upgrade": "npx projen upgrade",
     "default": "npx projen default",
     "watch": "npx projen watch",
     "package": "npx projen package",
     "eslint": "npx projen eslint",
     "release": "npx projen release",
+    "upgrade": "npx projen upgrade",
     "projen": "npx projen"
   },
   "author": {
@@ -33,20 +33,20 @@
   "devDependencies": {
     "@types/jest": "^26.0.24",
     "@types/json-schema": "^7.0.9",
-    "@types/node": "^10.17.0",
-    "@typescript-eslint/eslint-plugin": "^4.32.0",
-    "@typescript-eslint/parser": "^4.32.0",
+    "@types/node": "^12.7.0",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
     "eslint": "^6.8.0",
     "eslint-import-resolver-node": "^0.3.6",
     "eslint-import-resolver-typescript": "^2.5.0",
     "eslint-plugin-import": "^2.24.2",
     "jest": "^26.6.3",
     "jest-junit": "^12",
-    "jsii-srcmak": "^0.1.356",
+    "jsii-srcmak": "^0.1.357",
     "json-schema": "^0.3.0",
     "npm-check-updates": "^11",
     "prettier": "^2.4.1",
-    "projen": "^0.28.31",
+    "projen": "^0.29.7",
     "standard-version": "^9",
     "ts-jest": "^26.5.6",
     "typescript": "^3.9.10"
@@ -58,7 +58,7 @@
   },
   "bundledDependencies": [],
   "engines": {
-    "node": ">= 10.17.0"
+    "node": ">= 12.7.0"
   },
   "main": "lib/index.js",
   "license": "Apache-2.0",
