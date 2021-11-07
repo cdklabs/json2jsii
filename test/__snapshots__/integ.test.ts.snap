@@ -12,7 +12,7 @@ export interface MyStruct {
    *
    * @schema MyStruct#ClusterID
    */
-  readonly clusterID?: string;
+  readonly clusterId?: string;
 
   /**
    * Secrets Manager ARN for kubeconfig file
@@ -68,7 +68,7 @@ export interface MyStruct {
    *
    * @schema MyStruct#ValueOverrideURL
    */
-  readonly valueOverrideURL?: string;
+  readonly valueOverrideUrl?: string;
 
   /**
    * Primary identifier for Cloudformation
@@ -89,7 +89,7 @@ export interface MyStruct {
    *
    * @schema MyStruct#VPCConfiguration
    */
-  readonly vPCConfiguration?: MyStructVpcConfiguration;
+  readonly vpcConfiguration?: MyStructVpcConfiguration;
 
 }
 
@@ -100,7 +100,7 @@ export interface MyStruct {
 export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
-    'ClusterID': obj.clusterID,
+    'ClusterID': obj.clusterId,
     'KubeConfig': obj.kubeConfig,
     'RoleArn': obj.roleArn,
     'Namespace': obj.namespace,
@@ -108,10 +108,10 @@ export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> 
     'Values': obj.values,
     'ValueYaml': obj.valueYaml,
     'Version': obj.version,
-    'ValueOverrideURL': obj.valueOverrideURL,
+    'ValueOverrideURL': obj.valueOverrideUrl,
     'ID': obj.id,
     'TimeOut': obj.timeOut,
-    'VPCConfiguration': toJson_MyStructVpcConfiguration(obj.vPCConfiguration),
+    'VPCConfiguration': toJson_MyStructVpcConfiguration(obj.vpcConfiguration),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -552,7 +552,7 @@ export interface MyStruct {
    *
    * @schema MyStruct#OIDCIssuerURL
    */
-  readonly oIDCIssuerURL?: string;
+  readonly oidcIssuerUrl?: string;
 
   /**
    * @schema MyStruct#Tags
@@ -582,7 +582,7 @@ export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> 
     'ClusterSecurityGroupId': obj.clusterSecurityGroupId,
     'Endpoint': obj.endpoint,
     'EncryptionConfigKeyArn': obj.encryptionConfigKeyArn,
-    'OIDCIssuerURL': obj.oIDCIssuerURL,
+    'OIDCIssuerURL': obj.oidcIssuerUrl,
     'Tags': obj.tags?.map(y => toJson_MyStructTags(y)),
   };
   // filter undefined values

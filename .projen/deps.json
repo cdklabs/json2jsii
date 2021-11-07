@@ -81,11 +81,15 @@
       "type": "build"
     },
     {
-      "name": "case",
+      "name": "camelcase",
       "type": "runtime"
     },
     {
       "name": "json-schema",
+      "type": "runtime"
+    },
+    {
+      "name": "snake-case",
       "type": "runtime"
     }
   ],

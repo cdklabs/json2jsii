@@ -6,7 +6,7 @@ const project = new TypeScriptLibraryProject({
   authorName: 'Elad Ben-Israel',
   authorEmail: 'elad.benisrael@gmail.com',
   repository: 'https://github.com/aws/json2jsii.git',
-  deps: ['json-schema', 'case'],
+  deps: ['json-schema', 'camelcase', 'snake-case'],
   devDeps: ['@types/json-schema', 'jsii-srcmak', 'prettier'],
   releaseToNpm: true,
   minNodeVersion: '12.7.0',

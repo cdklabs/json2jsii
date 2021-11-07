@@ -1,12 +1,13 @@
-import * as Case from 'case';
+import * as camelCase from 'camelcase';
 import { JSONSchema4 } from 'json-schema';
+import { snakeCase } from 'snake-case';
 import { Code } from './code';
 import { ToJsonFunction } from './tojson';
 
 
 const PRIMITIVE_TYPES = ['string', 'number', 'integer', 'boolean'];
 const DEFINITIONS_PREFIX = '#/definitions/';
-const DEFAULT_RENDER_TYPE_NAME = (s: string) => s.split('.').map(x => Case.pascal(x)).join('');
+const DEFAULT_RENDER_TYPE_NAME = (s: string) => s.split('.').map(x => pascalCase(x)).join('');
 
 export interface TypeGeneratorOptions {
   /**
@@ -417,7 +418,7 @@ export class TypeGenerator {
     }
 
     // convert the name to camel case so it's compatible with JSII
-    name = Case.camel(name);
+    name = camelCase(name);
 
     this.emitDescription(code, `${structFqn}#${originalName}`, propDef.description);
     const propertyType = this.typeForProperty(`${structFqn}.${name}`, propDef);
@@ -456,7 +457,7 @@ export class TypeGenerator {
         }
 
         // sluggify and turn to UPPER_SNAKE_CASE
-        let memberName = Case.snake(value.replace(/[^a-z0-9]/gi, '_')).split('_').filter(x => x).join('_').toUpperCase();
+        let memberName = snakeCase(value.replace(/[^a-z0-9]/gi, '_')).split('_').filter(x => x).join('_').toUpperCase();
 
         // if member name starts with a non-alpha character, add a prefix so it becomes a symbol
         if (!/^[A-Z].*/i.test(memberName)) {
@@ -572,6 +573,10 @@ export class TypeGenerator {
 
 function supportedUnionOptionType(type: any): type is string {
   return type && (typeof(type) === 'string' && PRIMITIVE_TYPES.includes(type));
+}
+
+function pascalCase(s: string): string {
+  return camelCase(s, { pascalCase: true });
 }
 
 interface EmittedType {
