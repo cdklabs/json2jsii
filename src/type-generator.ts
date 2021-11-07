@@ -1,4 +1,4 @@
-import * as camelCase from 'camelcase';
+import camelCase from 'camelcase';
 import { JSONSchema4 } from 'json-schema';
 import { snakeCase } from 'snake-case';
 import { Code } from './code';
