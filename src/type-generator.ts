@@ -1,5 +1,5 @@
-import { JSONSchema4 } from 'json-schema';
 import * as Case from 'case';
+import { JSONSchema4 } from 'json-schema';
 import { Code } from './code';
 import { ToJsonFunction } from './tojson';
 

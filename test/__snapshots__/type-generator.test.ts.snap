@@ -436,7 +436,7 @@ export interface EksProps {
    *
    * @schema EksProps#OIDCIssuerURL
    */
-  readonly oidcIssuerUrl?: string;
+  readonly oIDCIssuerURL?: string;
 
   /**
    * @schema EksProps#Tags
@@ -466,7 +466,7 @@ export function toJson_EksProps(obj: EksProps | undefined): Record<string, any> 
     'ClusterSecurityGroupId': obj.clusterSecurityGroupId,
     'Endpoint': obj.endpoint,
     'EncryptionConfigKeyArn': obj.encryptionConfigKeyArn,
-    'OIDCIssuerURL': obj.oidcIssuerUrl,
+    'OIDCIssuerURL': obj.oIDCIssuerURL,
     'Tags': obj.tags?.map(y => toJson_EksPropsTags(y)),
   };
   // filter undefined values
@@ -823,7 +823,7 @@ export interface Bar1 {
   /**
    * @schema Bar1#prop
    */
-  readonly prop?: IoK8Sv1Beta1Foo;
+  readonly prop?: IoK8sV1beta1Foo;
 
 }
 
@@ -834,7 +834,7 @@ export interface Bar1 {
 export function toJson_Bar1(obj: Bar1 | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
-    'prop': toJson_IoK8Sv1Beta1Foo(obj.prop),
+    'prop': toJson_IoK8sV1beta1Foo(obj.prop),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -848,7 +848,7 @@ export interface Bar2 {
   /**
    * @schema Bar2#prop
    */
-  readonly prop?: IoK8Sv1Foo;
+  readonly prop?: IoK8sV1Foo;
 
 }
 
@@ -859,7 +859,7 @@ export interface Bar2 {
 export function toJson_Bar2(obj: Bar2 | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
-    'prop': toJson_IoK8Sv1Foo(obj.prop),
+    'prop': toJson_IoK8sV1Foo(obj.prop),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -869,7 +869,7 @@ export function toJson_Bar2(obj: Bar2 | undefined): Record<string, any> | undefi
 /**
  * @schema io.k8s.v1beta1.Foo
  */
-export interface IoK8Sv1Beta1Foo {
+export interface IoK8sV1beta1Foo {
   /**
    * @schema io.k8s.v1beta1.Foo#props
    */
@@ -878,10 +878,10 @@ export interface IoK8Sv1Beta1Foo {
 }
 
 /**
- * Converts an object of type 'IoK8Sv1Beta1Foo' to JSON representation.
+ * Converts an object of type 'IoK8sV1beta1Foo' to JSON representation.
  */
 /* eslint-disable max-len, quote-props */
-export function toJson_IoK8Sv1Beta1Foo(obj: IoK8Sv1Beta1Foo | undefined): Record<string, any> | undefined {
+export function toJson_IoK8sV1beta1Foo(obj: IoK8sV1beta1Foo | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'props': obj.props,
@@ -894,7 +894,7 @@ export function toJson_IoK8Sv1Beta1Foo(obj: IoK8Sv1Beta1Foo | undefined): Record
 /**
  * @schema io.k8s.v1.Foo
  */
-export interface IoK8Sv1Foo {
+export interface IoK8sV1Foo {
   /**
    * @schema io.k8s.v1.Foo#props
    */
@@ -903,10 +903,10 @@ export interface IoK8Sv1Foo {
 }
 
 /**
- * Converts an object of type 'IoK8Sv1Foo' to JSON representation.
+ * Converts an object of type 'IoK8sV1Foo' to JSON representation.
  */
 /* eslint-disable max-len, quote-props */
-export function toJson_IoK8Sv1Foo(obj: IoK8Sv1Foo | undefined): Record<string, any> | undefined {
+export function toJson_IoK8sV1Foo(obj: IoK8sV1Foo | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
     'props': obj.props,
