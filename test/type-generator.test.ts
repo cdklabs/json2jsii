@@ -1,9 +1,6 @@
-import { promises as fs, readFileSync } from 'fs';
-import * as os from 'os';
-import * as path from 'path';
-import { srcmak } from 'jsii-srcmak';
 import { JSONSchema4 } from 'json-schema';
 import { TypeGenerator } from '../src';
+import { generate } from './util';
 
 jest.setTimeout(3 * 60_000); // 1min
 
@@ -263,6 +260,20 @@ describe('enums', () => {
       Color: { enum: ['red', 'green', 'blue'] },
     },
   });
+
+  which('uses non-symbolic values', {
+    properties: {
+      Timeframe: {
+        description: 'The SLO time window options. Allowed enum values: 7d,30d,90d',
+        type: 'string',
+        enum: [
+          '7d',
+          '30d',
+          '90d',
+        ],
+      },
+    },
+  });
 });
 
 which('primitives', {
@@ -320,12 +331,6 @@ describe('type aliases', () => {
   });
 });
 
-test('forStruct', async () => {
-  const schema = JSON.parse(readFileSync(path.join(__dirname, 'fixtures', 'eks.json'), 'utf-8'));
-  const gen = TypeGenerator.forStruct('EksProps', schema);
-  const source = await generate(gen);
-  expect(source).toMatchSnapshot();
-});
 
 test('fails when trying to resolve an undefined $ref', () => {
   const g = new TypeGenerator();
@@ -402,22 +407,4 @@ function which(name: string, schema: JSONSchema4, definitions?: JSONSchema4) {
     gen.emitType('TestType', schema, 'fqn.of.TestType');
     expect(await generate(gen)).toMatchSnapshot();
   });
-}
-
-async function generate(gen: TypeGenerator) {
-  const source = gen.render();
-  const deps = ['@types/node'].map(d => path.dirname(require.resolve(`${d}/package.json`)));
-
-  // check that the output compiles & is jsii-compatible
-  await mkdtemp(async workdir => {
-    await fs.writeFile(path.join(workdir, 'index.ts'), source);
-    await srcmak(workdir, { deps });
-  });
-
-  return source;
-}
-
-async function mkdtemp(closure: (dir: string) => Promise<void>) {
-  const workdir = await fs.mkdtemp(path.join(os.tmpdir(), 'cdk8s-'));
-  await closure(workdir);
 }
