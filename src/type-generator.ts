@@ -457,7 +457,12 @@ export class TypeGenerator {
         }
 
         // sluggify and turn to UPPER_SNAKE_CASE
-        const memberName = snakeCase(value.replace(/[^a-z0-9]/gi, '_')).split('_').filter(x => x).join('_').toUpperCase();
+        let memberName = snakeCase(value.replace(/[^a-z0-9]/gi, '_')).split('_').filter(x => x).join('_').toUpperCase();
+
+        // if member name starts with a non-alpha character, add a prefix so it becomes a symbol
+        if (!/^[A-Z].*/i.test(memberName)) {
+          memberName = 'VALUE_' + memberName;
+        }
 
         code.line(`/** ${value} */`);
         code.line(`${memberName} = '${value}',`);
