@@ -43,18 +43,18 @@
     "eslint-plugin-import": "^2.25.2",
     "jest": "^26.6.3",
     "jest-junit": "^12",
-    "jsii-srcmak": "^0.1.392",
-    "json-schema": "^0.3.0",
+    "jsii-srcmak": "^0.1.393",
+    "json-schema": "^0.4.0",
     "npm-check-updates": "^11",
     "prettier": "^2.4.1",
-    "projen": "^0.33.1",
+    "projen": "^0.33.2",
     "standard-version": "^9",
     "ts-jest": "^26.5.6",
     "typescript": "^3.9.10"
   },
   "dependencies": {
     "camelcase": "^6.2.0",
-    "json-schema": "^0.3.0",
+    "json-schema": "^0.4.0",
     "snake-case": "^3.0.4"
   },
   "bundledDependencies": [],
