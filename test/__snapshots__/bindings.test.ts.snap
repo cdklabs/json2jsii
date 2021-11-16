@@ -120,9 +120,9 @@ public interface Name extends software.amazon.jsii.JsiiSerializable {
      * A builder for {@link Name}
      */
     public static final class Builder implements software.amazon.jsii.Builder<Name> {
-        private java.lang.String first;
-        private java.lang.String last;
-        private java.lang.String middle;
+        java.lang.String first;
+        java.lang.String last;
+        java.lang.String middle;
 
         /**
          * Sets the value of {@link Name#getFirst}
@@ -161,7 +161,7 @@ public interface Name extends software.amazon.jsii.JsiiSerializable {
          */
         @Override
         public Name build() {
-            return new Jsii$Proxy(first, last, middle);
+            return new Jsii$Proxy(this);
         }
     }
 
@@ -188,11 +188,11 @@ public interface Name extends software.amazon.jsii.JsiiSerializable {
         /**
          * Constructor that initializes the object based on literal property values passed by the {@link Builder}.
          */
-        protected Jsii$Proxy(final java.lang.String first, final java.lang.String last, final java.lang.String middle) {
+        protected Jsii$Proxy(final Builder builder) {
             super(software.amazon.jsii.JsiiObject.InitializationMode.JSII);
-            this.first = java.util.Objects.requireNonNull(first, \\"first is required\\");
-            this.last = java.util.Objects.requireNonNull(last, \\"last is required\\");
-            this.middle = middle;
+            this.first = java.util.Objects.requireNonNull(builder.first, \\"first is required\\");
+            this.last = java.util.Objects.requireNonNull(builder.last, \\"last is required\\");
+            this.middle = builder.middle;
         }
 
         @Override
