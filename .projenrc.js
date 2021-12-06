@@ -1,6 +1,6 @@
-const { TypeScriptLibraryProject, Semver } = require('projen');
+const { typescript } = require('projen');
 
-const project = new TypeScriptLibraryProject({
+const project = new typescript.TypeScriptProject({
   name: 'json2jsii',
   description: 'Generates jsii structs from JSON schemas',
   authorName: 'Elad Ben-Israel',
