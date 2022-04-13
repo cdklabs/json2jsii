@@ -43,7 +43,7 @@
     "eslint-plugin-import": "^2.26.0",
     "jest": "^26.6.3",
     "jest-junit": "^13",
-    "jsii-srcmak": "^0.1.528",
+    "jsii-srcmak": "^0.1.529",
     "json-schema": "^0.4.0",
     "npm-check-updates": "^12",
     "prettier": "^2.6.2",
