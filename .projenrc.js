@@ -9,8 +9,7 @@ const project = new typescript.TypeScriptProject({
   deps: ['json-schema', 'camelcase', 'snake-case'],
   devDeps: ['@types/json-schema', 'jsii-srcmak', 'prettier'],
   releaseToNpm: true,
-  minNodeVersion: '12.7.0',
-  workflowNodeVersion: '12.22.0', // required by @typescript-eslint/eslint-plugin@5.5.0
+  minNodeVersion: '14.17.0',
   projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
   defaultReleaseBranch: 'main',
   autoApproveOptions: {
