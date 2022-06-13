@@ -361,15 +361,17 @@ export class TypeGenerator {
       this.emitDescription(code, fqn, def.description);
 
       code.openBlock(`export class ${typeName}`);
+      const possibleTypes = [];
 
       for (const type of options) {
+        possibleTypes.push(type);
         const methodName = 'from' + type[0].toUpperCase() + type.substr(1);
         code.openBlock(`public static ${methodName}(value: ${type}): ${typeName}`);
         code.line(`return new ${typeName}(value);`);
         code.closeBlock();
       }
 
-      code.openBlock('private constructor(public readonly value: any)');
+      code.openBlock(`private constructor(public readonly value: ${possibleTypes.join(' | ')})`);
       code.closeBlock();
 
       code.closeBlock();
