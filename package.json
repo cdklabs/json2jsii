@@ -46,8 +46,8 @@
     "jsii-srcmak": "^0.1.592",
     "json-schema": "^0.4.0",
     "npm-check-updates": "^12",
-    "prettier": "^2.7.0",
-    "projen": "^0.58.14",
+    "prettier": "^2.7.1",
+    "projen": "^0.58.15",
     "standard-version": "^9",
     "ts-jest": "^27",
     "typescript": "~4.7.3"
