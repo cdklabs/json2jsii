@@ -56,6 +56,20 @@ export interface TypeGeneratorOptions {
    */
   readonly renderRefTypeName?: (def: string) => string;
 
+  /**
+   * Given a complex property name, render the type name to be emitted for it.
+   *
+   * When `emitType` is invoked, the type name to be emitted is provided by the caller.
+   * However, for complex types embedded in other types, we infer the type name of the complex property
+   * by appending the property name to the type fqn.
+   *
+   * This function provides a way to control how these names are determined.
+   *
+   * For example, if type `Foo` has a complex property `prop`, the emitted struct for it would be `FooBar`.
+   * Using this function, you can customize it however you like.
+   *
+   * @default - Only dot namespacing is handled by default. Elements between dots are pascal cased and concatenated.
+   */
   readonly renderPropertyTypeName?: (def: string) => string;
 }
 
