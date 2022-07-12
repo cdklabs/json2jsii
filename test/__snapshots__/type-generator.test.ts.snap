@@ -52,7 +52,7 @@ export function toJson_TestType(obj: TestType | undefined): Record<string, any> 
 "
 `;
 
-exports[`custom ref normalization 1`] = `
+exports[`custom ref normalization - deprecated 1`] = `
 "/**
  * @schema Bar
  */

@@ -36,6 +36,11 @@ export interface TypeGeneratorOptions {
   readonly toJson?: boolean;
 
   /**
+   * @deprecated - use `renderRefTypeName`
+   */
+  readonly renderTypeName?: (def: string) => string;
+
+  /**
    * Given a definition name, render the type name to be emitted by that definition.
    *
    * When `emitType` is invoked, the type name to be emitted is provided by the caller.
@@ -49,7 +54,9 @@ export interface TypeGeneratorOptions {
    *
    * @default - Only dot namespacing is handled by default. Elements between dots are pascal cased and concatenated.
    */
-  readonly renderTypeName?: (def: string) => string;
+  readonly renderRefTypeName?: (def: string) => string;
+
+  readonly renderPropertyTypeName?: (def: string) => string;
 }
 
 /**
@@ -102,7 +109,8 @@ export class TypeGenerator {
   private readonly exclude: string[];
   private readonly definitions: { [def: string]: JSONSchema4 };
   private readonly toJson: boolean;
-  private readonly renderTypeName: (def: string) => string;
+  private readonly renderRefTypeName: (def: string) => string;
+  private readonly renderPropertyTypeName: (def: string) => string;
 
   /**
    *
@@ -113,7 +121,13 @@ export class TypeGenerator {
     this.exclude = options.exclude ?? [];
     this.definitions = {};
     this.toJson = options.toJson ?? true;
-    this.renderTypeName = options.renderTypeName ?? DEFAULT_RENDER_TYPE_NAME;
+
+    if (options.renderRefTypeName && options.renderTypeName) {
+      throw new Error('\'renderTypeName\' cannot be passed along with \'renderRefTypeName\'. Since \'renderTypeName\' is deprecated, use \'renderRefTypeName\' only');
+    }
+
+    this.renderRefTypeName = options.renderRefTypeName ?? (options.renderTypeName ?? DEFAULT_RENDER_TYPE_NAME);
+    this.renderPropertyTypeName = options.renderPropertyTypeName ?? DEFAULT_RENDER_TYPE_NAME;
 
     for (const [typeName, def] of Object.entries(options.definitions ?? {})) {
       this.addDefinition(typeName, def);
@@ -220,7 +234,9 @@ export class TypeGenerator {
         throw new Error('only "string" enums are supported');
       }
 
-      return this.emitEnum(typeName, def, structFqn);
+      const enumTypeName = TypeGenerator.normalizeTypeName(this.renderRefTypeName(typeName));
+
+      return this.emitEnum(enumTypeName, def, structFqn);
     }
 
     // struct
@@ -421,7 +437,7 @@ export class TypeGenerator {
     name = camelCase(name);
 
     this.emitDescription(code, `${structFqn}#${originalName}`, propDef.description);
-    const propertyType = this.typeForProperty(`${structFqn}.${name}`, propDef);
+    const propertyType = this.typeForProperty(DEFAULT_RENDER_TYPE_NAME(`${structFqn}.${name}`), propDef);
     const required = this.isPropertyRequired(originalName, structDef);
     const optional = required ? '' : '?';
 
@@ -500,7 +516,7 @@ export class TypeGenerator {
   }
 
   private typeForProperty(propertyFqn: string, def: JSONSchema4): EmittedType {
-    const subtype = TypeGenerator.normalizeTypeName(DEFAULT_RENDER_TYPE_NAME(propertyFqn));
+    const subtype = TypeGenerator.normalizeTypeName(this.renderPropertyTypeName(propertyFqn));
     return this.emitTypeInternal(subtype, def, subtype);
   }
 
@@ -514,7 +530,7 @@ export class TypeGenerator {
       return { type: 'any', toJson: x => x };
     }
 
-    const typeName = TypeGenerator.normalizeTypeName(this.renderTypeName(def.$ref.substring(prefix.length)));
+    const typeName = TypeGenerator.normalizeTypeName(this.renderRefTypeName(def.$ref.substring(prefix.length)));
 
     // if we already emitted a type with this type name, just return it
     const emitted = this.emittedTypes[typeName];

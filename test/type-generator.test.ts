@@ -347,7 +347,7 @@ test('if "toJson" is disabled, toJson functions are not generated', async () => 
   expect(await generate(gen)).toMatchSnapshot();
 });
 
-test('custom ref normalization', async () => {
+test('custom ref normalization - deprecated', async () => {
 
   const foo = 'io.k8s.v1beta1.Foo';
   const bar = 'Bar';
