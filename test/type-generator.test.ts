@@ -369,6 +369,47 @@ test('custom ref normalization - deprecated', async () => {
 
 });
 
+test('custom ref normalization', async () => {
+
+  const foo = 'io.k8s.v1beta1.Foo';
+  const bar = 'Bar';
+
+  const gen = new TypeGenerator({
+    renderRefTypeName: (def: string) => {
+      return def.split('.').slice(2, 4).join('');
+    },
+  });
+
+  gen.addDefinition(foo, { properties: { props: { type: 'number' } } });
+
+  // two structs, each referencing a different version
+  gen.addDefinition(bar, { properties: { prop: { $ref: `#/definitions/${foo}` } } });
+  gen.emitType(bar);
+
+  const code = await generate(gen);
+  expect(code).toMatchSnapshot();
+
+});
+
+test('custom property normalization', async () => {
+
+  const foo = 'Foo';
+
+  const gen = new TypeGenerator({
+    renderPropertyTypeName: (def: string) => {
+      return `${def}Custom`;
+    },
+  });
+
+  gen.addDefinition(foo, { properties: { structProp: { properties: { stringProp: { type: 'string' } } } } });
+  gen.emitType(foo);
+
+  const code = await generate(gen);
+  expect(code).toMatchSnapshot();
+
+});
+
+
 test('shared namespace references', async () => {
 
   const foo1 = 'io.k8s.v1beta1.Foo';

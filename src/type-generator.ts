@@ -234,9 +234,7 @@ export class TypeGenerator {
         throw new Error('only "string" enums are supported');
       }
 
-      const enumTypeName = TypeGenerator.normalizeTypeName(this.renderRefTypeName(typeName));
-
-      return this.emitEnum(enumTypeName, def, structFqn);
+      return this.emitEnum(typeName, def, structFqn);
     }
 
     // struct

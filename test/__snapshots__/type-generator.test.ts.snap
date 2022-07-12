@@ -52,7 +52,113 @@ export function toJson_TestType(obj: TestType | undefined): Record<string, any> 
 "
 `;
 
+exports[`custom property normalization 1`] = `
+"/**
+ * @schema Foo
+ */
+export interface Foo {
+  /**
+   * @schema Foo#structProp
+   */
+  readonly structProp?: FooStructPropCustom;
+
+}
+
+/**
+ * Converts an object of type 'Foo' to JSON representation.
+ */
+/* eslint-disable max-len, quote-props */
+export function toJson_Foo(obj: Foo | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'structProp': toJson_FooStructPropCustom(obj.structProp),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, quote-props */
+
+/**
+ * @schema FooStructPropCustom
+ */
+export interface FooStructPropCustom {
+  /**
+   * @schema FooStructPropCustom#stringProp
+   */
+  readonly stringProp?: string;
+
+}
+
+/**
+ * Converts an object of type 'FooStructPropCustom' to JSON representation.
+ */
+/* eslint-disable max-len, quote-props */
+export function toJson_FooStructPropCustom(obj: FooStructPropCustom | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'stringProp': obj.stringProp,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, quote-props */
+"
+`;
+
 exports[`custom ref normalization - deprecated 1`] = `
+"/**
+ * @schema Bar
+ */
+export interface Bar {
+  /**
+   * @schema Bar#prop
+   */
+  readonly prop?: V1beta1Foo;
+
+}
+
+/**
+ * Converts an object of type 'Bar' to JSON representation.
+ */
+/* eslint-disable max-len, quote-props */
+export function toJson_Bar(obj: Bar | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'prop': toJson_V1beta1Foo(obj.prop),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, quote-props */
+
+/**
+ * @schema io.k8s.v1beta1.Foo
+ */
+export interface V1beta1Foo {
+  /**
+   * @schema io.k8s.v1beta1.Foo#props
+   */
+  readonly props?: number;
+
+}
+
+/**
+ * Converts an object of type 'V1beta1Foo' to JSON representation.
+ */
+/* eslint-disable max-len, quote-props */
+export function toJson_V1beta1Foo(obj: V1beta1Foo | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'props': obj.props,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, quote-props */
+"
+`;
+
+exports[`custom ref normalization 1`] = `
 "/**
  * @schema Bar
  */
