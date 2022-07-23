@@ -43,11 +43,11 @@
     "eslint-plugin-import": "^2.26.0",
     "jest": "^27",
     "jest-junit": "^13",
-    "jsii-srcmak": "^0.1.624",
+    "jsii-srcmak": "^0.1.625",
     "json-schema": "^0.4.0",
     "npm-check-updates": "^15",
     "prettier": "^2.7.1",
-    "projen": "^0.59.5",
+    "projen": "^0.59.6",
     "standard-version": "^9",
     "ts-jest": "^27",
     "typescript": "~4.7.4"
