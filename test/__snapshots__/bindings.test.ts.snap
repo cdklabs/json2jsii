@@ -11,6 +11,8 @@ import jsii
 import publication
 import typing_extensions
 
+from typeguard import check_type
+
 from ._jsii import *
 
 
@@ -34,6 +36,11 @@ class Name:
 
         :schema: Name
         '''
+        if __debug__:
+            type_hints = typing.get_type_hints(Name.__init__)
+            check_type(argname=\\"argument first\\", value=first, expected_type=type_hints[\\"first\\"])
+            check_type(argname=\\"argument last\\", value=last, expected_type=type_hints[\\"last\\"])
+            check_type(argname=\\"argument middle\\", value=middle, expected_type=type_hints[\\"middle\\"])
         self._values: typing.Dict[str, typing.Any] = {
             \\"first\\": first,
             \\"last\\": last,
