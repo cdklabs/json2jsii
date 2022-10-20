@@ -37,7 +37,14 @@ class Name:
         :schema: Name
         '''
         if __debug__:
-            type_hints = typing.get_type_hints(Name.__init__)
+            def stub(
+                *,
+                first: builtins.str,
+                last: builtins.str,
+                middle: typing.Optional[builtins.str] = None,
+            ) -> None:
+                ...
+            type_hints = typing.get_type_hints(stub)
             check_type(argname=\\"argument first\\", value=first, expected_type=type_hints[\\"first\\"])
             check_type(argname=\\"argument last\\", value=last, expected_type=type_hints[\\"last\\"])
             check_type(argname=\\"argument middle\\", value=middle, expected_type=type_hints[\\"middle\\"])
