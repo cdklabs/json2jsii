@@ -3857,10 +3857,10 @@ jsii-rosetta@^1.71.0:
     workerpool "^6.3.0"
     yargs "^16.2.0"
 
-jsii-srcmak@^0.1.744:
-  version "0.1.744"
-  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.744.tgz#71addcc4573de960b2833eb84c1ba038856e845a"
-  integrity sha512-xPaw0YFAoxrRbMsfiIeiBqgi5YO7FUCaF8w0MmhnvqDQDb93qEkQP8dQhImzutZsgSxUg7e0SAQ39rdeRhNAfA==
+jsii-srcmak@^0.1.745:
+  version "0.1.745"
+  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.745.tgz#435f4a79d0959e6c76f7d73d13a0564ba3d57d65"
+  integrity sha512-iTX8+kYI2DB+GfYla01UgNRP1THI8P0Yb5B7j5tDR1Jwj8pHSJn1D3Q1/2/LE7S3wjMwL2EizhqSXBmDIh2LqQ==
   dependencies:
     fs-extra "^9.1.0"
     jsii "^1.71.0"
@@ -4949,10 +4949,10 @@ progress@^2.0.3:
   resolved "https://registry.yarnpkg.com/progress/-/progress-2.0.3.tgz#7e8cf8d8f5b8f239c1bc68beb4eb78567d572ef8"
   integrity sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==
 
-projen@^0.65.35:
-  version "0.65.35"
-  resolved "https://registry.yarnpkg.com/projen/-/projen-0.65.35.tgz#f913356884a1e98246b3220635acda223ed3960b"
-  integrity sha512-IFKmdJYYQhH5ObsItVjP3yoXGWvwyGvMmOFfqRxFCLgjtxFcfyWagy4iX9Lx5P/t6wflyy0FPBRs72DSCvhfuw==
+projen@^0.65.36:
+  version "0.65.36"
+  resolved "https://registry.yarnpkg.com/projen/-/projen-0.65.36.tgz#572ef2d03ecbddaa4f92de13fb35459dc5a05a8e"
+  integrity sha512-veSMieTJYJ43CS7xOLdDnDy4QCkHZpOSmaR9en58rsfoNFqWpF6+ee/ezu8/bl3PoBbutVIRc/wzQjW2uyNCbA==
   dependencies:
     "@iarna/toml" "^2.2.5"
     case "^1.6.3"
