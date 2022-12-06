@@ -37,18 +37,11 @@ class Name:
         :schema: Name
         '''
         if __debug__:
-            def stub(
-                *,
-                first: builtins.str,
-                last: builtins.str,
-                middle: typing.Optional[builtins.str] = None,
-            ) -> None:
-                ...
-            type_hints = typing.get_type_hints(stub)
+            type_hints = typing.get_type_hints(_typecheckingstub__a733313bf214654e62b2f9f69d233474d4c6277e0f71f4fd3acee58a8fc3c20d)
             check_type(argname=\\"argument first\\", value=first, expected_type=type_hints[\\"first\\"])
             check_type(argname=\\"argument last\\", value=last, expected_type=type_hints[\\"last\\"])
             check_type(argname=\\"argument middle\\", value=middle, expected_type=type_hints[\\"middle\\"])
-        self._values: typing.Dict[str, typing.Any] = {
+        self._values: typing.Dict[builtins.str, typing.Any] = {
             \\"first\\": first,
             \\"last\\": last,
         }
@@ -98,6 +91,15 @@ __all__ = [
 ]
 
 publication.publish()
+
+def _typecheckingstub__a733313bf214654e62b2f9f69d233474d4c6277e0f71f4fd3acee58a8fc3c20d(
+    *,
+    first: builtins.str,
+    last: builtins.str,
+    middle: typing.Optional[builtins.str] = None,
+) -> None:
+    \\"\\"\\"Type checking stubs\\"\\"\\"
+    pass
 "
 `;
 
