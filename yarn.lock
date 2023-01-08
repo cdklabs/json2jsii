@@ -1611,9 +1611,9 @@ combined-stream@^1.0.8:
     delayed-stream "~1.0.0"
 
 commander@^9.4.1:
-  version "9.4.1"
-  resolved "https://registry.yarnpkg.com/commander/-/commander-9.4.1.tgz#d1dd8f2ce6faf93147295c0df13c7c21141cfbdd"
-  integrity sha512-5EEkTNyHNGFPD2H+c/dXXfQZYa/scCKasxWcXJaWnNJ99pnQN9Vnmqow+p+PlFPE63Q6mThaZws1T+HxfpgtPw==
+  version "9.5.0"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-9.5.0.tgz#bc08d1eb5cedf7ccb797a96199d41c7bc3e60d30"
+  integrity sha512-KRs7WVDKg86PWiuAqhDrAQnTXZKraVcCc6vFdL14qrZ/DcWwuRo7VoiYXalXO7S5GKpqYiVEwCbgFDfxNHKJBQ==
 
 comment-json@4.2.2:
   version "4.2.2"
@@ -3954,10 +3954,10 @@ jsii-rosetta@^1.73.0:
     workerpool "^6.3.1"
     yargs "^16.2.0"
 
-jsii-srcmak@^0.1.786:
-  version "0.1.786"
-  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.786.tgz#102ac6a4b2eff20e0dc1f2f003c1cf90a948889f"
-  integrity sha512-x5VRz5v+y/lfXIfgRx5HZ1TAOe+ZWWPnIl/iPIfGMHSxBSRLnZScwB5NMhmw4uhClwzZWg3sg7QL6hWZFZvMTw==
+jsii-srcmak@^0.1.787:
+  version "0.1.787"
+  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.787.tgz#4dbd86968a1e18e37efd6dda70161e51aa902056"
+  integrity sha512-0tAZQMwuJvNQCu0cILHWS9rKXKYGdtkWR3lyjT9Z3DEk4k1/nCma/dIGqPh1Dor/3LlvSq5CaqGCFjW+1Xx0/A==
   dependencies:
     fs-extra "^9.1.0"
     jsii "^1.73.0"
@@ -5021,10 +5021,10 @@ prelude-ls@~1.1.2:
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"
   integrity sha512-ESF23V4SKG6lVSGZgYNpbsiaAkdab6ZgOxe52p7+Kid3W3u3bxR4Vfd/o21dmN7jSt0IwgZ4v5MUd26FEtXE9w==
 
-prettier@^2.8.1:
-  version "2.8.1"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.1.tgz#4e1fd11c34e2421bc1da9aea9bd8127cd0a35efc"
-  integrity sha512-lqGoSJBQNJidqCHE80vqZJHWHRFoNYsSpP9AjFhlhi9ODCJA541svILes/+/1GM3VaL/abZi7cpFzOpdR9UPKg==
+prettier@^2.8.2:
+  version "2.8.2"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.2.tgz#c4ea1b5b454d7c4b59966db2e06ed7eec5dfd160"
+  integrity sha512-BtRV9BcncDyI2tsuS19zzhzoxD8Dh8LiCx7j7tHzrkz8GFXAexeWFdi22mjE1d16dftH2qNaytVxqiRTGlMfpw==
 
 pretty-format@^26.0.0, pretty-format@^26.6.2:
   version "26.6.2"
