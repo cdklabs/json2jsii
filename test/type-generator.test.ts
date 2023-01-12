@@ -1,6 +1,6 @@
 import { JSONSchema4 } from 'json-schema';
-import { TypeGenerator } from '../src';
 import { generate } from './util';
+import { TypeGenerator } from '../src';
 
 jest.setTimeout(3 * 60_000); // 1min
 
