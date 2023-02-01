@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync } from 'fs';
 import * as path from 'path';
-import { TypeGenerator } from '../src';
 import { generate } from './util';
+import { TypeGenerator } from '../src';
 
 jest.setTimeout(1000 * 60 * 5);
 
