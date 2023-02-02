@@ -270,11 +270,11 @@ export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> 
  */
 export enum MyStructMyEnum {
   /** one */
-  ONE = 'one',
+  ONE = \\"one\\",
   /** two */
-  TWO = 'two',
+  TWO = \\"two\\",
   /** three */
-  THREE = 'three',
+  THREE = \\"three\\",
 }
 
 /**
@@ -282,9 +282,9 @@ export enum MyStructMyEnum {
  */
 export enum MyStructYourEnum {
   /** jo */
-  JO = 'jo',
+  JO = \\"jo\\",
   /** shmo */
-  SHMO = 'shmo',
+  SHMO = \\"shmo\\",
 }
 "
 `;

@@ -215,9 +215,9 @@ export class TypeGenerator {
     }
 
     // enums
-    if (def.enum && Array.isArray(def.enum) && def.enum.length > 0 && !def.enum.find(x => typeof(x) !== 'string')) {
-      if (def.type && def.type !== 'string') {
-        throw new Error('only "string" enums are supported');
+    if (def.enum && Array.isArray(def.enum) && def.enum.length > 0 && def.enum.every(x => ['string', 'number'].includes(typeof(x)))) {
+      if (def.type && !(def.type === 'string' || def.type === 'number' || def.type === 'integer')) {
+        throw new Error('only enums with string or number values are supported');
       }
 
       return this.emitEnum(typeName, def, structFqn);
@@ -443,8 +443,8 @@ export class TypeGenerator {
         throw new Error(`definition is not an enum: ${JSON.stringify(def)}`);
       }
 
-      if (def.type && def.type !== 'string') {
-        throw new Error('can only generate string enums');
+      if (def.type && !(def.type === 'string' || def.type === 'number' || def.type === 'integer')) {
+        throw new Error('only enums with string or number values are supported');
       }
 
       this.emitDescription(code, structFqn, def.description);
@@ -452,12 +452,12 @@ export class TypeGenerator {
       code.openBlock(`export enum ${typeName}`);
 
       for (const value of def.enum) {
-        if (typeof(value) !== 'string') {
-          throw new Error('can only generate enums for string values');
+        if (!['string', 'number'].includes(typeof(value))) {
+          throw new Error('only enums with string or number values are supported');
         }
 
         // sluggify and turn to UPPER_SNAKE_CASE
-        let memberName = snakeCase(value.replace(/[^a-z0-9]/gi, '_')).split('_').filter(x => x).join('_').toUpperCase();
+        let memberName = snakeCase(`${value}`.replace(/[^a-z0-9]/gi, '_')).split('_').filter(x => x).join('_').toUpperCase();
 
         // if member name starts with a non-alpha character, add a prefix so it becomes a symbol
         if (!/^[A-Z].*/i.test(memberName)) {
@@ -465,7 +465,7 @@ export class TypeGenerator {
         }
 
         code.line(`/** ${value} */`);
-        code.line(`${memberName} = '${value}',`);
+        code.line(`${memberName} = ${JSON.stringify(value)},`);
       }
 
       code.closeBlock();
