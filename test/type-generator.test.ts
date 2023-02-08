@@ -274,6 +274,32 @@ describe('enums', () => {
       },
     },
   });
+
+  which('has number values', {
+    properties: {
+      Percentiles: {
+        type: 'number',
+        enum: [
+          .9,
+          .95,
+          .99,
+        ],
+      },
+    },
+  });
+
+  which('has integer values', {
+    properties: {
+      Days: {
+        type: 'integer',
+        enum: [
+          1,
+          2,
+          3,
+        ],
+      },
+    },
+  });
 });
 
 which('primitives', {
