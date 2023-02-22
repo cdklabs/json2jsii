@@ -547,7 +547,7 @@ export class IntOrString {
   public static fromString(value: string): IntOrString {
     return new IntOrString(value);
   }
-  private constructor(public readonly value: any) {
+  private constructor(public readonly value: number | string) {
   }
 }
 
@@ -561,7 +561,7 @@ export class MyStructHaver {
   public static fromString(value: string): MyStructHaver {
     return new MyStructHaver(value);
   }
-  private constructor(public readonly value: any) {
+  private constructor(public readonly value: number | string) {
   }
 }
 "

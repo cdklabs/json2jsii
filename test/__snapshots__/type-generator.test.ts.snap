@@ -1192,7 +1192,7 @@ export class TestType {
   public static fromNumber(value: number): TestType {
     return new TestType(value);
   }
-  private constructor(public readonly value: any) {
+  private constructor(public readonly value: string | number) {
   }
 }
 "
