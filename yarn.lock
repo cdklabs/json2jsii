@@ -1546,6 +1546,14 @@ case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
+cdklabs-projen-project-types@^0.1.93:
+  version "0.1.93"
+  resolved "https://registry.yarnpkg.com/cdklabs-projen-project-types/-/cdklabs-projen-project-types-0.1.93.tgz#9475d9cf354b334c9d08463f54424f45a1b232c2"
+  integrity sha512-vsRk8GEyDg22BxTjOYWK9CFZsNWbkv/54VK4BeNR9pHRY4sKnql8dZhQYk6FRyijLrmze62VTSUyinHrMNljzA==
+  dependencies:
+    projen "^0.71.48"
+    yaml "^2.2.2"
+
 chalk@^2.0.0, chalk@^2.4.2:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.2.tgz#cd42541677a54333cf541a49108c1432b44c9424"

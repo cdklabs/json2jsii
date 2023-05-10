@@ -19,6 +19,7 @@
     "pre-compile": "npx projen pre-compile",
     "release": "npx projen release",
     "test": "npx projen test",
+    "test:update": "npx projen test:update",
     "test:watch": "npx projen test:watch",
     "unbump": "npx projen unbump",
     "upgrade": "npx projen upgrade",
@@ -26,9 +27,9 @@
     "projen": "npx projen"
   },
   "author": {
-    "name": "Elad Ben-Israel",
-    "email": "elad.benisrael@gmail.com",
-    "organization": false
+    "name": "Amazon Web Services",
+    "email": "aws-cdk-dev@amazon.com",
+    "organization": true
   },
   "devDependencies": {
     "@types/jest": "^26.0.24",
@@ -36,6 +37,7 @@
     "@types/node": "^14",
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
+    "cdklabs-projen-project-types": "^0.1.93",
     "eslint": "^8",
     "eslint-import-resolver-node": "^0.3.7",
     "eslint-import-resolver-typescript": "^2.7.1",
