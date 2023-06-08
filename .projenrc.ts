@@ -1,5 +1,4 @@
-const { CdklabsTypeScriptProject } = require('cdklabs-projen-project-types');
-const { typescript } = require('projen');
+import { CdklabsTypeScriptProject } from 'cdklabs-projen-project-types';
 
 const project = new CdklabsTypeScriptProject({
   private: false,
@@ -7,6 +6,7 @@ const project = new CdklabsTypeScriptProject({
   workflowNodeVersion: '16.x',
   minNodeVersion: '16.14.0',
   name: 'json2jsii',
+  projenrcTs: true,
   description: 'Generates jsii structs from JSON schemas',
   authorName: 'Elad Ben-Israel',
   authorEmail: 'elad.benisrael@gmail.com',
@@ -14,13 +14,7 @@ const project = new CdklabsTypeScriptProject({
   deps: ['json-schema', 'camelcase', 'snake-case'],
   devDeps: ['@types/json-schema', 'jsii-srcmak', 'prettier', 'cdklabs-projen-project-types'],
   releaseToNpm: true,
-  minNodeVersion: '14.17.0',
-  projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
   defaultReleaseBranch: 'main',
-  autoApproveOptions: {
-    allowedUsernames: ['cdklabs-automation'],
-    secret: 'GITHUB_TOKEN',
-  },
   autoApproveUpgrades: true,
 });
 
