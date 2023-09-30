@@ -122,6 +122,20 @@ describe('arrays', () => {
     });
   });
 
+  test('without items', () => {
+    const toJson = generateToJson({
+      properties: {
+        ArrayProp: { type: 'array' },
+      },
+    });
+
+    expect(toJson({
+      arrayProp: ['bello', { foo: 88, bar: 'world' }],
+    })).toStrictEqual({
+      ArrayProp: ['bello', { foo: 88, bar: 'world' }],
+    });
+  });
+
 });
 
 test('any', () => {
