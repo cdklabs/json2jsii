@@ -136,6 +136,25 @@ describe('arrays', () => {
     });
   });
 
+  test('with items', () => {
+    const toJson = generateToJson({
+      properties: {
+        ArrayProp: {
+          type: 'array',
+          items: {
+            type: 'string',
+          },
+        },
+      },
+    });
+
+    expect(toJson({
+      arrayProp: ['bello', { foo: 88, bar: 'world' }],
+    })).toStrictEqual({
+      ArrayProp: ['bello', { foo: 88, bar: 'world' }],
+    });
+  });
+
 });
 
 test('any', () => {

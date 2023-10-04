@@ -316,19 +316,6 @@ which('primitives', {
   },
 });
 
-describe('arrays', () => {
-  which('items not defined', {
-    type: 'object',
-    properties: {
-      foo: {
-        description: 'some property',
-        type: 'array',
-        default: [],
-      },
-    },
-  });
-});
-
 which('camel casing', {
   properties: {
     'CamelCase1': { type: 'string' },

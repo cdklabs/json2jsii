@@ -115,6 +115,34 @@ export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> 
 "
 `;
 
+exports[`arrays with items 1`] = `
+"/**
+ * @schema MyStruct
+ */
+export interface MyStruct {
+  /**
+   * @schema MyStruct#ArrayProp
+   */
+  readonly arrayProp?: string[];
+
+}
+
+/**
+ * Converts an object of type 'MyStruct' to JSON representation.
+ */
+/* eslint-disable max-len, quote-props */
+export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'ArrayProp': obj.arrayProp?.map(y => y),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, quote-props */
+"
+`;
+
 exports[`arrays without items 1`] = `
 "/**
  * @schema MyStruct
