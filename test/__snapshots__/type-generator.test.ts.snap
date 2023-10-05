@@ -586,6 +586,50 @@ export interface Foo {
 "
 `;
 
+exports[`sanitize number enum when one of the values is null 1`] = `
+"/**
+ * @schema Foo
+ */
+export interface Foo {
+  /**
+   * @schema Foo#foo
+   */
+  readonly foo?: FooFoo;
+
+}
+
+/**
+ * @schema FooFoo
+ */
+export enum FooFoo {
+  /** 3 */
+  VALUE_3 = 3,
+}
+"
+`;
+
+exports[`sanitize string enum when one of the values is null 1`] = `
+"/**
+ * @schema Foo
+ */
+export interface Foo {
+  /**
+   * @schema Foo#foo
+   */
+  readonly foo?: FooFoo;
+
+}
+
+/**
+ * @schema FooFoo
+ */
+export enum FooFoo {
+  /** val1 */
+  VAL1 = \\"val1\\",
+}
+"
+`;
+
 exports[`shared namespace references 1`] = `
 "/**
  * @schema Bar1

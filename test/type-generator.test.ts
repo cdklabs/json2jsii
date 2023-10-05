@@ -451,6 +451,46 @@ test('enum when type is defined as array', async () => {
 
 });
 
+test('sanitize string enum when one of the values is null', async () => {
+
+  const schema: JSONSchema4 = {
+    properties: {
+      foo: {
+        type: ['null', 'string'],
+        enum: ['val1', null],
+      },
+    },
+  };
+
+  const gen = TypeGenerator.forStruct('Foo', schema, {
+    toJson: false,
+    sanitizeEnums: true,
+  });
+
+  expect(await generate(gen)).toMatchSnapshot();
+
+});
+
+test('sanitize number enum when one of the values is null', async () => {
+
+  const schema: JSONSchema4 = {
+    properties: {
+      foo: {
+        type: ['null', 'number'],
+        enum: [3, null],
+      },
+    },
+  };
+
+  const gen = TypeGenerator.forStruct('Foo', schema, {
+    toJson: false,
+    sanitizeEnums: true,
+  });
+
+  expect(await generate(gen)).toMatchSnapshot();
+
+});
+
 test('custom ref normalization', async () => {
 
   const foo = 'io.k8s.v1beta1.Foo';

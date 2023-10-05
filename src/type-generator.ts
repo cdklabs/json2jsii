@@ -36,6 +36,17 @@ export interface TypeGeneratorOptions {
   readonly toJson?: boolean;
 
   /**
+   * When set to true, enums are sanitized from the 'null' literal value,
+   * allowing typing the property as an enum, instead of the underlying type.
+   *
+   * Note that switching this from flase to true is a breaking change in
+   * the generated code as it might change a property type.
+   *
+   * @default false
+   */
+  readonly sanitizeEnums?: boolean;
+
+  /**
    * Given a definition name, render the type name to be emitted by that definition.
    *
    * When `emitType` is invoked, the type name to be emitted is provided by the caller.
@@ -102,6 +113,7 @@ export class TypeGenerator {
   private readonly exclude: string[];
   private readonly definitions: { [def: string]: JSONSchema4 };
   private readonly toJson: boolean;
+  private readonly sanitizeEnums: boolean;
   private readonly renderTypeName: (def: string) => string;
 
   /**
@@ -113,6 +125,7 @@ export class TypeGenerator {
     this.exclude = options.exclude ?? [];
     this.definitions = {};
     this.toJson = options.toJson ?? true;
+    this.sanitizeEnums = options.sanitizeEnums ?? false;
     this.renderTypeName = options.renderTypeName ?? DEFAULT_RENDER_TYPE_NAME;
 
     for (const [typeName, def] of Object.entries(options.definitions ?? {})) {
@@ -177,7 +190,7 @@ export class TypeGenerator {
    *
    * 3. ['<type1>', '<type2>'] -> 'any'
    */
-  private maybeTransformType(def: JSONSchema4) {
+  private maybeTransformTypeArray(def: JSONSchema4) {
 
     if (!Array.isArray(def.type)) {
       return;
@@ -218,7 +231,14 @@ export class TypeGenerator {
       }
     }
 
-    this.maybeTransformType(def);
+    this.maybeTransformTypeArray(def);
+
+    if (def.enum && this.sanitizeEnums) {
+      // santizie enums from liternal 'null' because they prevent emitting the enum
+      // and instead cause a fallback to 'string'. we assume the optionality of the enum
+      // covers the 'null' value.
+      def.enum = def.enum.filter(d => d !== null);
+    }
 
     // callers expect that emit a type named `typeName` so we can't change it here
     // but at least we can verify it's correct.
