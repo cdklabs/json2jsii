@@ -535,7 +535,8 @@ export class TypeGenerator {
 
   private typeForArray(propertyFqn: string, def: JSONSchema4): EmittedType {
     if (!def.items || typeof(def.items) !== 'object') {
-      throw new Error(`unsupported array type ${def.items}`);
+      // Falling back to an array of any type
+      def.items = {};
     }
 
     return this.typeForProperty(propertyFqn, def.items);
