@@ -39,7 +39,7 @@ export interface TypeGeneratorOptions {
    * When set to true, enums are sanitized from the 'null' literal value,
    * allowing typing the property as an enum, instead of the underlying type.
    *
-   * Note that switching this from flase to true is a breaking change in
+   * Note that switching this from 'false' to 'true' is a breaking change in
    * the generated code as it might change a property type.
    *
    * @default false
