@@ -1,5 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`additionalProperties when type is defined as array 1`] = `
+"/**
+ * @schema Foo
+ */
+export interface Foo {
+  /**
+   * @schema Foo#foo
+   */
+  readonly foo?: { [key: string]: string };
+
+}
+"
+`;
+
 exports[`camel casing 1`] = `
 "/**
  * @schema fqn.of.TestType
@@ -190,6 +204,30 @@ export function toJson_TestType(obj: TestType | undefined): Record<string, any> 
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 /* eslint-enable max-len, quote-props */
+"
+`;
+
+exports[`enum when type is defined as array 1`] = `
+"/**
+ * @schema Foo
+ */
+export interface Foo {
+  /**
+   * @schema Foo#foo
+   */
+  readonly foo?: FooFoo;
+
+}
+
+/**
+ * @schema FooFoo
+ */
+export enum FooFoo {
+  /** val1 */
+  VAL1 = \\"val1\\",
+  /** val2 */
+  VAL2 = \\"val2\\",
+}
 "
 `;
 
@@ -531,6 +569,20 @@ export function toJson_TestType(obj: TestType | undefined): Record<string, any> 
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 /* eslint-enable max-len, quote-props */
+"
+`;
+
+exports[`properties when type is defined as array 1`] = `
+"/**
+ * @schema Foo
+ */
+export interface Foo {
+  /**
+   * @schema Foo#bar
+   */
+  readonly bar?: string;
+
+}
 "
 `;
 
@@ -1040,6 +1092,20 @@ export function toJson_TypeC(obj: TypeC | undefined): Record<string, any> | unde
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 /* eslint-enable max-len, quote-props */
+"
+`;
+
+exports[`type can be an array with null and a single non null type 1`] = `
+"/**
+ * @schema Foo
+ */
+export interface Foo {
+  /**
+   * @schema Foo#bar
+   */
+  readonly bar?: boolean;
+
+}
 "
 `;
 
