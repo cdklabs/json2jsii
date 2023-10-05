@@ -182,7 +182,7 @@ export class TypeGenerator {
    * the option to omit the property. What it doesn't allow is explicitly passing 'null', which might
    * be desired in some cases. For now we prefer type safety over that.
    *
-   * 1. ['null', '<type>'] -> optional 'string'
+   * 1. ['null', '<type>'] -> optional '<type>'
    * 2. ['null', '<type1>', '<type2>'] -> optional 'any'
    *
    *
