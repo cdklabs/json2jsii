@@ -185,7 +185,6 @@ export class TypeGenerator {
    * 1. ['null', '<type>'] -> optional '<type>'
    * 2. ['null', '<type1>', '<type2>'] -> optional 'any'
    *
-   *
    * This is the normal jsii conversion, nothing much we can do here.
    *
    * 3. ['<type1>', '<type2>'] -> 'any'
