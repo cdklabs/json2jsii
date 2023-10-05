@@ -378,6 +378,119 @@ test('if "toJson" is disabled, toJson functions are not generated', async () => 
   expect(await generate(gen)).toMatchSnapshot();
 });
 
+test('type can be an array with null and a single non null type', async () => {
+
+  const schema: JSONSchema4 = {
+    properties: {
+      bar: { type: ['null', 'boolean'] },
+    },
+  };
+
+  const gen = TypeGenerator.forStruct('Foo', schema, {
+    toJson: false,
+  });
+
+  expect(await generate(gen)).toMatchSnapshot();
+
+});
+
+test('additionalProperties when type is defined as array', async () => {
+
+  const schema: JSONSchema4 = {
+    properties: {
+      foo: {
+        type: ['null', 'object'],
+        additionalProperties: {
+          type: 'string',
+        },
+      },
+    },
+  };
+
+  const gen = TypeGenerator.forStruct('Foo', schema, {
+    toJson: false,
+  });
+
+  expect(await generate(gen)).toMatchSnapshot();
+
+});
+
+test('properties when type is defined as array', async () => {
+
+  const schema: JSONSchema4 = {
+    type: ['null', 'object'],
+    properties: {
+      bar: { type: 'string' },
+    },
+  };
+
+  const gen = TypeGenerator.forStruct('Foo', schema, {
+    toJson: false,
+  });
+
+  expect(await generate(gen)).toMatchSnapshot();
+
+});
+
+test('enum when type is defined as array', async () => {
+
+  const schema: JSONSchema4 = {
+    properties: {
+      foo: {
+        type: ['null', 'string'],
+        enum: ['val1', 'val2'],
+      },
+    },
+  };
+
+  const gen = TypeGenerator.forStruct('Foo', schema, {
+    toJson: false,
+  });
+
+  expect(await generate(gen)).toMatchSnapshot();
+
+});
+
+test('sanitize string enum when one of the values is null', async () => {
+
+  const schema: JSONSchema4 = {
+    properties: {
+      foo: {
+        type: ['null', 'string'],
+        enum: ['val1', null],
+      },
+    },
+  };
+
+  const gen = TypeGenerator.forStruct('Foo', schema, {
+    toJson: false,
+    sanitizeEnums: true,
+  });
+
+  expect(await generate(gen)).toMatchSnapshot();
+
+});
+
+test('sanitize number enum when one of the values is null', async () => {
+
+  const schema: JSONSchema4 = {
+    properties: {
+      foo: {
+        type: ['null', 'number'],
+        enum: [3, null],
+      },
+    },
+  };
+
+  const gen = TypeGenerator.forStruct('Foo', schema, {
+    toJson: false,
+    sanitizeEnums: true,
+  });
+
+  expect(await generate(gen)).toMatchSnapshot();
+
+});
+
 test('custom ref normalization', async () => {
 
   const foo = 'io.k8s.v1beta1.Foo';

@@ -36,6 +36,17 @@ export interface TypeGeneratorOptions {
   readonly toJson?: boolean;
 
   /**
+   * When set to true, enums are sanitized from the 'null' literal value,
+   * allowing typing the property as an enum, instead of the underlying type.
+   *
+   * Note that switching this from 'false' to 'true' is a breaking change in
+   * the generated code as it might change a property type.
+   *
+   * @default false
+   */
+  readonly sanitizeEnums?: boolean;
+
+  /**
    * Given a definition name, render the type name to be emitted by that definition.
    *
    * When `emitType` is invoked, the type name to be emitted is provided by the caller.
@@ -102,6 +113,7 @@ export class TypeGenerator {
   private readonly exclude: string[];
   private readonly definitions: { [def: string]: JSONSchema4 };
   private readonly toJson: boolean;
+  private readonly sanitizeEnums: boolean;
   private readonly renderTypeName: (def: string) => string;
 
   /**
@@ -113,6 +125,7 @@ export class TypeGenerator {
     this.exclude = options.exclude ?? [];
     this.definitions = {};
     this.toJson = options.toJson ?? true;
+    this.sanitizeEnums = options.sanitizeEnums ?? false;
     this.renderTypeName = options.renderTypeName ?? DEFAULT_RENDER_TYPE_NAME;
 
     for (const [typeName, def] of Object.entries(options.definitions ?? {})) {
@@ -157,6 +170,48 @@ export class TypeGenerator {
   }
 
   /**
+   * Many schemas define a type as an array of types to indicate union types.
+   * To avoid having the type generator be aware of that, we transform those types
+   * into their corresponding typescript definitions.
+   * --------------------------------------------------
+   *
+   * Strictly speaking, these definitions are meant to allow the liternal 'null' value
+   * to be used in addition to the actual types. However, since union types are not supported
+   * in jsii, allowing this would mean falling back to 'any' and loosing all type safety for such
+   * properties. Transforming it into a single concrete optional type provides both type safety and
+   * the option to omit the property. What it doesn't allow is explicitly passing 'null', which might
+   * be desired in some cases. For now we prefer type safety over that.
+   *
+   * 1. ['null', '<type>'] -> optional '<type>'
+   * 2. ['null', '<type1>', '<type2>'] -> optional 'any'
+   *
+   * This is the normal jsii conversion, nothing much we can do here.
+   *
+   * 3. ['<type1>', '<type2>'] -> 'any'
+   */
+  private maybeTransformTypeArray(def: JSONSchema4) {
+
+    if (!Array.isArray(def.type)) {
+      return;
+    }
+
+    const nullType = def.type.some(t => t === 'null');
+    const nonNullTypes = new Set(def.type.filter(t => t !== 'null'));
+
+    if (nullType) {
+      def.required = false;
+    }
+
+    if (nonNullTypes.size === 0) {
+      def.type = 'null';
+    } else {
+      // if its a union of non null types we use 'any' to be jsii compliant
+      def.type = nonNullTypes.size > 1 ? 'any' : nonNullTypes.values().next().value;
+    }
+
+  }
+
+  /**
    * Emit a type based on a JSON schema. If `def` is not specified, the
    * definition of the type will be looked up in the `definitions` provided
    * during initialization or via `addDefinition()`.
@@ -173,6 +228,15 @@ export class TypeGenerator {
       if (!def) {
         throw new Error(`unable to find schema definition for ${typeName}`);
       }
+    }
+
+    this.maybeTransformTypeArray(def);
+
+    if (def.enum && this.sanitizeEnums) {
+      // santizie enums from liternal 'null' because they prevent emitting the enum
+      // and instead cause a fallback to 'string'. we assume the optionality of the enum
+      // covers the 'null' value.
+      def.enum = def.enum.filter(d => d !== null);
     }
 
     // callers expect that emit a type named `typeName` so we can't change it here
