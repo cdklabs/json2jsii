@@ -22,4 +22,12 @@ describe('normalizeTypeName', () => {
     expect(TypeGenerator.normalizeTypeName('attributemanifestsOptions')).toEqual('AttributemanifestsOptions');
     expect(TypeGenerator.normalizeTypeName('attributeMANIFESTSOptions')).toEqual('AttributeManifestsOptions');
   });
+  test('Kebab-case names are converted to PascalCase', () => {
+    expect(TypeGenerator.normalizeTypeName('AttributeManifests')).toEqual('AttributeManifests');
+    expect(TypeGenerator.normalizeTypeName('Attribute-Manifests')).toEqual('AttributeManifests');
+    expect(TypeGenerator.normalizeTypeName('Attribute-manifests')).toEqual('AttributeManifests');
+    expect(TypeGenerator.normalizeTypeName('attribute-manifests')).toEqual('AttributeManifests');
+    expect(TypeGenerator.normalizeTypeName('attribute-manifestsOptions')).toEqual('AttributeManifestsOptions');
+    expect(TypeGenerator.normalizeTypeName('attribute-MANIFESTSOptions')).toEqual('AttributeManifestsOptions');
+  });
 });

@@ -72,12 +72,16 @@ export class TypeGenerator {
    * (e.g. "Vpc", "FooBarZooFiGoo").
    */
   public static normalizeTypeName(typeName: string) {
+
+    // Handle kebab-case first
+    const stage1 = typeName.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('');
+
     // start with the full string and then use the regex to match all-caps sequences.
     const re = /([A-Z]+)(?:[^a-z]|$)/g;
-    let result = typeName;
+    let result = stage1;
     let m;
     do {
-      m = re.exec(typeName);
+      m = re.exec(stage1);
       if (m) {
         const before = result.slice(0, m.index); // all the text before the sequence
         const cap = m[1]; // group #1 matches the all-caps sequence we are after
