@@ -231,6 +231,52 @@ export enum FooFoo {
 "
 `;
 
+exports[`enums has allowlisted characters 1`] = `
+"/**
+ * @schema fqn.of.TestType
+ */
+export interface TestType {
+  /**
+   * @schema fqn.of.TestType#Chars
+   */
+  readonly chars?: FqnOfTestTypeChars;
+
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+/* eslint-disable max-len, quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'Chars': obj.chars,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, quote-props */
+
+/**
+ * @schema FqnOfTestTypeChars
+ */
+export enum FqnOfTestTypeChars {
+  /** != */
+  VALUE_NOT_EQUALS_TO = \\"!=\\",
+  /** ! */
+  VALUE_EXCLAMATION = \\"!\\",
+  /** <= */
+  VALUE_LESSER_THAN_EQUAL_TO = \\"<=\\",
+  /** !~ */
+  VALUE_NEGATION_TILDE = \\"!~\\",
+  /** ' */
+  VALUE_APOSTROPHE = \\"'\\",
+  /** \\\\ */
+  VALUE_BACKWARD_SLASH = \\"\\\\\\\\\\",
+}
+"
+`;
+
 exports[`enums has integer values 1`] = `
 "/**
  * @schema fqn.of.TestType

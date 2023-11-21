@@ -300,6 +300,22 @@ describe('enums', () => {
       },
     },
   });
+
+  which('has allowlisted characters', {
+    properties: {
+      Chars: {
+        type: 'string',
+        enum: [
+          '!=',
+          '!',
+          '<=',
+          '!~',
+          '\'',
+          '\\',
+        ],
+      },
+    },
+  });
 });
 
 which('primitives', {

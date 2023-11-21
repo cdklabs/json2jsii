@@ -1,6 +1,7 @@
 import camelCase from 'camelcase';
 import { JSONSchema4 } from 'json-schema';
 import { snakeCase } from 'snake-case';
+import { getAllowlistedCharName, isAllowlistedCharacter } from './character-allowlist';
 import { Code } from './code';
 import { ToJsonFunction } from './tojson';
 
@@ -526,12 +527,18 @@ export class TypeGenerator {
           throw new Error('only enums with string or number values are supported');
         }
 
-        // sluggify and turn to UPPER_SNAKE_CASE
-        let memberName = snakeCase(`${value}`.replace(/[^a-z0-9]/gi, '_')).split('_').filter(x => x).join('_').toUpperCase();
+        let memberName;
 
-        // if member name starts with a non-alpha character, add a prefix so it becomes a symbol
-        if (!/^[A-Z].*/i.test(memberName)) {
-          memberName = 'VALUE_' + memberName;
+        if (value && isAllowlistedCharacter(value.toString())) {
+          memberName = 'VALUE_' + getAllowlistedCharName(value.toString());
+        } else {
+          // sluggify and turn to UPPER_SNAKE_CASE
+          memberName = snakeCase(`${value}`.replace(/[^a-z0-9]/gi, '_')).split('_').filter(x => x).join('_').toUpperCase();
+
+          // if member name starts with a non-alpha character, add a prefix so it becomes a symbol
+          if (!/^[A-Z].*/i.test(memberName)) {
+            memberName = 'VALUE_' + memberName;
+          }
         }
 
         code.line(`/** ${value} */`);
