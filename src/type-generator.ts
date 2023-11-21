@@ -521,7 +521,7 @@ export class TypeGenerator {
 
       code.openBlock(`export enum ${typeName}`);
 
-      const processedValues: string[] = [];
+      const processedValues = new Set<string>();
 
       for (const value of def.enum) {
         if (!['string', 'number'].includes(typeof(value))) {
@@ -534,8 +534,8 @@ export class TypeGenerator {
         // If enums of same value exists, then we choose one of them and skip adding others
         // since that would cause conflict
         const lowerCaseValue = value?.toString().toLowerCase();
-        if (lowerCaseValue && !processedValues.includes(lowerCaseValue)) {
-          processedValues.push(lowerCaseValue);
+        if (lowerCaseValue && !processedValues.has(lowerCaseValue)) {
+          processedValues.add(lowerCaseValue);
         } else {
           continue;
         }
