@@ -300,6 +300,26 @@ describe('enums', () => {
       },
     },
   });
+
+  which('has repeated values', {
+    properties: {
+      Same: {
+        type: 'string',
+        enum: [
+          'replace',
+          'Replace',
+          'keep',
+          'Keep',
+          'hashmod',
+          'HashMod',
+          'labelmap',
+          'LabelMap',
+          '24',
+          '0.99',
+        ],
+      },
+    },
+  });
 });
 
 which('primitives', {

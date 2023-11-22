@@ -311,6 +311,52 @@ export enum FqnOfTestTypePercentiles {
 "
 `;
 
+exports[`enums has repeated values 1`] = `
+"/**
+ * @schema fqn.of.TestType
+ */
+export interface TestType {
+  /**
+   * @schema fqn.of.TestType#Same
+   */
+  readonly same?: FqnOfTestTypeSame;
+
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+/* eslint-disable max-len, quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'Same': obj.same,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, quote-props */
+
+/**
+ * @schema FqnOfTestTypeSame
+ */
+export enum FqnOfTestTypeSame {
+  /** replace */
+  REPLACE = \\"replace\\",
+  /** keep */
+  KEEP = \\"keep\\",
+  /** hashmod */
+  HASHMOD = \\"hashmod\\",
+  /** labelmap */
+  LABELMAP = \\"labelmap\\",
+  /** 24 */
+  VALUE_24 = \\"24\\",
+  /** 0.99 */
+  VALUE_0_99 = \\"0.99\\",
+}
+"
+`;
+
 exports[`enums renders a typescript enum 1`] = `
 "/**
  * @schema fqn.of.TestType
