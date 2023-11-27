@@ -522,6 +522,8 @@ export class TypeGenerator {
 
       code.openBlock(`export enum ${typeName}`);
 
+      const processedValues = new Set<string>();
+
       for (const value of def.enum) {
         if (!['string', 'number'].includes(typeof(value))) {
           throw new Error('only enums with string or number values are supported');
@@ -534,6 +536,15 @@ export class TypeGenerator {
         } else {
           // sluggify and turn to UPPER_SNAKE_CASE
           memberName = snakeCase(`${value}`.replace(/[^a-z0-9]/gi, '_')).split('_').filter(x => x).join('_').toUpperCase();
+
+          // If enums of same value exists, then we choose one of them and skip adding others
+          // since that would cause conflict
+          const lowerCaseValue = value?.toString().toLowerCase();
+          if (lowerCaseValue && !processedValues.has(lowerCaseValue)) {
+            processedValues.add(lowerCaseValue);
+          } else {
+            continue;
+          }
 
           // if member name starts with a non-alpha character, add a prefix so it becomes a symbol
           if (!/^[A-Z].*/i.test(memberName)) {
