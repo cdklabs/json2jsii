@@ -1,4 +1,4 @@
-const allowListCharacters = {
+export const NAMED_SYMBOLS = {
   EXCLAMATION: '!',
   AT_SIGN: '@',
   BACKTICK: '`',
@@ -38,21 +38,3 @@ const allowListCharacters = {
   GREATER_THAN_EQUAL_TO: '>=',
   LESSER_THAN_EQUAL_TO: '<=',
 };
-
-export function isAllowlistedCharacter(char: string): boolean {
-  if (Object.values(allowListCharacters).includes(char)) {
-    return true;
-  }
-
-  return false;
-}
-
-export function getAllowlistedCharName(char: string): string | undefined {
-  for (const [key, value] of Object.entries(allowListCharacters)) {
-    if (value === char) {
-      return key;
-    }
-  }
-
-  return undefined;
-}

@@ -273,6 +273,10 @@ export enum FqnOfTestTypeChars {
   VALUE_APOSTROPHE = \\"'\\",
   /** \\\\ */
   VALUE_BACKWARD_SLASH = \\"\\\\\\\\\\",
+  /** Foo.Bar!= */
+  FOO_PERIOD_BAR_NOT_EQUALS_TO = \\"Foo.Bar!=\\",
+  /** Foo.!=Bar */
+  FOO_PERIOD_NOT_EQUALS_TO_BAR = \\"Foo.!=Bar\\",
 }
 "
 `;
@@ -348,11 +352,11 @@ export function toJson_TestType(obj: TestType | undefined): Record<string, any> 
  */
 export enum FqnOfTestTypePercentiles {
   /** 0.9 */
-  VALUE_0_9 = 0.9,
+  VALUE_0_PERIOD = 0.9,
   /** 0.95 */
-  VALUE_0_95 = 0.95,
+  VALUE_0_PERIOD_95 = 0.95,
   /** 0.99 */
-  VALUE_0_99 = 0.99,
+  VALUE_0_PERIOD_99 = 0.99,
 }
 "
 `;
@@ -398,7 +402,7 @@ export enum FqnOfTestTypeSame {
   /** 24 */
   VALUE_24 = \\"24\\",
   /** 0.99 */
-  VALUE_0_99 = \\"0.99\\",
+  VALUE_0_PERIOD_99 = \\"0.99\\",
 }
 "
 `;
@@ -448,7 +452,7 @@ export enum FqnOfTestTypeFirstEnum {
   /** value2 */
   VALUE2 = \\"value2\\",
   /** value-of-three */
-  VALUE_OF_THREE = \\"value-of-three\\",
+  VALUE_HYPHEN_OF_HYPHEN_THREE = \\"value-of-three\\",
   /** valueOfFour */
   VALUE_OF_FOUR = \\"valueOfFour\\",
 }
@@ -491,7 +495,7 @@ export enum FqnOfTestTypeChildSecondEnum {
   /** enum values can be crazy */
   ENUM_VALUES_CAN_BE_CRAZY = \\"enum values can be crazy\\",
   /** yes>>123 */
-  YES_123 = \\"yes>>123\\",
+  YES_GREATER_THAN_GREATER_THAN_123 = \\"yes>>123\\",
 }
 "
 `;

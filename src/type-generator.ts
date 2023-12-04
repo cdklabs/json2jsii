@@ -1,7 +1,7 @@
 import camelCase from 'camelcase';
 import { JSONSchema4 } from 'json-schema';
 import { snakeCase } from 'snake-case';
-import { getAllowlistedCharName, isAllowlistedCharacter } from './character-allowlist';
+import { NAMED_SYMBOLS } from './allowlist';
 import { Code } from './code';
 import { ToJsonFunction } from './tojson';
 
@@ -529,27 +529,20 @@ export class TypeGenerator {
           throw new Error('only enums with string or number values are supported');
         }
 
-        let memberName;
+        let memberName = snakeCase(rewriteNamedSymbols(`${value}`).replace(/[^a-z0-9]/gi, '_')).split('_').filter(x => x).join('_').toUpperCase();
 
-        if (value && isAllowlistedCharacter(value.toString())) {
-          memberName = 'VALUE_' + getAllowlistedCharName(value.toString());
+        // If enums of same value exists, then we choose one of them and skip adding others
+        // since that would cause conflict
+        const lowerCaseValue = value?.toString().toLowerCase();
+        if (lowerCaseValue && !processedValues.has(lowerCaseValue)) {
+          processedValues.add(lowerCaseValue);
         } else {
-          // sluggify and turn to UPPER_SNAKE_CASE
-          memberName = snakeCase(`${value}`.replace(/[^a-z0-9]/gi, '_')).split('_').filter(x => x).join('_').toUpperCase();
+          continue;
+        }
 
-          // If enums of same value exists, then we choose one of them and skip adding others
-          // since that would cause conflict
-          const lowerCaseValue = value?.toString().toLowerCase();
-          if (lowerCaseValue && !processedValues.has(lowerCaseValue)) {
-            processedValues.add(lowerCaseValue);
-          } else {
-            continue;
-          }
-
-          // if member name starts with a non-alpha character, add a prefix so it becomes a symbol
-          if (!/^[A-Z].*/i.test(memberName)) {
-            memberName = 'VALUE_' + memberName;
-          }
+        // if member name starts with a non-alpha character, add a prefix so it becomes a symbol
+        if (!/^[A-Z].*/i.test(memberName)) {
+          memberName = 'VALUE_' + memberName;
         }
 
         code.line(`/** ${value} */`);
@@ -678,6 +671,39 @@ interface EmittedType {
    * Returns the code to convert a statement `s` back to JSON.
    */
   readonly toJson: (code: string) => string;
+}
+
+function rewriteNamedSymbols(value: string): string {
+  const ret = new Array<string>();
+  while (value.length > 0) {
+    const [prefixName, prefixLen] = longestPrefixMatch(value, NAMED_SYMBOLS);
+    if (prefixName) {
+      ret.push(`_${prefixName}_`);
+      value = value.slice(prefixLen);
+    } else {
+      ret.push(value.charAt(0));
+      value = value.slice(1);
+    }
+  }
+
+  // Remove underscores if its only prefix to be returned
+  const retAsString = ret.toString();
+  if (retAsString[0] === '_') { ret.unshift('VALUE'); }
+  if (retAsString[ret.length - 1] === '_') { ret.pop(); }
+
+  return ret.join('');
+}
+
+function longestPrefixMatch(x: string, lookupTable: Record<string, string>): [string | undefined, number] {
+  let ret: string | undefined;
+  let longest: number = 0;
+  for (const [name, value] of Object.entries(lookupTable)) {
+    if (x.startsWith(value) && value.length > longest) {
+      ret = name;
+      longest = value.length;
+    }
+  }
+  return [ret, longest];
 }
 
 type TypeEmitter = (code: Code) => EmittedType;
