@@ -277,6 +277,20 @@ export enum FqnOfTestTypeChars {
   FOO_PERIOD_BAR_NOT_EQUALS_TO = \\"Foo.Bar!=\\",
   /** Foo.!=Bar */
   FOO_PERIOD_NOT_EQUALS_TO_BAR = \\"Foo.!=Bar\\",
+  /** bool:true */
+  BOOL_TRUE = \\"bool:true\\",
+  /** Foo-Bar */
+  FOO_BAR = \\"Foo-Bar\\",
+  /** Bar_Foo */
+  BAR_FO = \\"Bar_Foo\\",
+  /** 0.Foo */
+  VALUE_0_PERIOD_FOO = \\"0.Foo\\",
+  /** Foo.0 */
+  FOO_0 = \\"Foo.0\\",
+  /** 0.99 */
+  VALUE_0_99 = \\"0.99\\",
+  /** .99 */
+  VALUE_99 = \\".99\\",
 }
 "
 `;
@@ -352,11 +366,11 @@ export function toJson_TestType(obj: TestType | undefined): Record<string, any> 
  */
 export enum FqnOfTestTypePercentiles {
   /** 0.9 */
-  VALUE_0_PERIOD = 0.9,
+  VALUE_0_9 = 0.9,
   /** 0.95 */
-  VALUE_0_PERIOD_95 = 0.95,
+  VALUE_0_95 = 0.95,
   /** 0.99 */
-  VALUE_0_PERIOD_99 = 0.99,
+  VALUE_0_99 = 0.99,
 }
 "
 `;
@@ -402,7 +416,7 @@ export enum FqnOfTestTypeSame {
   /** 24 */
   VALUE_24 = \\"24\\",
   /** 0.99 */
-  VALUE_0_PERIOD_99 = \\"0.99\\",
+  VALUE_0_99 = \\"0.99\\",
 }
 "
 `;
@@ -452,7 +466,7 @@ export enum FqnOfTestTypeFirstEnum {
   /** value2 */
   VALUE2 = \\"value2\\",
   /** value-of-three */
-  VALUE_HYPHEN_OF_HYPHEN_THREE = \\"value-of-three\\",
+  VALUE_OF_THREE = \\"value-of-three\\",
   /** valueOfFour */
   VALUE_OF_FOUR = \\"valueOfFour\\",
 }

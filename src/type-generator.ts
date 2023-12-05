@@ -698,12 +698,21 @@ function longestPrefixMatch(x: string, lookupTable: Record<string, string>): [st
   let ret: string | undefined;
   let longest: number = 0;
   for (const [name, value] of Object.entries(lookupTable)) {
-    if (x.startsWith(value) && value.length > longest) {
+    if (x.startsWith(value) && value.length > longest && !isExemptedSymbolPattern(x)) {
       ret = name;
       longest = value.length;
     }
   }
   return [ret, longest];
+}
+
+function isExemptedSymbolPattern(input: string): boolean {
+  // Decimal numbers
+  if (/^\d*\.\d+$/.test(input)) {
+    return true;
+  }
+
+  return false;
 }
 
 type TypeEmitter = (code: Code) => EmittedType;
