@@ -282,7 +282,7 @@ export enum FqnOfTestTypeChars {
   /** Foo-Bar */
   FOO_BAR = \\"Foo-Bar\\",
   /** Bar_Foo */
-  BAR_FO = \\"Bar_Foo\\",
+  BAR_FOO = \\"Bar_Foo\\",
   /** 0.Foo */
   VALUE_0_PERIOD_FOO = \\"0.Foo\\",
   /** Foo.0 */

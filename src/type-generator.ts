@@ -678,7 +678,8 @@ function rewriteNamedSymbols(value: string): string {
   while (value.length > 0) {
     const [prefixName, prefixLen] = longestPrefixMatch(value, NAMED_SYMBOLS);
     if (prefixName) {
-      ret.push(`_${prefixName}_`);
+      const prefix = `_${prefixName}_`.split('');
+      ret.push(...prefix);
       value = value.slice(prefixLen);
     } else {
       ret.push(value.charAt(0));
@@ -687,9 +688,8 @@ function rewriteNamedSymbols(value: string): string {
   }
 
   // Remove underscores if its only prefix to be returned
-  const retAsString = ret.toString();
-  if (retAsString[0] === '_') { ret.unshift('VALUE'); }
-  if (retAsString[ret.length - 1] === '_') { ret.pop(); }
+  if (ret[0] === '_') { ret.unshift('VALUE'); }
+  if (ret[ret.length - 1] === '_') { ret.pop(); }
 
   return ret.join('');
 }
