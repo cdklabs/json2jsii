@@ -720,7 +720,7 @@ function hasSubStringAt(input: string, index: number, substring: string): boolea
 function isExemptPattern(input: string, index: number): boolean {
   const exemptPatterns = [
     // 9.9, 9.
-    /(?<=\d)\.\d?/,
+    /(?<=\d)\.\d/,
   ];
 
   return exemptPatterns.some((p) => testRegexAt(p, input, index));
