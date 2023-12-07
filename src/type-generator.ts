@@ -673,17 +673,19 @@ interface EmittedType {
   readonly toJson: (code: string) => string;
 }
 
-function rewriteNamedSymbols(value: string): string {
+function rewriteNamedSymbols(input: string): string {
   const ret = new Array<string>();
-  while (value.length > 0) {
-    const [prefixName, prefixLen] = longestPrefixMatch(value, NAMED_SYMBOLS);
+
+  let cursor = 0;
+  while (cursor < input.length) {
+    const [prefixName, prefixLen] = longestPrefixMatch(input, cursor, NAMED_SYMBOLS);
     if (prefixName) {
       const prefix = `_${prefixName}_`.split('');
       ret.push(...prefix);
-      value = value.slice(prefixLen);
+      cursor += prefixLen;
     } else {
-      ret.push(value.charAt(0));
-      value = value.slice(1);
+      ret.push(input.charAt(cursor));
+      cursor += 1;
     }
   }
 
@@ -694,11 +696,12 @@ function rewriteNamedSymbols(value: string): string {
   return ret.join('');
 }
 
-function longestPrefixMatch(x: string, lookupTable: Record<string, string>): [string | undefined, number] {
+function longestPrefixMatch(input: string, index: number, lookupTable: Record<string, string>): [string | undefined, number] {
   let ret: string | undefined;
   let longest: number = 0;
+
   for (const [name, value] of Object.entries(lookupTable)) {
-    if (x.startsWith(value) && value.length > longest && !isExemptedSymbolPattern(x)) {
+    if (hasSubStringAt(input, index, value) && value.length > longest && !isExemptPattern(input, index)) {
       ret = name;
       longest = value.length;
     }
@@ -706,13 +709,28 @@ function longestPrefixMatch(x: string, lookupTable: Record<string, string>): [st
   return [ret, longest];
 }
 
-function isExemptedSymbolPattern(input: string): boolean {
-  // Decimal numbers
-  if (/^\d*\.\d+$/.test(input)) {
+function hasSubStringAt(input: string, index: number, substring: string): boolean {
+  if (index == input.indexOf(substring, index)) {
     return true;
   }
 
   return false;
+}
+
+function isExemptPattern(input: string, index: number): boolean {
+  const exemptPatterns = [
+    // 9.9, 9.
+    /(?<=\d)\.\d?/,
+  ];
+
+  return exemptPatterns.some((p) => testRegexAt(p, input, index));
+}
+
+function testRegexAt(regex: RegExp, input: string, index: number): boolean {
+  const re = new RegExp(regex, 'y');
+  re.lastIndex = index;
+
+  return re.test(input);
 }
 
 type TypeEmitter = (code: Code) => EmittedType;
