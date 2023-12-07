@@ -5,6 +5,8 @@ export const NAMED_SYMBOLS = {
   AMPERSAND: '&',
   APOSTROPHE: '\'',
   ASTERISK: '*',
+  HYPHEN: '-',
+  UNDERSCORE: '_',
   DOLLAR_SIGN: '$',
   POUND_SIGN: '#',
   TILDE: '~',

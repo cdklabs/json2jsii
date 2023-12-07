@@ -280,15 +280,17 @@ export enum FqnOfTestTypeChars {
   /** bool:true */
   BOOL_TRUE = \\"bool:true\\",
   /** Foo-Bar */
-  FOO_BAR = \\"Foo-Bar\\",
-  /** Bar_Foo */
-  BAR_FOO = \\"Bar_Foo\\",
+  FOO_HYPHEN_BAR = \\"Foo-Bar\\",
+  /** Foo_Bar */
+  FOO_UNDERSCORE_BAR = \\"Foo_Bar\\",
+  /** Foo.Bar */
+  FOO_PERIOD_BAR = \\"Foo.Bar\\",
   /** 0.Foo */
   VALUE_0_PERIOD_FOO = \\"0.Foo\\",
-  /** .Foo */
-  VALUE_PERIOD_FOO = \\".Foo\\",
   /** Foo.0 */
   FOO_PERIOD_0 = \\"Foo.0\\",
+  /** .Foo */
+  VALUE_PERIOD_FOO = \\".Foo\\",
   /** Foo. */
   FOO_PERIOD = \\"Foo.\\",
   /** 0.9 */
@@ -306,7 +308,7 @@ export enum FqnOfTestTypeChars {
   /** 9.90.0.9 */
   VALUE_9_90_0_9 = \\"9.90.0.9\\",
   /** Foo<>>=9.0.9{}-Bar */
-  FOO_ANGLE_BRACKETS_GREATER_THAN_EQUAL_TO_9_0_9_CURLY_BRACES_BAR = \\"Foo<>>=9.0.9{}-Bar\\",
+  FOO_ANGLE_BRACKETS_GREATER_THAN_EQUAL_TO_9_0_9_CURLY_BRACES_HYPHEN_BAR = \\"Foo<>>=9.0.9{}-Bar\\",
 }
 "
 `;
@@ -482,7 +484,7 @@ export enum FqnOfTestTypeFirstEnum {
   /** value2 */
   VALUE2 = \\"value2\\",
   /** value-of-three */
-  VALUE_OF_THREE = \\"value-of-three\\",
+  VALUE_HYPHEN_OF_HYPHEN_THREE = \\"value-of-three\\",
   /** valueOfFour */
   VALUE_OF_FOUR = \\"valueOfFour\\",
 }
