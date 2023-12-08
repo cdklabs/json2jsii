@@ -1,6 +1,7 @@
 import camelCase from 'camelcase';
 import { JSONSchema4 } from 'json-schema';
 import { snakeCase } from 'snake-case';
+import { NAMED_SYMBOLS } from './allowlist';
 import { Code } from './code';
 import { ToJsonFunction } from './tojson';
 
@@ -528,8 +529,7 @@ export class TypeGenerator {
           throw new Error('only enums with string or number values are supported');
         }
 
-        // sluggify and turn to UPPER_SNAKE_CASE
-        let memberName = snakeCase(`${value}`.replace(/[^a-z0-9]/gi, '_')).split('_').filter(x => x).join('_').toUpperCase();
+        let memberName = snakeCase(rewriteNamedSymbols(`${value}`).replace(/[^a-z0-9]/gi, '_')).split('_').filter(x => x).join('_').toUpperCase();
 
         // If enums of same value exists, then we choose one of them and skip adding others
         // since that would cause conflict
@@ -671,6 +671,66 @@ interface EmittedType {
    * Returns the code to convert a statement `s` back to JSON.
    */
   readonly toJson: (code: string) => string;
+}
+
+function rewriteNamedSymbols(input: string): string {
+  const ret = new Array<string>();
+
+  let cursor = 0;
+  while (cursor < input.length) {
+    const [prefixName, prefixLen] = longestPrefixMatch(input, cursor, NAMED_SYMBOLS);
+    if (prefixName) {
+      const prefix = `_${prefixName}_`.split('');
+      ret.push(...prefix);
+      cursor += prefixLen;
+    } else {
+      ret.push(input.charAt(cursor));
+      cursor += 1;
+    }
+  }
+
+  // Remove underscores if its only prefix to be returned
+  if (ret[0] === '_') { ret.unshift('VALUE'); }
+  if (ret[ret.length - 1] === '_') { ret.pop(); }
+
+  return ret.join('');
+}
+
+function longestPrefixMatch(input: string, index: number, lookupTable: Record<string, string>): [string | undefined, number] {
+  let ret: string | undefined;
+  let longest: number = 0;
+
+  for (const [name, value] of Object.entries(lookupTable)) {
+    if (hasSubStringAt(input, index, value) && value.length > longest && !isExemptPattern(input, index)) {
+      ret = name;
+      longest = value.length;
+    }
+  }
+  return [ret, longest];
+}
+
+function hasSubStringAt(input: string, index: number, substring: string): boolean {
+  if (index == input.indexOf(substring, index)) {
+    return true;
+  }
+
+  return false;
+}
+
+function isExemptPattern(input: string, index: number): boolean {
+  const exemptPatterns = [
+    // 9.9, 9.
+    /(?<=\d)\.\d/,
+  ];
+
+  return exemptPatterns.some((p) => testRegexAt(p, input, index));
+}
+
+function testRegexAt(regex: RegExp, input: string, index: number): boolean {
+  const re = new RegExp(regex, 'y');
+  re.lastIndex = index;
+
+  return re.test(input);
 }
 
 type TypeEmitter = (code: Code) => EmittedType;

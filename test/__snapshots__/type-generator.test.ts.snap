@@ -231,6 +231,88 @@ export enum FooFoo {
 "
 `;
 
+exports[`enums has allowlisted characters 1`] = `
+"/**
+ * @schema fqn.of.TestType
+ */
+export interface TestType {
+  /**
+   * @schema fqn.of.TestType#Chars
+   */
+  readonly chars?: FqnOfTestTypeChars;
+
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+/* eslint-disable max-len, quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'Chars': obj.chars,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, quote-props */
+
+/**
+ * @schema FqnOfTestTypeChars
+ */
+export enum FqnOfTestTypeChars {
+  /** != */
+  VALUE_NOT_EQUALS_TO = \\"!=\\",
+  /** ! */
+  VALUE_EXCLAMATION = \\"!\\",
+  /** <= */
+  VALUE_LESSER_THAN_EQUAL_TO = \\"<=\\",
+  /** !~ */
+  VALUE_NEGATION_TILDE = \\"!~\\",
+  /** ' */
+  VALUE_APOSTROPHE = \\"'\\",
+  /** \\\\ */
+  VALUE_BACKWARD_SLASH = \\"\\\\\\\\\\",
+  /** Foo.Bar!= */
+  FOO_PERIOD_BAR_NOT_EQUALS_TO = \\"Foo.Bar!=\\",
+  /** Foo.!=Bar */
+  FOO_PERIOD_NOT_EQUALS_TO_BAR = \\"Foo.!=Bar\\",
+  /** bool:true */
+  BOOL_TRUE = \\"bool:true\\",
+  /** Foo-Bar */
+  FOO_HYPHEN_BAR = \\"Foo-Bar\\",
+  /** Foo_Bar */
+  FOO_UNDERSCORE_BAR = \\"Foo_Bar\\",
+  /** Foo.Bar */
+  FOO_PERIOD_BAR = \\"Foo.Bar\\",
+  /** 0.Foo */
+  VALUE_0_PERIOD_FOO = \\"0.Foo\\",
+  /** Foo.0 */
+  FOO_PERIOD_0 = \\"Foo.0\\",
+  /** .Foo */
+  VALUE_PERIOD_FOO = \\".Foo\\",
+  /** Foo. */
+  FOO_PERIOD = \\"Foo.\\",
+  /** 0.9 */
+  VALUE_0_9 = \\"0.9\\",
+  /** .9 */
+  VALUE_PERIOD_9 = \\".9\\",
+  /** 9 */
+  VALUE_9 = \\"9\\",
+  /** 9. */
+  VALUE_9_PERIOD = \\"9.\\",
+  /** 9.9 */
+  VALUE_9_9 = \\"9.9\\",
+  /** 99 */
+  VALUE_99 = \\"99\\",
+  /** 9.90.0.9 */
+  VALUE_9_90_0_9 = \\"9.90.0.9\\",
+  /** Foo<>>=9.0.9{}-Bar */
+  FOO_ANGLE_BRACKETS_GREATER_THAN_EQUAL_TO_9_0_9_CURLY_BRACES_HYPHEN_BAR = \\"Foo<>>=9.0.9{}-Bar\\",
+}
+"
+`;
+
 exports[`enums has integer values 1`] = `
 "/**
  * @schema fqn.of.TestType
@@ -402,7 +484,7 @@ export enum FqnOfTestTypeFirstEnum {
   /** value2 */
   VALUE2 = \\"value2\\",
   /** value-of-three */
-  VALUE_OF_THREE = \\"value-of-three\\",
+  VALUE_HYPHEN_OF_HYPHEN_THREE = \\"value-of-three\\",
   /** valueOfFour */
   VALUE_OF_FOUR = \\"valueOfFour\\",
 }
@@ -445,7 +527,7 @@ export enum FqnOfTestTypeChildSecondEnum {
   /** enum values can be crazy */
   ENUM_VALUES_CAN_BE_CRAZY = \\"enum values can be crazy\\",
   /** yes>>123 */
-  YES_123 = \\"yes>>123\\",
+  YES_GREATER_THAN_GREATER_THAN_123 = \\"yes>>123\\",
 }
 "
 `;

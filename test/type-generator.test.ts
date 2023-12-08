@@ -301,6 +301,40 @@ describe('enums', () => {
     },
   });
 
+  which('has allowlisted characters', {
+    properties: {
+      Chars: {
+        type: 'string',
+        enum: [
+          '!=',
+          '!',
+          '<=',
+          '!~',
+          '\'',
+          '\\',
+          'Foo.Bar!=',
+          'Foo.!=Bar',
+          'bool:true',
+          'Foo-Bar',
+          'Foo_Bar',
+          'Foo.Bar',
+          '0.Foo',
+          'Foo.0',
+          '.Foo',
+          'Foo.',
+          '0.9',
+          '.9',
+          '9',
+          '9.',
+          '9.9',
+          '99',
+          '9.90.0.9',
+          'Foo<>>=9.0.9{}-Bar',
+        ],
+      },
+    },
+  });
+
   which('has repeated values', {
     properties: {
       Same: {
