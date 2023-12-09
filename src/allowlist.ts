@@ -36,4 +36,5 @@ export const NAMED_SYMBOLS = {
   ANGLE_BRACKETS: '<>',
   GREATER_THAN_EQUAL_TO: '>=',
   LESSER_THAN_EQUAL_TO: '<=',
+  EQUALS: '=',
 };
