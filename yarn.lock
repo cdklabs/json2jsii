@@ -792,10 +792,12 @@
   dependencies:
     undici-types "~5.26.4"
 
-"@types/node@^16":
-  version "16.18.70"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.18.70.tgz#d4c819be1e9f8b69a794d6f2fd929d9ff76f6d4b"
-  integrity sha512-8eIk20G5VVVQNZNouHjLA2b8utE2NvGybLjMaF4lyhA9uhGwnmXF8o+icdXKGSQSNANJewXva/sFUoZLwAaYAg==
+"@types/node@^18":
+  version "18.19.6"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.19.6.tgz#537beece2c8ad4d9abdaa3b0f428e601eb57dac8"
+  integrity sha512-X36s5CXMrrJOs2lQCdDF68apW4Rfx9ixYMawlepwmE4Anezv/AV2LSpKD1Ub8DAc+urp5bk0BGZ6NtmBitfnsg==
+  dependencies:
+    undici-types "~5.26.4"
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.4"
@@ -4242,10 +4244,10 @@ process-nextick-args@~2.0.0:
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-2.0.1.tgz#7820d9b16120cc55ca9ae7792680ae7dba6d7fe2"
   integrity sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==
 
-projen@^0.77.6:
-  version "0.77.6"
-  resolved "https://registry.yarnpkg.com/projen/-/projen-0.77.6.tgz#480c1af4246bba55e8d0732ff7a9d1804ce414be"
-  integrity sha512-nXbbDr81UjfLjCfVfHGfGPIjiN7INSyMUa52FYupX0TmybMq+CnvX8o0O45feOLLhsifNq7EHXtF+hgBtpBb8A==
+projen@^0.78.13:
+  version "0.78.13"
+  resolved "https://registry.yarnpkg.com/projen/-/projen-0.78.13.tgz#5c6693ababa4f2e7d93759c722a35d41c9c2e691"
+  integrity sha512-ihL1lcfmi7M0EA7qgdXGja2SLLc6vtsQ1Wd2RqqxOuFnchw9/kZubdrxy38J8iI36AEwb0Qucb1uLTuwFhl7Qw==
   dependencies:
     "@iarna/toml" "^2.2.5"
     case "^1.6.3"
