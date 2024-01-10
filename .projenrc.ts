@@ -3,11 +3,9 @@ import { CdklabsTypeScriptProject } from 'cdklabs-projen-project-types';
 const project = new CdklabsTypeScriptProject({
   private: false,
   enablePRAutoMerge: true,
-  workflowNodeVersion: '16.x',
-  minNodeVersion: '18.12.0',
-  setNodeEngineVersion: false,
   name: 'json2jsii',
   projenrcTs: true,
+  setNodeEngineVersion: false,
   description: 'Generates jsii structs from JSON schemas',
   authorName: 'Elad Ben-Israel',
   authorEmail: 'elad.benisrael@gmail.com',
