@@ -3533,10 +3533,10 @@ jsii-rosetta@^1.94.0:
     workerpool "^6.5.1"
     yargs "^16.2.0"
 
-jsii-srcmak@^0.1.1031:
-  version "0.1.1031"
-  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.1031.tgz#a868cf38274c22d0a476d858c1e59d96b37726c7"
-  integrity sha512-+e17KPOjLGnoUenwYHqrWgigfEhDInOAuiR51FkkTzr+/gn2cfpYvSLhtPWP50B7RxYPZXMEVm8ieTv2VOnhzg==
+jsii-srcmak@^0.1.1032:
+  version "0.1.1032"
+  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.1032.tgz#74e60f96e544b66d6cbb082aa4eca24e441c79cc"
+  integrity sha512-GJ06Hp7F/VdlL8r/OBfothteY+mssWq9I8ueeHMzrIFQfdFVidi3ts2j2yYLv4kzvSL9t6N/5IPJAAUstFrYmA==
   dependencies:
     fs-extra "^9.1.0"
     jsii "~5.3.15"
@@ -4270,10 +4270,10 @@ process-nextick-args@~2.0.0:
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-2.0.1.tgz#7820d9b16120cc55ca9ae7792680ae7dba6d7fe2"
   integrity sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==
 
-projen@^0.79.14:
-  version "0.79.14"
-  resolved "https://registry.yarnpkg.com/projen/-/projen-0.79.14.tgz#69bcdfb166d782a76542e0c949f19fd630eb8284"
-  integrity sha512-LtRdoUlXoM3jdY3KxJ33qZ2Ymh6SDNZjAhAU4q/FVSm8c+QUjFCvhNH7YygNrjEcKkD/H3PQrHNTN+DmVmfLmA==
+projen@^0.79.16:
+  version "0.79.16"
+  resolved "https://registry.yarnpkg.com/projen/-/projen-0.79.16.tgz#49604da02a95024ef0f789c35732ba6ca7f26693"
+  integrity sha512-Q0t7OJJHtXAJ4MiUaxInNqgbKEcY51P8BYQrK2sBvcAQl06BFbtcV+AaxIytPD//EklNMyxjXFzzHcHN307uMw==
   dependencies:
     "@iarna/toml" "^2.2.5"
     case "^1.6.3"
@@ -5147,9 +5147,9 @@ typedarray@^0.0.6:
   integrity sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==
 
 typescript@next:
-  version "5.4.0-dev.20240209"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.4.0-dev.20240209.tgz#536d80a9f7ccb8d31e5b909622ab7811c380810a"
-  integrity sha512-qhstJB8bOkf9hDabhxluOD3J94iUqsQZtTcia/T8ymwqh2ziTXx9z9OQg3sxJOcUEVVxwAxKybCiwLM2HxwPwg==
+  version "5.4.0-dev.20240210"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.4.0-dev.20240210.tgz#49879f43e95b3058e37760dbaed0e661c7c6fdaa"
+  integrity sha512-2Gzli3tdbcXsjTYrQXJhqtevbqmk6soSQYu/n2x05Psj4YeFIcP/zGICTZx5UNF+la7n6+tVoj7dZNr0TQK6jg==
 
 typescript@~3.9.10:
   version "3.9.10"
