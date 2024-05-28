@@ -45,7 +45,7 @@
     "eslint-plugin-import": "^2.29.1",
     "jest": "^27",
     "jest-junit": "^15",
-    "jsii-srcmak": "^0.1.1135",
+    "jsii-srcmak": "^0.1.1136",
     "prettier": "^2.8.8",
     "projen": "^0.81.16",
     "standard-version": "^9",
