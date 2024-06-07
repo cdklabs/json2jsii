@@ -9,7 +9,7 @@ const project = new CdklabsTypeScriptProject({
   description: 'Generates jsii structs from JSON schemas',
   authorName: 'Elad Ben-Israel',
   authorEmail: 'elad.benisrael@gmail.com',
-  repository: 'https://github.com/aws/json2jsii',
+  repository: 'https://github.com/cdklabs/json2jsii',
   deps: ['json-schema', 'camelcase', 'snake-case'],
   devDeps: ['@types/json-schema', 'jsii-srcmak', 'prettier', 'cdklabs-projen-project-types'],
   releaseToNpm: true,
