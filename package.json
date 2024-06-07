@@ -3,7 +3,7 @@
   "description": "Generates jsii structs from JSON schemas",
   "repository": {
     "type": "git",
-    "url": "https://github.com/aws/json2jsii.git"
+    "url": "https://github.com/aws/json2jsii"
   },
   "scripts": {
     "build": "npx projen build",
