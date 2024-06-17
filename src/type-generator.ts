@@ -488,6 +488,9 @@ export class TypeGenerator {
       name = name.substring(1);
     }
 
+    // Replace slashes with underscores (for property names liks 'kubernetes/io')
+    name = name.replace(/\//, '_');
+
     // convert the name to camel case so it's compatible with JSII
     name = camelCase(name);
 
