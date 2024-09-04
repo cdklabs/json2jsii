@@ -3640,7 +3640,7 @@ jsii-reflect@^1.103.1:
     oo-ascii-tree "^1.103.1"
     yargs "^16.2.0"
 
-jsii-rosetta@^5.5.3:
+jsii-rosetta@^5.5.4:
   version "5.5.4"
   resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.5.4.tgz#8825f62fb3a38860d7834740fe2d4d9cc5251268"
   integrity sha512-hTIjmP9KmOptBm881r1aFq7CLi4agNvy4GOgbupF/K4pAFBH1hTJ4xL9NBxQxhEuWi3rRFQA72Z6aYz1AHcuIg==
@@ -3659,19 +3659,19 @@ jsii-rosetta@^5.5.3:
     workerpool "^6.5.1"
     yargs "^17.7.2"
 
-jsii-srcmak@^0.1.1232:
-  version "0.1.1232"
-  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.1232.tgz#60f6d55fde9499f9bc0c2362c16614a8f5bd200a"
-  integrity sha512-OqcaWxTAQPzWaLOAp4AxXJbTpUMiX1uSRPyXofiOg23+T0G6Igc9keoQlhx/8jMa5gy5Xv7fR8SG9/5Cg/2Uzw==
+jsii-srcmak@^0.1.1233:
+  version "0.1.1233"
+  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.1233.tgz#c92f4688f93b7da82eeb409b0387babb92923699"
+  integrity sha512-KVJ1b7fc3oJLFjwsWqyP4/nzoJ+bl5IKs5LcjoMTEHm2hPUH8TZxWBVLWvZIKNtLeBQO24O4TvZZ6jwJtHwliQ==
   dependencies:
     fs-extra "^9.1.0"
-    jsii "~5.5.1"
+    jsii "~5.5.2"
     jsii-pacmak "^1.103.1"
-    jsii-rosetta "^5.5.3"
+    jsii-rosetta "^5.5.4"
     ncp "^2.0.0"
     yargs "^17.7.2"
 
-jsii@~5.5.0, jsii@~5.5.1:
+jsii@~5.5.0, jsii@~5.5.2:
   version "5.5.2"
   resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.5.2.tgz#b6411b742ace39b7d028153bdbdd3c64c02c88b2"
   integrity sha512-pXvOPzn0pK4pvNF+vl9OjeI+49YDsKnx/CRgu5SoTYNh3HFsWhNg8OukEgW+vyKw6l1ohZQLZfikKnIehe4WZQ==
@@ -5571,9 +5571,9 @@ yallist@^4.0.0:
   integrity sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
 
 yaml@^2.2.2, yaml@^2.4.1, yaml@^2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/yaml/-/yaml-2.5.0.tgz#c6165a721cf8000e91c36490a41d7be25176cf5d"
-  integrity sha512-2wWLbGbYDiSqqIKoPjar3MPgB94ErzCtrNE1FdqGuaO0pi2JGjmE8aW8TDZwzU7vuxcGRdL/4gPQwQ7hD5AMSw==
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/yaml/-/yaml-2.5.1.tgz#c9772aacf62cb7494a95b0c4f1fb065b563db130"
+  integrity sha512-bLQOjaX/ADgQ20isPJRvF0iRUHIxVhYvr53Of7wGcWlO2jvtUlH5m87DsmulFVxRpNLOnI4tB6p/oh8D7kpn9Q==
 
 yargs-parser@20.x, yargs-parser@^20.2.2, yargs-parser@^20.2.3:
   version "20.2.9"
