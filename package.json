@@ -48,7 +48,7 @@
     "jest-junit": "^15",
     "jsii-srcmak": "^0.1.1234",
     "prettier": "^2.8.8",
-    "projen": "^0.86.9",
+    "projen": "^0.86.10",
     "ts-jest": "^27",
     "ts-node": "^10.9.2",
     "typescript": "~4.9.5"
