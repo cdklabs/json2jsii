@@ -15,6 +15,18 @@ const project = new CdklabsTypeScriptProject({
   releaseToNpm: true,
   defaultReleaseBranch: 'main',
   autoApproveUpgrades: true,
+  pullRequestTemplate: true,
+  pullRequestTemplateContents: [
+    'Fixes #',
+    '',
+    '---',
+    '',
+    '### Ask Yourself',
+    '',
+    '[ ] Have you reviewed the contribution guide?',
+    '[ ] Have you reviewed the breaking changes guide?',
+    '',
+  ],
 });
 
 project.gitignore.exclude('.vscode/');
