@@ -119,6 +119,34 @@ export function toJson_V1beta1Foo(obj: V1beta1Foo | undefined): Record<string, a
 "
 `;
 
+exports[`dedup properties with different casing 1`] = `
+"/**
+ * @schema Foo
+ */
+export interface Foo {
+  /**
+   * @schema Foo#pod_priority_class_name
+   */
+  readonly podPriorityClassName?: string;
+
+}
+
+/**
+ * Converts an object of type 'Foo' to JSON representation.
+ */
+/* eslint-disable max-len, quote-props */
+export function toJson_Foo(obj: Foo | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'pod_priority_class_name': obj.podPriorityClassName,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, quote-props */
+"
+`;
+
 exports[`documentation "*/" is is escaped 1`] = `
 "/**
  * @schema fqn.of.TestType

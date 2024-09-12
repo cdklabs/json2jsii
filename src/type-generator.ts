@@ -115,6 +115,7 @@ export class TypeGenerator {
 
   private readonly typesToEmit: { [name: string]: TypeEmitter } = { };
   private readonly emittedTypes: Record<string, EmittedType> = {};
+  private readonly emittedProperties: Set<string> = new Set();
   private readonly exclude: string[];
   private readonly definitions: { [def: string]: JSONSchema4 };
   private readonly toJson: boolean;
@@ -479,6 +480,10 @@ export class TypeGenerator {
     return emitted;
   }
 
+  private propertyFqn(structFqn: string, propName: string) {
+    return `${structFqn}.${propName}`;
+  }
+
   private emitProperty(code: Code, name: string, propDef: JSONSchema4, structFqn: string, structDef: JSONSchema4, toJson: ToJsonFunction) {
     const originalName = name;
 
@@ -491,6 +496,14 @@ export class TypeGenerator {
     // convert the name to camel case so it's compatible with JSII
     name = camelCase(name);
 
+    const propertyFqn = this.propertyFqn(structFqn, name);
+
+    if (this.emittedProperties.has(propertyFqn)) {
+      // can happen if two properties have different casing that results
+      // in the same camelCase string.
+      return;
+    }
+
     this.emitDescription(code, `${structFqn}#${originalName}`, propDef.description);
     const propertyType = this.typeForProperty(`${structFqn}.${name}`, propDef);
     const required = this.isPropertyRequired(originalName, structDef);
@@ -500,6 +513,7 @@ export class TypeGenerator {
     code.line();
 
     toJson.addField(originalName, name, propertyType.toJson);
+    this.emittedProperties.add(propertyFqn);
   }
 
   private emitEnum(typeName: string, def: JSONSchema4, structFqn: string): EmittedType {
