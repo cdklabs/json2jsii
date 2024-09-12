@@ -601,3 +601,25 @@ function which(name: string, schema: JSONSchema4, definitions?: JSONSchema4) {
     expect(await generate(gen)).toMatchSnapshot();
   });
 }
+
+test('dedup properties with different casing', async () => {
+
+  // based on https://github.com/zalando/postgres-operator/blob/7d4da928726b5029f72e9ab83ee9b6ff481e70c7/manifests/postgresql.crd.yaml#L353-L357
+  const schema: JSONSchema4 = {
+    properties: {
+      pod_priority_class_name: {
+        type: 'string',
+      },
+      podPriorityClassName: {
+        type: 'string',
+      },
+    },
+  };
+
+  const gen = TypeGenerator.forStruct('Foo', schema, {
+    toJson: true,
+  });
+
+  expect(await generate(gen)).toMatchSnapshot();
+
+});
