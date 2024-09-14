@@ -1946,9 +1946,9 @@ downlevel-dts@^0.11.0:
     typescript next
 
 electron-to-chromium@^1.5.4:
-  version "1.5.21"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.21.tgz#f331794ee99045f2b2d73bc1d2dc654a13c462ee"
-  integrity sha512-+rBAerCpQvFSPyAO677i5gJuWGO2WFsoujENdcMzsrpP7Ebcc3pmpERgU8CV4fFF10a5haP4ivnFQ/AmLICBVg==
+  version "1.5.22"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.22.tgz#5ae58990a35391bad7605742e52855a0f281ef82"
+  integrity sha512-tKYm5YHPU1djz0O+CGJ+oJIvimtsCcwR2Z9w7Skh08lUdyzXY5djods3q+z2JkWdb7tCcmM//eVavSRAiaPRNg==
 
 emittery@^0.8.1:
   version "0.8.1"
@@ -3659,10 +3659,10 @@ jsii-rosetta@^5.5.4:
     workerpool "^6.5.1"
     yargs "^17.7.2"
 
-jsii-srcmak@^0.1.1238:
-  version "0.1.1238"
-  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.1238.tgz#1f0a91c323e228cde0694973ef94bb1d62887660"
-  integrity sha512-cGseElO9dKSxgyDGCme1fWi1FQ21dmR0cblqYSGdpayusKPA9zBuLnFthuiv8HVaoEsJsvRQHWQm+N83+uU2cg==
+jsii-srcmak@^0.1.1239:
+  version "0.1.1239"
+  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.1239.tgz#5b8613b086b795d50563958dbc9bef93c0386382"
+  integrity sha512-XOO9U+FJAL1OY9fAf6gucJ7clThKbsZQgabvcQwLr3Gqgut1z1PBhovk9iFqpzqw+tPaZ/+InMOFZZXPn1/J1g==
   dependencies:
     fs-extra "^9.1.0"
     jsii "~5.5.3"
@@ -5234,9 +5234,9 @@ typedarray@^0.0.6:
   integrity sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==
 
 typescript@next:
-  version "5.7.0-dev.20240912"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.7.0-dev.20240912.tgz#18c62679bece831289c7dfc23cb9f170f011eb5d"
-  integrity sha512-mDTEqq6tLag5w75BeGd1g9t64z7dlhTl/3x0CP1bG/638MXiBbvCoI5sbkcEY0UoYUxP7EeIi7ZI6HBd9lDPFw==
+  version "5.7.0-dev.20240913"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.7.0-dev.20240913.tgz#e2a0e3be0b9e5e4f80f307174bf75c7ca13f5408"
+  integrity sha512-cnMtLIMpmtz4XXNNvXJ8A8Mi8E1Q74cka3qcGnYVRWPqe9GmUvFI6vfcupvr9IjKBMVjpHgG5SuR5Da0Hv6CJA==
 
 typescript@~4.9.5:
   version "4.9.5"
