@@ -1466,9 +1466,9 @@ comment-json@4.2.2:
     repeat-string "^1.6.1"
 
 commit-and-tag-version@^12:
-  version "12.4.3"
-  resolved "https://registry.yarnpkg.com/commit-and-tag-version/-/commit-and-tag-version-12.4.3.tgz#e1d596b118156b8cd4ea333a5d3cbefe98322eb0"
-  integrity sha512-q+DaQ4QmvDjU3QBUfZmiH3CCL5Jf3saJ0I9dI1hL9equA4ZosoOkg3eya5q0qAc5T0eow+gF0DfKZskRbm4Shw==
+  version "12.4.4"
+  resolved "https://registry.yarnpkg.com/commit-and-tag-version/-/commit-and-tag-version-12.4.4.tgz#7c3db19f9f7a7b8039c1335df6dc78976b94967e"
+  integrity sha512-sK+69usdfluwRO6DtXs8wpRvyM9OAuV6y8kTgMj+ncRG3KrXeKjNcxFsWnnwH/KZU9k8ErKu5uQ1ptX6/pPk7A==
   dependencies:
     chalk "^2.4.2"
     conventional-changelog "4.0.0"
@@ -3659,10 +3659,10 @@ jsii-rosetta@^5.5.4:
     workerpool "^6.5.1"
     yargs "^17.7.2"
 
-jsii-srcmak@^0.1.1240:
-  version "0.1.1240"
-  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.1240.tgz#cab78a83867117cd253a7c9c9c07a8c7a9f10add"
-  integrity sha512-mNo4WSkmH+tHWjq5s729phQsAR33Lqf4fYHhchQ0F0F2CupbGQGjKF9iIjZAlhayFgzlFy3jb9/a7rZXKRqYpQ==
+jsii-srcmak@^0.1.1241:
+  version "0.1.1241"
+  resolved "https://registry.yarnpkg.com/jsii-srcmak/-/jsii-srcmak-0.1.1241.tgz#9cef921a0c0235ca9097f2d421f8b826bbdff907"
+  integrity sha512-5uRP2Cq4sy7NQWgyGVt8OlrLCWfStWuJGK4JwiH167URxu6oJRmzipZHH0ZEdMZsHW4lhXEM9Z33STPLXqnGtQ==
   dependencies:
     fs-extra "^9.1.0"
     jsii "~5.5.3"
@@ -5234,9 +5234,9 @@ typedarray@^0.0.6:
   integrity sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==
 
 typescript@next:
-  version "5.7.0-dev.20240914"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.7.0-dev.20240914.tgz#509164972bac727f30d92c1af1ba5455f02b983b"
-  integrity sha512-FFOqgbzyxpBRq2YcKTQTAuurIKiU5A0VoWwDDnSjHPDHDbs3eriLiMIj8BExs2Soz7Wr+HxMJkbAZ0RCgvoIZg==
+  version "5.7.0-dev.20240915"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.7.0-dev.20240915.tgz#aff28833009d26116378bea0ea68d36ae32d6a57"
+  integrity sha512-DpaEZn4KstKaVrFUxGv+zOrJVIFJJaf/lTPedsVRrnhrs/yysIhXlr40nHDNH1TznDWPit6UKYoKp/6/YPvlpQ==
 
 typescript@~4.9.5:
   version "4.9.5"
