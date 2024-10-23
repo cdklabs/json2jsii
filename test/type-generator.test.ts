@@ -567,6 +567,26 @@ test('custom ref normalization', async () => {
 
 });
 
+test('custom definition prefix', async () => {
+
+  const foo = 'io.k8s.v1beta1.Foo';
+  const bar = 'Bar';
+
+  const gen = new TypeGenerator({
+    definitionsPrefix: '#/$defs/',
+  });
+
+  gen.addDefinition(foo, { properties: { props: { type: 'number' } } });
+
+  // two structs, each referencing a different version
+  gen.addDefinition(bar, { properties: { prop: { $ref: `#/$defs/${foo}` } } });
+  gen.emitType(bar);
+
+  const code = await generate(gen);
+  expect(code).toMatchSnapshot();
+
+});
+
 test('shared namespace references', async () => {
 
   const foo1 = 'io.k8s.v1beta1.Foo';

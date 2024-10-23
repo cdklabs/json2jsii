@@ -66,6 +66,59 @@ export function toJson_TestType(obj: TestType | undefined): Record<string, any> 
 "
 `;
 
+exports[`custom definition prefix 1`] = `
+"/**
+ * @schema Bar
+ */
+export interface Bar {
+  /**
+   * @schema Bar#prop
+   */
+  readonly prop?: IoK8Sv1Beta1Foo;
+
+}
+
+/**
+ * Converts an object of type 'Bar' to JSON representation.
+ */
+/* eslint-disable max-len, quote-props */
+export function toJson_Bar(obj: Bar | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'prop': toJson_IoK8Sv1Beta1Foo(obj.prop),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, quote-props */
+
+/**
+ * @schema io.k8s.v1beta1.Foo
+ */
+export interface IoK8Sv1Beta1Foo {
+  /**
+   * @schema io.k8s.v1beta1.Foo#props
+   */
+  readonly props?: number;
+
+}
+
+/**
+ * Converts an object of type 'IoK8Sv1Beta1Foo' to JSON representation.
+ */
+/* eslint-disable max-len, quote-props */
+export function toJson_IoK8Sv1Beta1Foo(obj: IoK8Sv1Beta1Foo | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'props': obj.props,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, quote-props */
+"
+`;
+
 exports[`custom ref normalization 1`] = `
 "/**
  * @schema Bar

@@ -7,7 +7,7 @@ import { ToJsonFunction } from './tojson';
 
 
 const PRIMITIVE_TYPES = ['string', 'number', 'integer', 'boolean'];
-const DEFINITIONS_PREFIX = '#/definitions/';
+const DEFAULT_DEFINITIONS_PREFIX = '#/definitions/';
 const DEFAULT_RENDER_TYPE_NAME = (s: string) => s.split('.').map(x => pascalCase(x)).join('');
 
 export interface TypeGeneratorOptions {
@@ -62,6 +62,13 @@ export interface TypeGeneratorOptions {
    * @default - Only dot namespacing is handled by default. Elements between dots are pascal cased and concatenated.
    */
   readonly renderTypeName?: (def: string) => string;
+
+  /**
+   * Allow overriding default definitions path prefix: newer JSON Schema versions support `#/$defs/`
+   *
+   * @default #/definitions/
+   */
+  readonly definitionsPrefix?: string;
 }
 
 /**
@@ -121,6 +128,7 @@ export class TypeGenerator {
   private readonly toJson: boolean;
   private readonly sanitizeEnums: boolean;
   private readonly renderTypeName: (def: string) => string;
+  private readonly definitionsPrefix: string;
 
   /**
    *
@@ -133,6 +141,7 @@ export class TypeGenerator {
     this.toJson = options.toJson ?? true;
     this.sanitizeEnums = options.sanitizeEnums ?? false;
     this.renderTypeName = options.renderTypeName ?? DEFAULT_RENDER_TYPE_NAME;
+    this.definitionsPrefix = options.definitionsPrefix ?? DEFAULT_DEFINITIONS_PREFIX;
 
     for (const [typeName, def] of Object.entries(options.definitions ?? {})) {
       this.addDefinition(typeName, def);
@@ -157,7 +166,7 @@ export class TypeGenerator {
    * emitted as a custom type (`emitCustomType()`).
    */
   public addAlias(from: string, to: string) {
-    this.addDefinition(from, { $ref: `#/definitions/${to}` });
+    this.addDefinition(from, { $ref: `${this.definitionsPrefix}${to}` });
   }
 
   /**
@@ -251,8 +260,8 @@ export class TypeGenerator {
       throw new Error(`${typeName} must be normalized before calling emitType`);
     }
 
-    if (structFqn.startsWith(DEFINITIONS_PREFIX)) {
-      structFqn = structFqn.substring(DEFINITIONS_PREFIX.length);
+    if (structFqn.startsWith(this.definitionsPrefix)) {
+      structFqn = structFqn.substring(this.definitionsPrefix.length);
     }
 
     if (this.isExcluded(structFqn)) {
@@ -605,8 +614,7 @@ export class TypeGenerator {
   }
 
   private typeForRef(def: JSONSchema4): EmittedType {
-    const prefix = '#/definitions/';
-    if (!def.$ref || !def.$ref.startsWith(prefix)) {
+    if (!def.$ref || !def.$ref.startsWith(this.definitionsPrefix)) {
       throw new Error(`invalid $ref ${JSON.stringify(def)}`);
     }
 
@@ -614,7 +622,7 @@ export class TypeGenerator {
       return { type: 'any', toJson: x => x };
     }
 
-    const typeName = TypeGenerator.normalizeTypeName(this.renderTypeName(def.$ref.substring(prefix.length)));
+    const typeName = TypeGenerator.normalizeTypeName(this.renderTypeName(def.$ref.substring(this.definitionsPrefix.length)));
 
     // if we already emitted a type with this type name, just return it
     const emitted = this.emittedTypes[typeName];
@@ -637,11 +645,11 @@ export class TypeGenerator {
 
   private resolveReference(def: JSONSchema4): JSONSchema4 {
     const ref = def.$ref;
-    if (!ref || !ref.startsWith(DEFINITIONS_PREFIX)) {
+    if (!ref || !ref.startsWith(this.definitionsPrefix)) {
       throw new Error('expecting a local reference');
     }
 
-    const lookup = ref.substr(DEFINITIONS_PREFIX.length);
+    const lookup = ref.substr(this.definitionsPrefix.length);
     const found = this.definitions[lookup];
     if (!found) {
       throw new Error(`unable to find a definition for the $ref "${lookup}"`);
