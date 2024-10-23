@@ -1,0 +1,20 @@
+{
+  "$ref": "#/definitions/config",
+  "definitions": {
+    "config": {
+      "properties": {
+        "timeout": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9]+(ns|us|µs|μs|ms|s|m|h)?$"
+            },
+            {
+              "type": "number"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

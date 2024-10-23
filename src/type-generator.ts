@@ -415,14 +415,14 @@ export class TypeGenerator {
    * @returns true if this definition can be represented as a union or false if it cannot
    */
   private tryEmitUnion(typeName: string, def: JSONSchema4, fqn: string): EmittedType | undefined {
-    const options = new Array<string>();
+    const options = new Array<[string, string?]>();
     for (const option of def.oneOf || def.anyOf || []) {
       if (!supportedUnionOptionType(option.type)) {
         return undefined;
       }
 
       const type = option.type === 'integer' ? 'number' : option.type;
-      options.push(type);
+      options.push([type, option.pattern]);
     }
 
     const emitted: EmittedType = { type: typeName, toJson: x => `${x}?.value` };
@@ -433,10 +433,16 @@ export class TypeGenerator {
       code.openBlock(`export class ${typeName}`);
       const possibleTypes = [];
 
-      for (const type of options) {
+      for (const [type, pattern] of options) {
         possibleTypes.push(type);
         const methodName = 'from' + type[0].toUpperCase() + type.substr(1);
         code.openBlock(`public static ${methodName}(value: ${type}): ${typeName}`);
+        if (pattern) {
+          code.open(`if (!(new RegExp('${pattern}').test(value))) {`);
+          code.line(`throw new Error(\`value \${value} does not match validation regex ${pattern}\`)`);
+          code.close('};');
+        };
+
         code.line(`return new ${typeName}(value);`);
         code.closeBlock();
       }
@@ -512,7 +518,7 @@ export class TypeGenerator {
     code.line(`readonly ${name}${optional}: ${propertyType.type};`);
     code.line();
 
-    toJson.addField(originalName, name, propertyType.toJson);
+    toJson.addField(originalName, name, propertyType.toJson, propDef.pattern);
     this.emittedProperties.add(propertyFqn);
   }
 
