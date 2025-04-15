@@ -1978,9 +1978,9 @@ dunder-proto@^1.0.0, dunder-proto@^1.0.1:
     gopd "^1.2.0"
 
 electron-to-chromium@^1.5.73:
-  version "1.5.136"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.136.tgz#854b45e6a892137762cb026ed6ec77391fc5c07b"
-  integrity sha512-kL4+wUTD7RSA5FHx5YwWtjDnEEkIIikFgWHR4P6fqjw1PPLlqYkxeOb++wAauAssat0YClCy8Y3C5SxgSkjibQ==
+  version "1.5.137"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.137.tgz#53a7fef3ea9f7eb5fcf704454050ff930c43ed92"
+  integrity sha512-/QSJaU2JyIuTbbABAo/crOs+SuAZLS+fVVS10PVrIT9hrRkmZl8Hb0xPSkKRUUWHQtYzXHpQUW3Dy5hwMzGZkA==
 
 emittery@^0.8.1:
   version "0.8.1"
@@ -3782,9 +3782,9 @@ jsii-srcmak@^0.1.1308:
     yargs "^17.7.2"
 
 jsii@~5.7.1:
-  version "5.7.11"
-  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.7.11.tgz#97ce41848edc840337424a510313c5e8a3fae73a"
-  integrity sha512-rk9JFqsStro5+ZhIb7J7n9ioNR3g1WryNY6z30KGtWoHHsTJjkyuR7tyDkL7QPoYSBdrIcug2FsIWgvjlAO+gg==
+  version "5.7.12"
+  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.7.12.tgz#8b901de69b7b1839d9f874cb546627a6681001b8"
+  integrity sha512-FNdkUCoVflgNnb1A6tNuKZwjoM0S4dx5AtSKTO6OnXAqUth+ydR0f/pxll3PdjkDJVZtnKp/dxMetbiWL+5+7Q==
   dependencies:
     "@jsii/check-node" "1.111.0"
     "@jsii/spec" "^1.111.0"
