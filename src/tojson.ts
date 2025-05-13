@@ -25,11 +25,18 @@ export class ToJsonFunction {
   }
 
   public emit(code: Code) {
+    const disabledEslintRules = [
+      'max-len',
+      '@stylistic/max-len',
+      'quote-props',
+      '@stylistic/quote-props',
+    ];
+
     code.line();
     code.line('/**');
     code.line(` * Converts an object of type '${this.baseType}' to JSON representation.`);
     code.line(' */');
-    code.line('/* eslint-disable max-len, quote-props */');
+    code.line(`/* eslint-disable ${disabledEslintRules.join(', ')} */`);
     code.openBlock(`export function ${this.functionName}(obj: ${this.baseType} | undefined): Record<string, any> | undefined`);
     code.line('if (obj === undefined) { return undefined; }');
 
@@ -43,7 +50,7 @@ export class ToJsonFunction {
     code.line('return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});');
 
     code.closeBlock();
-    code.line('/* eslint-enable max-len, quote-props */');
+    code.line(`/* eslint-enable ${disabledEslintRules.join(', ')} */`);
   }
 }
 
