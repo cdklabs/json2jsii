@@ -37,6 +37,14 @@ export interface TypeGeneratorOptions {
   readonly toJson?: boolean;
 
   /**
+   * When true, generated `toJson_Xyz` functions will be marked with `@internal` tag.
+   * This is useful when you want to hide these functions from public API documentation.
+   *
+   * @default false
+   */
+  readonly toJsonInternal?: boolean;
+
+  /**
    * When set to true, enums are sanitized from the 'null' literal value,
    * allowing typing the property as an enum, instead of the underlying type.
    *
@@ -119,6 +127,7 @@ export class TypeGenerator {
   private readonly exclude: string[];
   private readonly definitions: { [def: string]: JSONSchema4 };
   private readonly toJson: boolean;
+  private readonly toJsonInternal: boolean;
   private readonly sanitizeEnums: boolean;
   private readonly renderTypeName: (def: string) => string;
 
@@ -131,6 +140,7 @@ export class TypeGenerator {
     this.exclude = options.exclude ?? [];
     this.definitions = {};
     this.toJson = options.toJson ?? true;
+    this.toJsonInternal = options.toJsonInternal ?? false;
     this.sanitizeEnums = options.sanitizeEnums ?? false;
     this.renderTypeName = options.renderTypeName ?? DEFAULT_RENDER_TYPE_NAME;
 
@@ -453,7 +463,7 @@ export class TypeGenerator {
   }
 
   private emitStruct(typeName: string, structDef: JSONSchema4, structFqn: string): EmittedType {
-    const toJson = new ToJsonFunction(typeName);
+    const toJson = new ToJsonFunction(typeName, this.toJsonInternal);
     const emitted: EmittedType = {
       type: typeName,
       toJson: x => `${toJson.functionName}(${x})`,

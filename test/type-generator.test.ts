@@ -432,6 +432,27 @@ test('if "toJson" is disabled, toJson functions are not generated', async () => 
   expect(await generate(gen)).toMatchSnapshot();
 });
 
+test('if "toJsonInternal" is enabled, toJson functions are marked as @internal', async () => {
+  const schema: JSONSchema4 = {
+    properties: {
+      bar: { type: 'string' },
+      nested: {
+        type: 'object',
+        properties: {
+          value: { type: 'number' },
+        },
+      },
+    },
+  };
+
+  const gen = TypeGenerator.forStruct('Foo', schema, {
+    toJson: true,
+    toJsonInternal: true,
+  });
+
+  expect(await generate(gen)).toMatchSnapshot();
+});
+
 test('type can be an array with null and a single non null type', async () => {
 
   const schema: JSONSchema4 = {
