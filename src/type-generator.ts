@@ -464,8 +464,12 @@ export class TypeGenerator {
       this.emitDescription(code, structFqn, structDef.description);
       code.openBlock(`export interface ${typeName}`);
 
-      for (const [propName, propSpec] of Object.entries(structDef.properties || {})) {
+      const props = Object.entries(structDef.properties || {});
+      for (const [idx, [propName, propSpec]] of props.entries()) {
         this.emitProperty(code, propName, propSpec, structFqn, structDef, toJson);
+        if (idx < props.length - 1) {
+          code.line();
+        }
       }
 
       code.closeBlock();
@@ -510,7 +514,6 @@ export class TypeGenerator {
     const optional = required ? '' : '?';
 
     code.line(`readonly ${name}${optional}: ${propertyType.type};`);
-    code.line();
 
     toJson.addField(originalName, name, propertyType.toJson);
     this.emittedProperties.add(propertyFqn);

@@ -9,7 +9,6 @@ export interface Foo {
    * @schema Foo#foo
    */
   readonly foo?: { [key: string]: string };
-
 }
 "
 `;
@@ -43,7 +42,6 @@ export interface TestType {
    * @schema fqn.of.TestType#camel-case-5
    */
   readonly camelCase5?: string;
-
 }
 
 /**
@@ -75,7 +73,6 @@ export interface Bar {
    * @schema Bar#prop
    */
   readonly prop?: V1beta1Foo;
-
 }
 
 /**
@@ -100,7 +97,6 @@ export interface V1beta1Foo {
    * @schema io.k8s.v1beta1.Foo#props
    */
   readonly props?: number;
-
 }
 
 /**
@@ -158,7 +154,6 @@ export interface TestType {
    * @schema fqn.of.TestType#field
    */
   readonly field?: string;
-
 }
 
 /**
@@ -186,7 +181,6 @@ export interface TestType {
    * @schema fqn.of.TestType#field
    */
   readonly field?: boolean;
-
 }
 
 /**
@@ -216,7 +210,6 @@ export interface TestType {
    * @schema fqn.of.TestType#field
    */
   readonly field?: string;
-
 }
 
 /**
@@ -244,7 +237,6 @@ export interface Foo {
    * @schema Foo#foo
    */
   readonly foo?: FooFoo;
-
 }
 
 /**
@@ -268,7 +260,6 @@ export interface TestType {
    * @schema fqn.of.TestType#Chars
    */
   readonly chars?: FqnOfTestTypeChars;
-
 }
 
 /**
@@ -350,7 +341,6 @@ export interface TestType {
    * @schema fqn.of.TestType#Days
    */
   readonly days?: FqnOfTestTypeDays;
-
 }
 
 /**
@@ -390,7 +380,6 @@ export interface TestType {
    * @schema fqn.of.TestType#Percentiles
    */
   readonly percentiles?: FqnOfTestTypePercentiles;
-
 }
 
 /**
@@ -430,7 +419,6 @@ export interface TestType {
    * @schema fqn.of.TestType#Same
    */
   readonly same?: FqnOfTestTypeSame;
-
 }
 
 /**
@@ -483,7 +471,6 @@ export interface TestType {
    * @schema fqn.of.TestType#child
    */
   readonly child?: FqnOfTestTypeChild;
-
 }
 
 /**
@@ -527,7 +514,6 @@ export interface FqnOfTestTypeChild {
    * @schema FqnOfTestTypeChild#secondEnum
    */
   readonly secondEnum?: FqnOfTestTypeChildSecondEnum;
-
 }
 
 /**
@@ -571,7 +557,6 @@ export interface TestType {
    * @schema fqn.of.TestType#Timeframe
    */
   readonly timeframe?: FqnOfTestTypeTimeframe;
-
 }
 
 /**
@@ -613,7 +598,6 @@ export interface TestType {
    * @schema fqn.of.TestType#Color
    */
   readonly color?: FqnOfTestTypeColor;
-
 }
 
 /**
@@ -653,7 +637,6 @@ export interface Foo {
    * @schema Foo#bar
    */
   readonly bar?: string;
-
 }
 "
 `;
@@ -702,7 +685,6 @@ export interface TestType {
    * @schema fqn.of.TestType#integerValue
    */
   readonly integerValue?: number;
-
 }
 
 /**
@@ -737,7 +719,6 @@ export interface Foo {
    * @schema Foo#bar
    */
   readonly bar?: string;
-
 }
 "
 `;
@@ -751,7 +732,6 @@ export interface Foo {
    * @schema Foo#foo
    */
   readonly foo?: FooFoo;
-
 }
 
 /**
@@ -773,7 +753,6 @@ export interface Foo {
    * @schema Foo#foo
    */
   readonly foo?: FooFoo;
-
 }
 
 /**
@@ -795,7 +774,6 @@ export interface Bar1 {
    * @schema Bar1#prop
    */
   readonly prop?: IoK8Sv1Beta1Foo;
-
 }
 
 /**
@@ -820,7 +798,6 @@ export interface Bar2 {
    * @schema Bar2#prop
    */
   readonly prop?: IoK8Sv1Foo;
-
 }
 
 /**
@@ -845,7 +822,6 @@ export interface IoK8Sv1Beta1Foo {
    * @schema io.k8s.v1beta1.Foo#props
    */
   readonly props?: number;
-
 }
 
 /**
@@ -870,7 +846,6 @@ export interface IoK8Sv1Foo {
    * @schema io.k8s.v1.Foo#props
    */
   readonly props?: string;
-
 }
 
 /**
@@ -908,7 +883,6 @@ export interface TestType {
    * @schema fqn.of.TestType#arrayShouldBeOptional
    */
   readonly arrayShouldBeOptional?: ItemType[];
-
 }
 
 /**
@@ -935,7 +909,6 @@ export interface ItemType {
    * @schema ItemType#requiredField
    */
   readonly requiredField: string;
-
 }
 
 /**
@@ -963,7 +936,6 @@ export interface TestType {
    * @schema fqn.of.TestType#other
    */
   readonly other?: Other;
-
 }
 
 /**
@@ -988,7 +960,6 @@ export interface Other {
    * @schema Other#stringValue
    */
   readonly stringValue: string;
-
 }
 
 /**
@@ -1036,7 +1007,6 @@ export interface TestType {
    * @schema fqn.of.TestType#arrayOfString
    */
   readonly arrayOfString?: string[];
-
 }
 
 /**
@@ -1068,7 +1038,6 @@ export interface TestType {
    * @schema fqn.of.TestType#foo
    */
   readonly foo?: string;
-
 }
 
 /**
@@ -1135,7 +1104,6 @@ export interface TestType {
    * @schema fqn.of.TestType#NonCamelCaseRequired
    */
   readonly nonCamelCaseRequired: string;
-
 }
 
 /**
@@ -1168,7 +1136,6 @@ export interface TestType {
    * @schema fqn.of.TestType#entrypoint
    */
   readonly entrypoint?: MyType;
-
 }
 
 /**
@@ -1193,7 +1160,6 @@ export interface MyType {
    * @schema MyType#self
    */
   readonly self?: MyType;
-
 }
 
 /**
@@ -1223,7 +1189,6 @@ export interface TypeB {
    * @schema TypeB#refToTypeA
    */
   readonly refToTypeA?: NewType;
-
 }
 
 /**
@@ -1251,7 +1216,6 @@ export interface TypeA {
    * @schema TypeA#ref
    */
   readonly ref?: TypeC;
-
 }
 
 /**
@@ -1276,7 +1240,6 @@ export interface TypeC {
    * @schema TypeC#field
    */
   readonly field?: string;
-
 }
 
 /**
@@ -1304,7 +1267,6 @@ export interface Foo {
    * @schema Foo#bar
    */
   readonly bar?: boolean;
-
 }
 "
 `;
@@ -1321,7 +1283,6 @@ export interface TestType {
    * @schema TestType#fault
    */
   readonly fault?: TestTypeFault;
-
 }
 
 /**
@@ -1349,7 +1310,6 @@ export interface TestTypeFault {
    * @schema TestTypeFault#delay
    */
   readonly delay?: TestTypeFaultDelay;
-
 }
 
 /**
@@ -1397,7 +1357,6 @@ export interface TestTypeFaultDelay {
    * @schema TestTypeFaultDelay#percentage
    */
   readonly percentage?: TestTypeFaultDelayPercentage;
-
 }
 
 /**
@@ -1428,7 +1387,6 @@ export interface TestTypeFaultDelayPercentage {
    * @schema TestTypeFaultDelayPercentage#value
    */
   readonly value?: number;
-
 }
 
 /**
