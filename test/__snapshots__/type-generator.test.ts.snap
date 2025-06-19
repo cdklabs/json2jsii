@@ -1297,15 +1297,29 @@ export function toJson_TypeC(obj: TypeC | undefined): Record<string, any> | unde
 
 exports[`type can be an array with null and a single non null type 1`] = `
 "/**
- * @schema Foo
+ * @schema fqn.of.TestType
  */
-export interface Foo {
+export interface TestType {
   /**
-   * @schema Foo#bar
+   * @schema fqn.of.TestType#bar
    */
   readonly bar?: boolean;
 
 }
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'bar': obj.bar,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 "
 `;
 
@@ -1444,6 +1458,62 @@ export function toJson_TestTypeFaultDelayPercentage(obj: TestTypeFaultDelayPerce
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+"
+`;
+
+exports[`unions drop a null type from the union 1`] = `
+"/**
+ * @schema fqn.of.TestType
+ */
+export interface TestType {
+  /**
+   * @schema fqn.of.TestType#foo
+   */
+  readonly foo?: FqnOfTestTypeFoo;
+
+  /**
+   * @schema fqn.of.TestType#bar
+   */
+  readonly bar?: FqnOfTestTypeBar;
+
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'foo': obj.foo?.value,
+    'bar': obj.bar?.value,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * @schema FqnOfTestTypeFoo
+ */
+export class FqnOfTestTypeFoo {
+  public static fromBoolean(value: boolean): FqnOfTestTypeFoo {
+    return new FqnOfTestTypeFoo(value);
+  }
+  private constructor(public readonly value: boolean) {
+  }
+}
+
+/**
+ * @schema FqnOfTestTypeBar
+ */
+export class FqnOfTestTypeBar {
+  public static fromBoolean(value: boolean): FqnOfTestTypeBar {
+    return new FqnOfTestTypeBar(value);
+  }
+  private constructor(public readonly value: boolean) {
+  }
+}
 "
 `;
 

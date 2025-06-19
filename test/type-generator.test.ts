@@ -66,6 +66,16 @@ describe('unions', () => {
     },
   });
 
+  which('drop a null type from the union', {
+    properties: {
+      foo: {
+        anyOf: [{ type: 'null' }, { type: 'boolean' }],
+      },
+      bar: {
+        anyOf: [{ type: 'null' }, { type: 'boolean' }],
+      },
+    },
+  });
 });
 
 
@@ -432,20 +442,10 @@ test('if "toJson" is disabled, toJson functions are not generated', async () => 
   expect(await generate(gen)).toMatchSnapshot();
 });
 
-test('type can be an array with null and a single non null type', async () => {
-
-  const schema: JSONSchema4 = {
-    properties: {
-      bar: { type: ['null', 'boolean'] },
-    },
-  };
-
-  const gen = TypeGenerator.forStruct('Foo', schema, {
-    toJson: false,
-  });
-
-  expect(await generate(gen)).toMatchSnapshot();
-
+which('type can be an array with null and a single non null type', {
+  properties: {
+    bar: { type: ['null', 'boolean'] },
+  },
 });
 
 test('additionalProperties when type is defined as array', async () => {
