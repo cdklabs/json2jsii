@@ -66,13 +66,24 @@ describe('unions', () => {
     },
   });
 
-  which('drop a null type from the union', {
+  which('are tuples with a null type', {
     properties: {
       foo: {
         anyOf: [{ type: 'null' }, { type: 'boolean' }],
       },
       bar: {
         anyOf: [{ type: 'null' }, { type: 'boolean' }],
+      },
+    },
+  });
+
+  which('have only one type', {
+    properties: {
+      foo: {
+        anyOf: [{ type: 'boolean' }],
+      },
+      bar: {
+        anyOf: [{ type: 'boolean' }],
       },
     },
   });
@@ -442,10 +453,18 @@ test('if "toJson" is disabled, toJson functions are not generated', async () => 
   expect(await generate(gen)).toMatchSnapshot();
 });
 
-which('type can be an array with null and a single non null type', {
-  properties: {
-    bar: { type: ['null', 'boolean'] },
-  },
+describe('type arrays', () => {
+  which('have null and a single non null type', {
+    properties: {
+      bar: { type: ['null', 'boolean'] },
+    },
+  });
+
+  which('have a single type', {
+    properties: {
+      bar: { type: ['boolean'] },
+    },
+  });
 });
 
 test('additionalProperties when type is defined as array', async () => {

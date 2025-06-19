@@ -5,6 +5,7 @@ import { NAMED_SYMBOLS } from './allowlist';
 import { Code } from './code';
 import { ToJsonFunction } from './tojson';
 import { reduceNullUnion } from './transfomers/null-union';
+import { hoistSingletonUnion } from './transfomers/singleton-union';
 
 
 const PRIMITIVE_TYPES = ['string', 'number', 'integer', 'boolean'];
@@ -184,12 +185,15 @@ export class TypeGenerator {
    *
    * To avoid having the type generator be aware of all these cases,
    * we transform those types into their corresponding simplified definitions.
-   * --------------------------------------------------
+   *
    * @param def - the schema to be transformed
    */
   private transformTypes(def: JSONSchema4): JSONSchema4 {
     const transformers: Array<(def: JSONSchema4) => JSONSchema4> = [
       reduceNullUnion,
+
+      // needs to run towards the end to have the most effect
+      hoistSingletonUnion,
     ];
 
     // const deepCopiedDef = JSON.parse(JSON.stringify(def));

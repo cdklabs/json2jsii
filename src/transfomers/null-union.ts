@@ -43,6 +43,10 @@ function removeNullFromTypeArray(def: JSONSchema4): JSONSchema4 {
   return def;
 }
 
+/**
+ * Schemas may define a type as a union of types with one of the types being `null`.
+ * This is the same as defining an optional type.
+ */
 function removeNullFromUnion(def: JSONSchema4, combinator: 'anyOf' | 'oneOf'): JSONSchema4 {
   const union = def[combinator];
   if (!(union && Array.isArray(union))) {
