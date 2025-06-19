@@ -87,6 +87,39 @@ describe('unions', () => {
       },
     },
   });
+
+  which('have multiple of the same type', {
+    properties: {
+      foo: {
+        oneOf: [
+          { type: 'boolean' },
+          { type: 'boolean' },
+        ],
+      },
+    },
+  });
+
+
+  which('have multiple enums', {
+    properties: {
+      foo: {
+        oneOf: [
+          {
+            type: 'string',
+            enum: [
+              'tab',
+            ],
+          },
+          {
+            type: 'string',
+            enum: [
+              'space',
+            ],
+          },
+        ],
+      },
+    },
+  });
 });
 
 

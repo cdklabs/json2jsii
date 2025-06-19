@@ -1523,6 +1523,72 @@ export function toJson_TestTypeFaultDelayPercentage(obj: TestTypeFaultDelayPerce
 "
 `;
 
+exports[`unions have multiple enums 1`] = `
+"/**
+ * @schema fqn.of.TestType
+ */
+export interface TestType {
+  /**
+   * @schema fqn.of.TestType#foo
+   */
+  readonly foo?: FqnOfTestTypeFoo;
+
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'foo': obj.foo,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * @schema FqnOfTestTypeFoo
+ */
+export enum FqnOfTestTypeFoo {
+  /** tab */
+  TAB = \\"tab\\",
+  /** space */
+  SPACE = \\"space\\",
+}
+"
+`;
+
+exports[`unions have multiple of the same type 1`] = `
+"/**
+ * @schema fqn.of.TestType
+ */
+export interface TestType {
+  /**
+   * @schema fqn.of.TestType#foo
+   */
+  readonly foo?: boolean;
+
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'foo': obj.foo,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+"
+`;
+
 exports[`unions have only one type 1`] = `
 "/**
  * @schema fqn.of.TestType

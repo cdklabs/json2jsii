@@ -6,6 +6,7 @@ import { Code } from './code';
 import { ToJsonFunction } from './tojson';
 import { reduceNullUnion } from './transfomers/null-union';
 import { hoistSingletonUnion } from './transfomers/singleton-union';
+import { reduceDuplicateTypesInUnion } from './transfomers/union-duplicates';
 
 
 const PRIMITIVE_TYPES = ['string', 'number', 'integer', 'boolean'];
@@ -191,6 +192,7 @@ export class TypeGenerator {
   private transformTypes(def: JSONSchema4): JSONSchema4 {
     const transformers: Array<(def: JSONSchema4) => JSONSchema4> = [
       reduceNullUnion,
+      reduceDuplicateTypesInUnion,
 
       // needs to run towards the end to have the most effect
       hoistSingletonUnion,
