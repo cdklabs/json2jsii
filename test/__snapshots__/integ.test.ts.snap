@@ -90,7 +90,6 @@ export interface MyStruct {
    * @schema MyStruct#VPCConfiguration
    */
   readonly vpcConfiguration?: MyStructVpcConfiguration;
-
 }
 
 /**
@@ -137,7 +136,6 @@ export interface MyStructVpcConfiguration {
    * @schema MyStructVpcConfiguration#SubnetIds
    */
   readonly subnetIds?: string[];
-
 }
 
 /**
@@ -248,7 +246,6 @@ export interface MyStruct {
    * @schema MyStruct#Modified
    */
   readonly modified?: Date;
-
 }
 
 /**
@@ -301,7 +298,6 @@ export interface Creator {
    * @schema Creator#Email
    */
   readonly email?: string;
-
 }
 
 /**
@@ -337,7 +333,6 @@ export interface Query {
    * @schema Query#Denominator
    */
   readonly denominator?: string;
-
 }
 
 /**
@@ -393,7 +388,6 @@ export interface Threshold {
    * @schema Threshold#WarningDisplay
    */
   readonly warningDisplay?: string;
-
 }
 
 /**
@@ -558,7 +552,6 @@ export interface MyStruct {
    * @schema MyStruct#Tags
    */
   readonly tags?: MyStructTags[];
-
 }
 
 /**
@@ -604,7 +597,6 @@ export interface MyStructKubernetesNetworkConfig {
    * @schema MyStructKubernetesNetworkConfig#ServiceIpv4Cidr
    */
   readonly serviceIpv4Cidr?: string;
-
 }
 
 /**
@@ -661,7 +653,6 @@ export interface MyStructResourcesVpcConfig {
    * @schema MyStructResourcesVpcConfig#PublicAccessCidrs
    */
   readonly publicAccessCidrs?: string[];
-
 }
 
 /**
@@ -699,7 +690,6 @@ export interface EncryptionConfigEntry {
    * @schema EncryptionConfigEntry#Provider
    */
   readonly provider?: Provider;
-
 }
 
 /**
@@ -730,7 +720,6 @@ export interface MyStructKubernetesApiAccess {
    * @schema MyStructKubernetesApiAccess#Users
    */
   readonly users?: KubernetesApiAccessEntry[];
-
 }
 
 /**
@@ -761,7 +750,6 @@ export interface MyStructTags {
    * @schema MyStructTags#Key
    */
   readonly key: string;
-
 }
 
 /**
@@ -791,7 +779,6 @@ export interface Provider {
    * @schema Provider#KeyArn
    */
   readonly keyArn?: string;
-
 }
 
 /**
@@ -826,7 +813,6 @@ export interface KubernetesApiAccessEntry {
    * @schema KubernetesApiAccessEntry#Groups
    */
   readonly groups?: string[];
-
 }
 
 /**

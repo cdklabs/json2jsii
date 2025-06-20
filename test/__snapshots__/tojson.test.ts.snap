@@ -9,7 +9,6 @@ export interface MyStruct {
    * @schema MyStruct#MyAny
    */
   readonly myAny?: any;
-
 }
 
 /**
@@ -37,7 +36,6 @@ export interface MyStruct {
    * @schema MyStruct#Array_Of_complex
    */
   readonly arrayOfComplex?: MyType[];
-
 }
 
 /**
@@ -67,7 +65,6 @@ export interface MyType {
    * @schema MyType#Bar
    */
   readonly bar?: string;
-
 }
 
 /**
@@ -96,7 +93,6 @@ export interface MyStruct {
    * @schema MyStruct#ArrayProp
    */
   readonly arrayProp?: string[];
-
 }
 
 /**
@@ -124,7 +120,6 @@ export interface MyStruct {
    * @schema MyStruct#ArrayProp
    */
   readonly arrayProp?: string[];
-
 }
 
 /**
@@ -152,7 +147,6 @@ export interface MyStruct {
    * @schema MyStruct#ArrayProp
    */
   readonly arrayProp?: any[];
-
 }
 
 /**
@@ -180,7 +174,6 @@ export interface MyStruct {
    * @schema MyStruct#ComplexType
    */
   readonly complexType?: MyType;
-
 }
 
 /**
@@ -215,7 +208,6 @@ export interface MyType {
    * @schema MyType#Nested
    */
   readonly nested: YourType;
-
 }
 
 /**
@@ -242,7 +234,6 @@ export interface YourType {
    * @schema YourType#John
    */
   readonly john?: string[];
-
 }
 
 /**
@@ -270,7 +261,6 @@ export interface MyStruct {
    * @schema MyStruct#DateTime
    */
   readonly dateTime?: Date;
-
 }
 
 /**
@@ -303,7 +293,6 @@ export interface MyStruct {
    * @schema MyStruct#YourEnum
    */
   readonly yourEnum?: MyStructYourEnum;
-
 }
 
 /**
@@ -354,7 +343,6 @@ export interface MyStruct {
    * @schema MyStruct#ComplexMap
    */
   readonly complexMap?: { [key: string]: MyType };
-
 }
 
 /**
@@ -384,7 +372,6 @@ export interface MyType {
    * @schema MyType#Bar
    */
   readonly bar?: string;
-
 }
 
 /**
@@ -418,7 +405,6 @@ export interface MyStruct {
    * @schema MyStruct#NumberMap
    */
   readonly numberMap?: { [key: string]: number };
-
 }
 
 /**
@@ -462,7 +448,6 @@ export interface MyStruct {
    * @schema MyStruct#x-extension
    */
   readonly xExtension?: string;
-
 }
 
 /**
@@ -508,7 +493,6 @@ export interface MyStruct {
    * @schema MyStruct#With_UnderScore
    */
   readonly withUnderScore?: number;
-
 }
 
 /**
@@ -549,7 +533,6 @@ export interface MyStruct {
    * @schema MyStruct#Haver
    */
   readonly haver?: MyStructHaver;
-
 }
 
 /**
@@ -576,7 +559,6 @@ export interface ComplexType {
    * @schema ComplexType#Ref_to_union
    */
   readonly refToUnion?: IntOrString;
-
 }
 
 /**
