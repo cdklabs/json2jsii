@@ -1,7 +1,10 @@
-import { JSONSchema4, JSONSchema4Type, JSONSchema4TypeName } from 'json-schema';
+import { JSONSchema4, JSONSchema4Type } from 'json-schema';
+
+const PRIMITIVE_TYPES = new Set(['string', 'number', 'integer', 'boolean']);
 
 /**
  * Reduces multiple occurrences of the same type in oneOf/anyOf into a single type.
+ * Only reduces primitive types and $refs with matching references.
  * For enums, combines all enum values into a single enum.
  */
 export function reduceDuplicateTypesInUnion(def: JSONSchema4): JSONSchema4 {
@@ -15,10 +18,28 @@ export function reduceDuplicateTypesInUnion(def: JSONSchema4): JSONSchema4 {
     return def;
   }
 
-  // Group types by their type property
-  const typeGroups = new Map<JSONSchema4TypeName | JSONSchema4TypeName[], JSONSchema4[]>();
+  const reducedUnion: JSONSchema4[] = [];
+  const typeGroups = new Map<string, JSONSchema4[]>();
+
+  // First pass: Group types by their type property or $ref
   for (const item of union) {
-    const key = item.type || 'any';
+    // Handle $ref types
+    if (item.$ref) {
+      if (!typeGroups.has(item.$ref)) {
+        typeGroups.set(item.$ref, []);
+      }
+      typeGroups.get(item.$ref)!.push(item);
+      continue;
+    }
+
+    // Only group primitive types
+    const type = item.type;
+    if (!type || (typeof type === 'string' && !PRIMITIVE_TYPES.has(type))) {
+      reducedUnion.push(item);
+      continue;
+    }
+
+    const key = type.toString();
     if (!typeGroups.has(key)) {
       typeGroups.set(key, []);
     }
@@ -27,9 +48,8 @@ export function reduceDuplicateTypesInUnion(def: JSONSchema4): JSONSchema4 {
 
   // For each group, if there are multiple items:
   // - For enums: combine all enum values
-  // - For other types: keep only one instance
-  const reducedUnion: JSONSchema4[] = [];
-  for (const [type, items] of typeGroups.entries()) {
+  // - For primitive types or matching $refs: keep only one instance
+  for (const [_type, items] of typeGroups.entries()) {
     if (items.length === 1) {
       reducedUnion.push(items[0]);
       continue;
@@ -44,11 +64,11 @@ export function reduceDuplicateTypesInUnion(def: JSONSchema4): JSONSchema4 {
         }
       }
       reducedUnion.push({
-        type,
+        type: items[0].type, // Use the type from the first item
         enum: Array.from(combinedEnum),
       });
     } else {
-      // For non-enums, just keep the first one
+      // For primitive types or matching $refs, just keep the first one
       reducedUnion.push(items[0]);
     }
   }
