@@ -1593,6 +1593,84 @@ export function toJson_TestTypeFaultDelayPercentage(obj: TestTypeFaultDelayPerce
 "
 `;
 
+exports[`unions have an array of a type and the same type simplifyElementArrayUnions disabled 1`] = `
+"/**
+ * @schema fqn.of.TestType
+ */
+export interface TestType {
+  /**
+   * @schema fqn.of.TestType#foo
+   */
+  readonly foo?: any;
+
+  /**
+   * @schema fqn.of.TestType#bar
+   */
+  readonly bar?: any;
+
+  /**
+   * @schema fqn.of.TestType#baz
+   */
+  readonly baz?: any;
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'foo': obj.foo,
+    'bar': obj.bar,
+    'baz': obj.baz,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+"
+`;
+
+exports[`unions have an array of a type and the same type simplifyElementArrayUnions enabled 1`] = `
+"/**
+ * @schema fqn.of.TestType
+ */
+export interface TestType {
+  /**
+   * @schema fqn.of.TestType#foo
+   */
+  readonly foo?: string[];
+
+  /**
+   * @schema fqn.of.TestType#bar
+   */
+  readonly bar?: boolean[];
+
+  /**
+   * @schema fqn.of.TestType#baz
+   */
+  readonly baz?: number[];
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'foo': obj.foo?.map(y => y),
+    'bar': obj.bar?.map(y => y),
+    'baz': obj.baz?.map(y => y),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+"
+`;
+
 exports[`unions have enums in unions 1`] = `
 "/**
  * @schema fqn.of.TestType

@@ -49,6 +49,25 @@ export interface SchemaTransformations {
    * @default false
    */
   readonly convertNullUnionsToOptional?: boolean;
+  /**
+   * When true, unions (anyOf, oneOf) that contain an array type and its element type are simplified to just the array type.
+   *
+   * This is useful for jsii compatibility where such unions would be typed as 'any', but using just the array type
+   * provides better type safety while maintaining the same functionality since a single value can be wrapped in an array.
+   *
+   * ---
+   *
+   * **Considerations**: This changes the schema's type structure but maintains semantic equivalence since
+   * single values can be wrapped in arrays. The transformation assumes that treating a single value as a
+   * single-element array is acceptable for the use case.
+   *
+   * ----
+   *
+   * @example { anyOf: [{ type: 'array', items: { type: 'string' } }, { type: 'string' }] } -> { type: 'array', items: { type: 'string' } }
+   *
+   * @default false
+   */
+  readonly simplifyElementArrayUnions?: boolean;
 }
 
 export interface TypeGeneratorOptions {
@@ -253,9 +272,15 @@ export class TypeGenerator {
    */
   private transformTypes(def: JSONSchema4): JSONSchema4 {
     const transformers: Array<(def: JSONSchema4) => JSONSchema4> = [
+      // remove
       $T.reduceNullTypeArray, // legacy mandatory transformation
       this.maybeWith($T.reduceNullFromUnions, this.transformations.convertNullUnionsToOptional),
-      $T.reduceDuplicateTypesInUnion, // prevents invalid code
+
+      // merge
+      $T.reduceDuplicateTypesInUnion, // mandatory, as it prevents invalid code
+
+      // change
+      this.maybeWith($T.reduceArrayUnions, this.transformations.simplifyElementArrayUnions),
 
       // needs to run towards the end to have the most effect
       this.maybeWith($T.hoistSingletonUnions, this.transformations.hoistSingletonUnions),

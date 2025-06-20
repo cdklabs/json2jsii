@@ -169,6 +169,30 @@ describe('unions', () => {
       },
     },
   });
+
+  which.usingTransforms('simplifyElementArrayUnions')('have an array of a type and the same type', {
+    properties: {
+      foo: {
+        anyOf: [
+          { type: 'array', items: { type: 'string' } },
+          { type: 'string' },
+        ],
+      },
+      bar: {
+        anyOf: [
+          { type: 'array', items: { type: 'boolean' } },
+          { type: 'boolean' },
+        ],
+      },
+      baz: {
+        allOf: [
+          { type: 'array', items: { type: 'number' } },
+          { type: 'number' },
+        ],
+      },
+    },
+  });
+
 });
 
 
