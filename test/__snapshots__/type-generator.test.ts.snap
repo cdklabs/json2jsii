@@ -1581,6 +1581,106 @@ export class FqnOfTestTypeFoo {
 "
 `;
 
+exports[`unions have only one type hoistSingletonUnions disabled 1`] = `
+"/**
+ * @schema fqn.of.TestType
+ */
+export interface TestType {
+  /**
+   * @schema fqn.of.TestType#foo
+   */
+  readonly foo?: FqnOfTestTypeFoo;
+
+  /**
+   * @schema fqn.of.TestType#bar
+   */
+  readonly bar?: FqnOfTestTypeBar;
+
+  /**
+   * @schema fqn.of.TestType#baz
+   */
+  readonly baz?: any;
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'foo': obj.foo?.value,
+    'bar': obj.bar?.value,
+    'baz': obj.baz,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * @schema FqnOfTestTypeFoo
+ */
+export class FqnOfTestTypeFoo {
+  public static fromBoolean(value: boolean): FqnOfTestTypeFoo {
+    return new FqnOfTestTypeFoo(value);
+  }
+  private constructor(public readonly value: boolean) {
+  }
+}
+
+/**
+ * @schema FqnOfTestTypeBar
+ */
+export class FqnOfTestTypeBar {
+  public static fromString(value: string): FqnOfTestTypeBar {
+    return new FqnOfTestTypeBar(value);
+  }
+  private constructor(public readonly value: string) {
+  }
+}
+"
+`;
+
+exports[`unions have only one type hoistSingletonUnions enabled 1`] = `
+"/**
+ * @schema fqn.of.TestType
+ */
+export interface TestType {
+  /**
+   * @schema fqn.of.TestType#foo
+   */
+  readonly foo?: boolean;
+
+  /**
+   * @schema fqn.of.TestType#bar
+   */
+  readonly bar?: string;
+
+  /**
+   * @schema fqn.of.TestType#baz
+   */
+  readonly baz?: number;
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'foo': obj.foo,
+    'bar': obj.bar,
+    'baz': obj.baz,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+"
+`;
+
 exports[`unions include primitives 1`] = `
 "/**
  * @schema fqn.of.TestType
