@@ -1353,7 +1353,6 @@ export interface TestType {
    * @schema fqn.of.TestType#bar
    */
   readonly bar?: boolean;
-
 }
 
 /**
@@ -1515,7 +1514,6 @@ export interface TestType {
    * @schema fqn.of.TestType#foo
    */
   readonly foo?: FqnOfTestTypeFoo;
-
 }
 
 /**
@@ -1554,7 +1552,6 @@ export interface TestType {
    * @schema fqn.of.TestType#foo
    */
   readonly foo?: FqnOfTestTypeFoo;
-
 }
 
 /**
