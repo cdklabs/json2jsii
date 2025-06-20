@@ -1593,6 +1593,47 @@ export function toJson_TestTypeFaultDelayPercentage(obj: TestTypeFaultDelayPerce
 "
 `;
 
+exports[`unions have enums in unions 1`] = `
+"/**
+ * @schema fqn.of.TestType
+ */
+export interface TestType {
+  /**
+   * @schema fqn.of.TestType#foo
+   */
+  readonly foo?: FqnOfTestTypeFoo;
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'foo': obj.foo?.value,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * @schema FqnOfTestTypeFoo
+ */
+export class FqnOfTestTypeFoo {
+  public static fromString(value: string): FqnOfTestTypeFoo {
+    return new FqnOfTestTypeFoo(value);
+  }
+  public static fromNumber(value: number): FqnOfTestTypeFoo {
+    return new FqnOfTestTypeFoo(value);
+  }
+  private constructor(public readonly value: string | number) {
+  }
+}
+"
+`;
+
 exports[`unions have multiple enums 1`] = `
 "/**
  * @schema fqn.of.TestType
@@ -1769,6 +1810,23 @@ export function toJson_TestType(obj: TestType | undefined): Record<string, any> 
 "
 `;
 
+exports[`unions include primitive types through references 1`] = `
+"/**
+ * @schema fqn.of.TestType
+ */
+export class TestType {
+  public static fromString(value: string): TestType {
+    return new TestType(value);
+  }
+  public static fromNumber(value: number): TestType {
+    return new TestType(value);
+  }
+  private constructor(public readonly value: string | number) {
+  }
+}
+"
+`;
+
 exports[`unions include primitives 1`] = `
 "/**
  * @schema fqn.of.TestType
@@ -1785,3 +1843,5 @@ export class TestType {
 }
 "
 `;
+
+exports[`unions reject non-primitive types through references 1`] = `""`;

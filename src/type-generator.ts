@@ -472,11 +472,14 @@ export class TypeGenerator {
   private tryEmitUnion(typeName: string, def: JSONSchema4, fqn: string): EmittedType | undefined {
     const options = new Array<string>();
     for (const option of def.oneOf || def.anyOf || []) {
-      if (!supportedUnionOptionType(option.type)) {
+      // If it's a $ref, resolve it first
+      const resolvedOption = option.$ref ? this.resolveReference(option) : option;
+
+      if (!supportedUnionOptionType(resolvedOption.type)) {
         return undefined;
       }
 
-      const type = option.type === 'integer' ? 'number' : option.type;
+      const type = resolvedOption.type === 'integer' ? 'number' : resolvedOption.type;
       options.push(type);
     }
 
@@ -699,7 +702,7 @@ export class TypeGenerator {
       throw new Error('expecting a local reference');
     }
 
-    const lookup = ref.substr(DEFINITIONS_PREFIX.length);
+    const lookup = ref.substring(DEFINITIONS_PREFIX.length);
     const found = this.definitions[lookup];
     if (!found) {
       throw new Error(`unable to find a definition for the $ref "${lookup}"`);
@@ -726,7 +729,7 @@ export class TypeGenerator {
 }
 
 function supportedUnionOptionType(type: any): type is string {
-  return type && (typeof(type) === 'string' && PRIMITIVE_TYPES.includes(type));
+  return type && typeof(type) === 'string' && PRIMITIVE_TYPES.includes(type);
 }
 
 function pascalCase(s: string): string {
