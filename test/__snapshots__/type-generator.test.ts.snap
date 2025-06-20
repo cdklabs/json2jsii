@@ -655,7 +655,6 @@ export interface Foo {
    * @schema Foo#nested
    */
   readonly nested?: FooNested;
-
 }
 
 /**
@@ -682,7 +681,6 @@ export interface FooNested {
    * @schema FooNested#value
    */
   readonly value?: number;
-
 }
 
 /**
