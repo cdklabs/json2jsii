@@ -112,6 +112,17 @@ describe('unions', () => {
       },
     },
   });
+
+  which.usingTransforms('convertNullUnionsToOptional')('are tuples with a null type', {
+    properties: {
+      foo: {
+        anyOf: [{ type: 'null' }, { type: 'boolean' }],
+      },
+      bar: {
+        oneOf: [{ type: 'null' }, { type: 'boolean' }],
+      },
+    },
+  });
 });
 
 
