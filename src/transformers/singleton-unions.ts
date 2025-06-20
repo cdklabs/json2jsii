@@ -1,4 +1,5 @@
 import { JSONSchema4 } from 'json-schema';
+import { removeUnions, safeSelectUnion } from './util';
 
 /**
  * Schemas may define a type as a union of types with one of the types being `null`.
@@ -10,27 +11,15 @@ export function hoistSingletonUnions(def: JSONSchema4): JSONSchema4 {
     return def;
   }
 
-  // if we have more than one of anyOf, oneOf, or allOf, behavior is undefined and we can't hoist up
-  const hasAnyOf = Boolean(def.anyOf);
-  const hasOneOf = Boolean(def.oneOf);
-  const hasAllOf = Boolean(def.allOf);
-  if ([hasAnyOf, hasOneOf, hasAllOf].filter(value => value === true).length > 1) {
-    return def;
-  }
-
-  // select the union in question
-  const union = def.anyOf || def.oneOf || def.allOf;
-
-  // if the union is not an array or not a singleton, we can't hoist up
-  if (!Array.isArray(union) || union.length > 1) {
+  // cannot safely select a union or the union is not a singleton => we can't hoist up
+  const union = safeSelectUnion(def);
+  if (!union || union.length > 1) {
     return def;
   }
 
   // hoist then the only union element up
   const hoisted = union[0];
-  delete def.anyOf;
-  delete def.oneOf;
-  delete def.allOf;
+  removeUnions(def);
   delete def.type;
   Object.assign(def, hoisted);
   return def;
