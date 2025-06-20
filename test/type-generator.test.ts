@@ -14,6 +14,35 @@ describe('unions', () => {
     ],
   });
 
+  which('include primitive types through references', {
+    oneOf: [
+      { type: 'string' },
+      { $ref: '#/definitions/NumberType' },
+    ],
+  }, {
+    definitions: {
+      NumberType: {
+        type: 'number',
+      },
+    },
+  });
+
+  which('reject non-primitive types through references', {
+    oneOf: [
+      { type: 'string' },
+      { $ref: '#/definitions/ObjectType' },
+    ],
+  }, {
+    definitions: {
+      ObjectType: {
+        type: 'object',
+        properties: {
+          foo: { type: 'string' },
+        },
+      },
+    },
+  });
+
   which('constraints are ignored for objects', {
     description: 'An ordered list of route rules for HTTP traffic.',
     type: 'array',
@@ -73,6 +102,23 @@ describe('unions', () => {
         oneOf: [
           { type: 'boolean' },
           { type: 'boolean' },
+        ],
+      },
+    },
+  });
+
+  which('have enums in unions', {
+    properties: {
+      foo: {
+        oneOf: [
+          {
+            type: 'string',
+            enum: ['A', 'B', 'C'],
+          },
+          {
+            type: 'number',
+            enum: [1, 2, 3],
+          },
         ],
       },
     },
