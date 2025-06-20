@@ -8,7 +8,7 @@ export class ToJsonFunction {
 
   private readonly fields: Record<string, string> = {};
 
-  constructor(private readonly baseType: string) {
+  constructor(private readonly baseType: string, private readonly internal: boolean = false) {
     this.functionName = `toJson_${baseType}`;
   }
 
@@ -35,6 +35,9 @@ export class ToJsonFunction {
     code.line();
     code.line('/**');
     code.line(` * Converts an object of type '${this.baseType}' to JSON representation.`);
+    if (this.internal) {
+      code.line(' * @internal');
+    }
     code.line(' */');
     code.line(`/* eslint-disable ${disabledEslintRules.join(', ')} */`);
     code.openBlock(`export function ${this.functionName}(obj: ${this.baseType} | undefined): Record<string, any> | undefined`);

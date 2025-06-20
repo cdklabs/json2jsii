@@ -658,6 +658,67 @@ export interface Foo {
 "
 `;
 
+exports[`if "toJsonInternal" is enabled, toJson functions are marked as @internal 1`] = `
+"/**
+ * @schema Foo
+ */
+export interface Foo {
+  /**
+   * @schema Foo#bar
+   */
+  readonly bar?: string;
+
+  /**
+   * @schema Foo#nested
+   */
+  readonly nested?: FooNested;
+
+}
+
+/**
+ * Converts an object of type 'Foo' to JSON representation.
+ * @internal
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_Foo(obj: Foo | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'bar': obj.bar,
+    'nested': toJson_FooNested(obj.nested),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * @schema FooNested
+ */
+export interface FooNested {
+  /**
+   * @schema FooNested#value
+   */
+  readonly value?: number;
+
+}
+
+/**
+ * Converts an object of type 'FooNested' to JSON representation.
+ * @internal
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_FooNested(obj: FooNested | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'value': obj.value,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+"
+`;
+
 exports[`primitives 1`] = `
 "/**
  * @schema fqn.of.TestType
