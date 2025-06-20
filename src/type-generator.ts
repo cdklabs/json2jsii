@@ -4,13 +4,35 @@ import { snakeCase } from 'snake-case';
 import { NAMED_SYMBOLS } from './allowlist';
 import { Code } from './code';
 import { ToJsonFunction } from './tojson';
-import { reduceNullTypeArray } from './transfomers/null-type-array';
-import { reduceDuplicateTypesInUnion } from './transfomers/union-duplicates';
-
+import * as $T from './transformers';
 
 const PRIMITIVE_TYPES = ['string', 'number', 'integer', 'boolean'];
 const DEFINITIONS_PREFIX = '#/definitions/';
 const DEFAULT_RENDER_TYPE_NAME = (s: string) => s.split('.').map(x => pascalCase(x)).join('');
+
+/**
+ * Available opt-in schema transformations
+ */
+export interface SchemaTransformations {
+  /**
+   * When true, unions (anyOf, oneOf, allOf) that contain only a single element are hoisted to the top level of the schema.
+   *
+   * This transformation runs late in the transformation stack, to ensure maximal effect.
+   *
+   * ---
+   *
+   * **Considerations**: A future addition to the union will incur a breaking change in the generated code.
+   * Consider if the schema author might have used a union type to convey their future intentions.
+   * However the same risk applies for any schema going from a single type to a union type.
+   *
+   * ----
+   *
+   * @example { anyOf: [{ type: 'string' }] } -> { type: 'string' }
+   *
+   * @default false
+   */
+  readonly hoistSingletonUnions?: boolean;
+}
 
 export interface TypeGeneratorOptions {
   /**
@@ -39,7 +61,7 @@ export interface TypeGeneratorOptions {
   readonly toJson?: boolean;
 
   /**
-   * When true, generated `toJson_Xyz` functions will be marked with `@internal` tag.
+   * When true, generated `toJson_Xyz` functions will be marked with as internal.
    * This is useful when you want to hide these functions from public API documentation.
    *
    * @default false
@@ -72,6 +94,18 @@ export interface TypeGeneratorOptions {
    * @default - Only dot namespacing is handled by default. Elements between dots are pascal cased and concatenated.
    */
   readonly renderTypeName?: (def: string) => string;
+
+  /**
+   * Schemas often define a type in ways that make sense for a schema, but may produce convoluted typescript/jsii code.
+   * In many cases it is possible to transform these definitions into a semantically identically but simpler version,
+   * which will produce "nicer" code.
+   *
+   * These transformations are often not backwards compatible or at least carry a risk of incurring breaking changes in future.
+   * Therefore they are all opt-in.
+   *
+   * @default - no opt-in transformations are applied
+   */
+  readonly transformations?: SchemaTransformations;
 }
 
 /**
@@ -132,6 +166,7 @@ export class TypeGenerator {
   private readonly toJsonInternal: boolean;
   private readonly sanitizeEnums: boolean;
   private readonly renderTypeName: (def: string) => string;
+  private readonly transformations: SchemaTransformations;
 
   /**
    *
@@ -145,6 +180,7 @@ export class TypeGenerator {
     this.toJsonInternal = options.toJsonInternal ?? false;
     this.sanitizeEnums = options.sanitizeEnums ?? false;
     this.renderTypeName = options.renderTypeName ?? DEFAULT_RENDER_TYPE_NAME;
+    this.transformations = options.transformations ?? {};
 
     for (const [typeName, def] of Object.entries(options.definitions ?? {})) {
       this.addDefinition(typeName, def);
@@ -200,13 +236,22 @@ export class TypeGenerator {
    */
   private transformTypes(def: JSONSchema4): JSONSchema4 {
     const transformers: Array<(def: JSONSchema4) => JSONSchema4> = [
-      reduceNullTypeArray,
-      reduceDuplicateTypesInUnion,
+      $T.reduceNullTypeArray, // legacy mandatory transformation
+      $T.reduceDuplicateTypesInUnion, // prevents invalid code
+
+      // needs to run towards the end to have the most effect
+      this.maybeWith($T.hoistSingletonUnions, this.transformations.hoistSingletonUnions),
     ];
 
-    // const deepCopiedDef = JSON.parse(JSON.stringify(def));
-    const deepCopiedDef = def;
+    const deepCopiedDef = JSON.parse(JSON.stringify(def));
     return transformers.reduce((input, transform) => transform(input), deepCopiedDef);
+  }
+
+  /**
+   * Helper to conditionally run transformations
+   */
+  private maybeWith(transformation: (def: JSONSchema4) => JSONSchema4, run: boolean = false) {
+    return run ? transformation : (def: JSONSchema4) => def;
   }
 
   /**
@@ -231,7 +276,7 @@ export class TypeGenerator {
     def = this.transformTypes(def);
 
     if (def.enum && this.sanitizeEnums) {
-      // santizie enums from liternal 'null' because they prevent emitting the enum
+      // sanitize enums from literal 'null' because they prevent emitting the enum
       // and instead cause a fallback to 'string'. we assume the optionality of the enum
       // covers the 'null' value.
       def.enum = def.enum.filter(d => d !== null);
@@ -419,7 +464,7 @@ export class TypeGenerator {
 
     const emitted: EmittedType = { type: typeName, toJson: x => `${x}?.value` };
 
-    this.addCode(typeName, code => {
+    this.emitCustomType(typeName, code => {
       this.emitDescription(code, fqn, def.description);
 
       code.openBlock(`export class ${typeName}`);
@@ -427,7 +472,7 @@ export class TypeGenerator {
 
       for (const type of options) {
         possibleTypes.push(type);
-        const methodName = 'from' + type[0].toUpperCase() + type.substr(1);
+        const methodName = 'from' + type[0].toUpperCase() + type.substring(1);
         code.openBlock(`public static ${methodName}(value: ${type}): ${typeName}`);
         code.line(`return new ${typeName}(value);`);
         code.closeBlock();

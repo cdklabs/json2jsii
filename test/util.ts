@@ -18,6 +18,7 @@ export async function generate(gen: TypeGenerator) {
 }
 
 async function mkdtemp(closure: (dir: string) => Promise<void>) {
-  const workdir = await fs.mkdtemp(path.join(os.tmpdir(), 'cdk8s-'));
+  const workdir = await fs.mkdtemp(path.join(os.tmpdir(), 'json2jsii-'));
   await closure(workdir);
+  await fs.rm(workdir, { recursive: true, force: true });
 }

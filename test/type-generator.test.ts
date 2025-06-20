@@ -1,8 +1,9 @@
 import { JSONSchema4 } from 'json-schema';
 import { generate } from './util';
 import { TypeGenerator } from '../src';
+import { which } from './which';
 
-jest.setTimeout(3 * 60_000); // 1min
+jest.setTimeout(3 * 60_000); // 3min
 
 describe('unions', () => {
 
@@ -77,7 +78,6 @@ describe('unions', () => {
     },
   });
 
-
   which('have multiple enums', {
     properties: {
       foo: {
@@ -95,6 +95,20 @@ describe('unions', () => {
             ],
           },
         ],
+      },
+    },
+  });
+
+  which.usingTransforms('hoistSingletonUnions')('have only one type', {
+    properties: {
+      foo: {
+        anyOf: [{ type: 'boolean' }],
+      },
+      bar: {
+        oneOf: [{ type: 'string' }],
+      },
+      baz: {
+        allOf: [{ type: 'number' }],
       },
     },
   });
@@ -645,13 +659,6 @@ test('shared namespace references', async () => {
   expect(code).toMatchSnapshot();
 });
 
-function which(name: string, schema: JSONSchema4, definitions?: JSONSchema4) {
-  test(name, async () => {
-    const gen = new TypeGenerator(definitions);
-    gen.emitType('TestType', schema, 'fqn.of.TestType');
-    expect(await generate(gen)).toMatchSnapshot();
-  });
-}
 
 test('dedup properties with different casing', async () => {
 
