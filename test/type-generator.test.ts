@@ -66,6 +66,38 @@ describe('unions', () => {
     },
   });
 
+  which('have multiple of the same type', {
+    properties: {
+      foo: {
+        oneOf: [
+          { type: 'boolean' },
+          { type: 'boolean' },
+        ],
+      },
+    },
+  });
+
+
+  which('have multiple enums', {
+    properties: {
+      foo: {
+        oneOf: [
+          {
+            type: 'string',
+            enum: [
+              'tab',
+            ],
+          },
+          {
+            type: 'string',
+            enum: [
+              'space',
+            ],
+          },
+        ],
+      },
+    },
+  });
 });
 
 
@@ -453,20 +485,18 @@ test('if "toJsonInternal" is enabled, toJson functions are marked as @internal',
   expect(await generate(gen)).toMatchSnapshot();
 });
 
-test('type can be an array with null and a single non null type', async () => {
-
-  const schema: JSONSchema4 = {
+describe('type arrays', () => {
+  which('have null and a single non null type', {
     properties: {
       bar: { type: ['null', 'boolean'] },
     },
-  };
-
-  const gen = TypeGenerator.forStruct('Foo', schema, {
-    toJson: false,
   });
 
-  expect(await generate(gen)).toMatchSnapshot();
-
+  which('have a single type', {
+    properties: {
+      bar: { type: ['boolean'] },
+    },
+  });
 });
 
 test('additionalProperties when type is defined as array', async () => {
