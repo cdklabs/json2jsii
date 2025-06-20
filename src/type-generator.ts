@@ -32,6 +32,23 @@ export interface SchemaTransformations {
    * @default false
    */
   readonly hoistSingletonUnions?: boolean;
+  /**
+   * When true, unions (anyOf, oneOf) that contain a null-type are converted into an optional type with the null-type removed from the union.
+   *
+   * Combining with `hoistSingletonUnions` can significantly reduce the amount of union types that aren't really unions.
+   *
+   * ---
+   *
+   * **Considerations**: Optional properties and `null` values aren't strictly the same in JavaScript.
+   * Consider if the difference is functional or if the schema uses this pattern to denoted optional types.
+   *
+   * ----
+   *
+   * @example { required: true, anyOf: [{ type: 'null' }, { type: 'string' }] } -> { required: false, anyOf: [{ type: 'string' }] }
+   *
+   * @default false
+   */
+  readonly convertNullUnionsToOptional?: boolean;
 }
 
 export interface TypeGeneratorOptions {
@@ -237,6 +254,7 @@ export class TypeGenerator {
   private transformTypes(def: JSONSchema4): JSONSchema4 {
     const transformers: Array<(def: JSONSchema4) => JSONSchema4> = [
       $T.reduceNullTypeArray, // legacy mandatory transformation
+      this.maybeWith($T.reduceNullFromUnions, this.transformations.convertNullUnionsToOptional),
       $T.reduceDuplicateTypesInUnion, // prevents invalid code
 
       // needs to run towards the end to have the most effect
