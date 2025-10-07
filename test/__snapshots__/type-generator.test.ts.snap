@@ -1237,6 +1237,57 @@ export function toJson_MyType(obj: MyType | undefined): Record<string, any> | un
 "
 `;
 
+exports[`structs supports $defs references 1`] = `
+"/**
+ * @schema fqn.of.TestType
+ */
+export interface TestType {
+  /**
+   * @schema fqn.of.TestType#other
+   */
+  readonly other?: Other;
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'other': toJson_Other(obj.other),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * @schema Other
+ */
+export interface Other {
+  /**
+   * @schema Other#stringValue
+   */
+  readonly stringValue: string;
+}
+
+/**
+ * Converts an object of type 'Other' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_Other(obj: Other | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'stringValue': obj.stringValue,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+"
+`;
+
 exports[`type aliases alias to a custom type 1`] = `
 "// this is NewType
 

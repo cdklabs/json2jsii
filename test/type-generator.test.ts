@@ -231,6 +231,25 @@ describe('structs', () => {
     },
   });
 
+  which('supports $defs references', {
+    type: 'object',
+    properties: {
+      other: {
+        $ref: '#/$defs/Other',
+      },
+    },
+  }, {
+    definitions: {
+      Other: {
+        type: 'object',
+        properties: {
+          stringValue: { type: 'string' },
+        },
+        required: ['stringValue'],
+      },
+    },
+  });
+
   which('references itself', {
     type: 'object',
     properties: {
