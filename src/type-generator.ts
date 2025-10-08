@@ -7,7 +7,8 @@ import { ToJsonFunction } from './tojson';
 import * as $T from './transformers';
 
 const PRIMITIVE_TYPES = ['string', 'number', 'integer', 'boolean'];
-const DEFINITIONS_PREFIX = '#/definitions/';
+const DEFINITIONS_LEGACY_PREFIX = '#/definitions/';
+const DEFINITIONS_PREFIX = '#/$defs/';
 const DEFAULT_RENDER_TYPE_NAME = (s: string) => s.split('.').map(x => pascalCase(x)).join('');
 
 /**
@@ -331,7 +332,9 @@ export class TypeGenerator {
       throw new Error(`${typeName} must be normalized before calling emitType`);
     }
 
-    if (structFqn.startsWith(DEFINITIONS_PREFIX)) {
+    if (structFqn.startsWith(DEFINITIONS_LEGACY_PREFIX)) {
+      structFqn = structFqn.substring(DEFINITIONS_LEGACY_PREFIX.length);
+    } else if (structFqn.startsWith(DEFINITIONS_PREFIX)) {
       structFqn = structFqn.substring(DEFINITIONS_PREFIX.length);
     }
 
@@ -691,8 +694,7 @@ export class TypeGenerator {
   }
 
   private typeForRef(def: JSONSchema4): EmittedType {
-    const prefix = '#/definitions/';
-    if (!def.$ref || !def.$ref.startsWith(prefix)) {
+    if (!def.$ref || !isDefinitionsRef(def.$ref)) {
       throw new Error(`invalid $ref ${JSON.stringify(def)}`);
     }
 
@@ -700,7 +702,7 @@ export class TypeGenerator {
       return { type: 'any', toJson: x => x };
     }
 
-    const typeName = TypeGenerator.normalizeTypeName(this.renderTypeName(def.$ref.substring(prefix.length)));
+    const typeName = TypeGenerator.normalizeTypeName(this.renderTypeName(extractDefinitionName(def.$ref)));
 
     // if we already emitted a type with this type name, just return it
     const emitted = this.emittedTypes[typeName];
@@ -723,11 +725,11 @@ export class TypeGenerator {
 
   private resolveReference(def: JSONSchema4): JSONSchema4 {
     const ref = def.$ref;
-    if (!ref || !ref.startsWith(DEFINITIONS_PREFIX)) {
+    if (!ref || !isDefinitionsRef(ref)) {
       throw new Error('expecting a local reference');
     }
 
-    const lookup = ref.substring(DEFINITIONS_PREFIX.length);
+    const lookup = extractDefinitionName(ref);
     const found = this.definitions[lookup];
     if (!found) {
       throw new Error(`unable to find a definition for the $ref "${lookup}"`);
@@ -831,6 +833,19 @@ function testRegexAt(regex: RegExp, input: string, index: number): boolean {
   re.lastIndex = index;
 
   return re.test(input);
+}
+
+function isDefinitionsRef(ref: string): boolean {
+  return ref.startsWith(DEFINITIONS_LEGACY_PREFIX) || ref.startsWith(DEFINITIONS_PREFIX);
+}
+
+function extractDefinitionName(ref: string): string {
+  if (ref.startsWith(DEFINITIONS_LEGACY_PREFIX)) {
+    return ref.substring(DEFINITIONS_LEGACY_PREFIX.length);
+  } else if (ref.startsWith(DEFINITIONS_PREFIX)) {
+    return ref.substring(DEFINITIONS_PREFIX.length);
+  }
+  throw new Error(`invalid definitions ref: ${ref}`);
 }
 
 type TypeEmitter = (code: Code) => EmittedType;
