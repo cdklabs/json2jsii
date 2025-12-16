@@ -333,6 +333,19 @@ describe('structs', () => {
     },
   });
 
+  which('converts field names with slashes correctly', {
+    required: [
+      'kubernetes/io',
+    ],
+    type: 'object',
+    properties: {
+      'kubernetes/io': {
+        description: '',
+        type: 'string',
+      },
+    },
+  });
+
   which('if we have "properties" and "type" is omitted, it is considered a struct', {
     properties: {
       foo: {
