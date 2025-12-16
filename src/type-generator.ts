@@ -189,7 +189,7 @@ export class TypeGenerator {
    * struct and all other types.
    */
   public static forStruct(structName: string, schema: JSONSchema4, options: TypeGeneratorOptions = {}) {
-    const gen = new TypeGenerator({ definitions: schema.definitions, ...options });
+    const gen = new TypeGenerator({ definitions: { ...schema.definitions, ...schema.$defs }, ...options });
     gen.emitType(structName, schema);
     return gen;
   }
