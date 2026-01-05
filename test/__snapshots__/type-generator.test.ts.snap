@@ -9,7 +9,6 @@ export interface Foo {
    * @schema Foo#foo
    */
   readonly foo?: { [key: string]: string };
-
 }
 "
 `;
@@ -43,13 +42,12 @@ export interface TestType {
    * @schema fqn.of.TestType#camel-case-5
    */
   readonly camelCase5?: string;
-
 }
 
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -62,7 +60,7 @@ export function toJson_TestType(obj: TestType | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 "
 `;
 
@@ -75,13 +73,12 @@ export interface Bar {
    * @schema Bar#prop
    */
   readonly prop?: V1beta1Foo;
-
 }
 
 /**
  * Converts an object of type 'Bar' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_Bar(obj: Bar | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -90,7 +87,7 @@ export function toJson_Bar(obj: Bar | undefined): Record<string, any> | undefine
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * @schema io.k8s.v1beta1.Foo
@@ -100,13 +97,12 @@ export interface V1beta1Foo {
    * @schema io.k8s.v1beta1.Foo#props
    */
   readonly props?: number;
-
 }
 
 /**
  * Converts an object of type 'V1beta1Foo' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_V1beta1Foo(obj: V1beta1Foo | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -115,7 +111,35 @@ export function toJson_V1beta1Foo(obj: V1beta1Foo | undefined): Record<string, a
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+"
+`;
+
+exports[`dedup properties with different casing 1`] = `
+"/**
+ * @schema Foo
+ */
+export interface Foo {
+  /**
+   * @schema Foo#pod_priority_class_name
+   */
+  readonly podPriorityClassName?: string;
+
+}
+
+/**
+ * Converts an object of type 'Foo' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_Foo(obj: Foo | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'pod_priority_class_name': obj.podPriorityClassName,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 "
 `;
 
@@ -130,13 +154,12 @@ export interface TestType {
    * @schema fqn.of.TestType#field
    */
   readonly field?: string;
-
 }
 
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -145,7 +168,7 @@ export function toJson_TestType(obj: TestType | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 "
 `;
 
@@ -158,13 +181,12 @@ export interface TestType {
    * @schema fqn.of.TestType#field
    */
   readonly field?: boolean;
-
 }
 
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -173,7 +195,7 @@ export function toJson_TestType(obj: TestType | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 "
 `;
 
@@ -188,13 +210,12 @@ export interface TestType {
    * @schema fqn.of.TestType#field
    */
   readonly field?: string;
-
 }
 
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -203,7 +224,7 @@ export function toJson_TestType(obj: TestType | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 "
 `;
 
@@ -216,7 +237,6 @@ export interface Foo {
    * @schema Foo#foo
    */
   readonly foo?: FooFoo;
-
 }
 
 /**
@@ -240,13 +260,12 @@ export interface TestType {
    * @schema fqn.of.TestType#Chars
    */
   readonly chars?: FqnOfTestTypeChars;
-
 }
 
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -255,7 +274,7 @@ export function toJson_TestType(obj: TestType | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * @schema FqnOfTestTypeChars
@@ -322,13 +341,12 @@ export interface TestType {
    * @schema fqn.of.TestType#Days
    */
   readonly days?: FqnOfTestTypeDays;
-
 }
 
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -337,7 +355,7 @@ export function toJson_TestType(obj: TestType | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * @schema FqnOfTestTypeDays
@@ -362,13 +380,12 @@ export interface TestType {
    * @schema fqn.of.TestType#Percentiles
    */
   readonly percentiles?: FqnOfTestTypePercentiles;
-
 }
 
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -377,7 +394,7 @@ export function toJson_TestType(obj: TestType | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * @schema FqnOfTestTypePercentiles
@@ -402,13 +419,12 @@ export interface TestType {
    * @schema fqn.of.TestType#Same
    */
   readonly same?: FqnOfTestTypeSame;
-
 }
 
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -417,7 +433,7 @@ export function toJson_TestType(obj: TestType | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * @schema FqnOfTestTypeSame
@@ -455,13 +471,12 @@ export interface TestType {
    * @schema fqn.of.TestType#child
    */
   readonly child?: FqnOfTestTypeChild;
-
 }
 
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -471,7 +486,7 @@ export function toJson_TestType(obj: TestType | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * description of first enum
@@ -499,13 +514,12 @@ export interface FqnOfTestTypeChild {
    * @schema FqnOfTestTypeChild#secondEnum
    */
   readonly secondEnum?: FqnOfTestTypeChildSecondEnum;
-
 }
 
 /**
  * Converts an object of type 'FqnOfTestTypeChild' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_FqnOfTestTypeChild(obj: FqnOfTestTypeChild | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -514,7 +528,7 @@ export function toJson_FqnOfTestTypeChild(obj: FqnOfTestTypeChild | undefined): 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * description of second enum
@@ -543,13 +557,12 @@ export interface TestType {
    * @schema fqn.of.TestType#Timeframe
    */
   readonly timeframe?: FqnOfTestTypeTimeframe;
-
 }
 
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -558,7 +571,7 @@ export function toJson_TestType(obj: TestType | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * The SLO time window options. Allowed enum values: 7d,30d,90d
@@ -585,13 +598,12 @@ export interface TestType {
    * @schema fqn.of.TestType#Color
    */
   readonly color?: FqnOfTestTypeColor;
-
 }
 
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -600,7 +612,7 @@ export function toJson_TestType(obj: TestType | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * @schema FqnOfTestTypeColor
@@ -625,8 +637,66 @@ export interface Foo {
    * @schema Foo#bar
    */
   readonly bar?: string;
-
 }
+"
+`;
+
+exports[`if "toJsonInternal" is enabled, toJson functions are marked as @internal 1`] = `
+"/**
+ * @schema Foo
+ */
+export interface Foo {
+  /**
+   * @schema Foo#bar
+   */
+  readonly bar?: string;
+
+  /**
+   * @schema Foo#nested
+   */
+  readonly nested?: FooNested;
+}
+
+/**
+ * Converts an object of type 'Foo' to JSON representation.
+ * @internal
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_Foo(obj: Foo | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'bar': obj.bar,
+    'nested': toJson_FooNested(obj.nested),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * @schema FooNested
+ */
+export interface FooNested {
+  /**
+   * @schema FooNested#value
+   */
+  readonly value?: number;
+}
+
+/**
+ * Converts an object of type 'FooNested' to JSON representation.
+ * @internal
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_FooNested(obj: FooNested | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'value': obj.value,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 "
 `;
 
@@ -674,13 +744,12 @@ export interface TestType {
    * @schema fqn.of.TestType#integerValue
    */
   readonly integerValue?: number;
-
 }
 
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -696,7 +765,7 @@ export function toJson_TestType(obj: TestType | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 "
 `;
 
@@ -709,7 +778,6 @@ export interface Foo {
    * @schema Foo#bar
    */
   readonly bar?: string;
-
 }
 "
 `;
@@ -723,7 +791,6 @@ export interface Foo {
    * @schema Foo#foo
    */
   readonly foo?: FooFoo;
-
 }
 
 /**
@@ -745,7 +812,6 @@ export interface Foo {
    * @schema Foo#foo
    */
   readonly foo?: FooFoo;
-
 }
 
 /**
@@ -767,13 +833,12 @@ export interface Bar1 {
    * @schema Bar1#prop
    */
   readonly prop?: IoK8Sv1Beta1Foo;
-
 }
 
 /**
  * Converts an object of type 'Bar1' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_Bar1(obj: Bar1 | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -782,7 +847,7 @@ export function toJson_Bar1(obj: Bar1 | undefined): Record<string, any> | undefi
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * @schema Bar2
@@ -792,13 +857,12 @@ export interface Bar2 {
    * @schema Bar2#prop
    */
   readonly prop?: IoK8Sv1Foo;
-
 }
 
 /**
  * Converts an object of type 'Bar2' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_Bar2(obj: Bar2 | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -807,7 +871,7 @@ export function toJson_Bar2(obj: Bar2 | undefined): Record<string, any> | undefi
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * @schema io.k8s.v1beta1.Foo
@@ -817,13 +881,12 @@ export interface IoK8Sv1Beta1Foo {
    * @schema io.k8s.v1beta1.Foo#props
    */
   readonly props?: number;
-
 }
 
 /**
  * Converts an object of type 'IoK8Sv1Beta1Foo' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_IoK8Sv1Beta1Foo(obj: IoK8Sv1Beta1Foo | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -832,7 +895,7 @@ export function toJson_IoK8Sv1Beta1Foo(obj: IoK8Sv1Beta1Foo | undefined): Record
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * @schema io.k8s.v1.Foo
@@ -842,13 +905,12 @@ export interface IoK8Sv1Foo {
    * @schema io.k8s.v1.Foo#props
    */
   readonly props?: string;
-
 }
 
 /**
  * Converts an object of type 'IoK8Sv1Foo' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_IoK8Sv1Foo(obj: IoK8Sv1Foo | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -857,7 +919,7 @@ export function toJson_IoK8Sv1Foo(obj: IoK8Sv1Foo | undefined): Record<string, a
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 "
 `;
 
@@ -880,13 +942,12 @@ export interface TestType {
    * @schema fqn.of.TestType#arrayShouldBeOptional
    */
   readonly arrayShouldBeOptional?: ItemType[];
-
 }
 
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -897,7 +958,7 @@ export function toJson_TestType(obj: TestType | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * @schema ItemType
@@ -907,13 +968,12 @@ export interface ItemType {
    * @schema ItemType#requiredField
    */
   readonly requiredField: string;
-
 }
 
 /**
  * Converts an object of type 'ItemType' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_ItemType(obj: ItemType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -922,7 +982,7 @@ export function toJson_ItemType(obj: ItemType | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 "
 `;
 
@@ -963,13 +1023,12 @@ export interface TestType {
    * @schema fqn.of.TestType#other
    */
   readonly other?: Other;
-
 }
 
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -978,7 +1037,7 @@ export function toJson_TestType(obj: TestType | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * @schema Other
@@ -988,13 +1047,12 @@ export interface Other {
    * @schema Other#stringValue
    */
   readonly stringValue: string;
-
 }
 
 /**
  * Converts an object of type 'Other' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_Other(obj: Other | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -1003,7 +1061,7 @@ export function toJson_Other(obj: Other | undefined): Record<string, any> | unde
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 "
 `;
 
@@ -1036,13 +1094,12 @@ export interface TestType {
    * @schema fqn.of.TestType#arrayOfString
    */
   readonly arrayOfString?: string[];
-
 }
 
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -1055,7 +1112,7 @@ export function toJson_TestType(obj: TestType | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 "
 `;
 
@@ -1068,13 +1125,12 @@ export interface TestType {
    * @schema fqn.of.TestType#foo
    */
   readonly foo?: string;
-
 }
 
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -1083,7 +1139,7 @@ export function toJson_TestType(obj: TestType | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 "
 `;
 
@@ -1135,13 +1191,12 @@ export interface TestType {
    * @schema fqn.of.TestType#NonCamelCaseRequired
    */
   readonly nonCamelCaseRequired: string;
-
 }
 
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -1155,7 +1210,7 @@ export function toJson_TestType(obj: TestType | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 "
 `;
 
@@ -1168,13 +1223,12 @@ export interface TestType {
    * @schema fqn.of.TestType#entrypoint
    */
   readonly entrypoint?: MyType;
-
 }
 
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -1183,7 +1237,7 @@ export function toJson_TestType(obj: TestType | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * @schema MyType
@@ -1193,13 +1247,12 @@ export interface MyType {
    * @schema MyType#self
    */
   readonly self?: MyType;
-
 }
 
 /**
  * Converts an object of type 'MyType' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_MyType(obj: MyType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -1208,7 +1261,58 @@ export function toJson_MyType(obj: MyType | undefined): Record<string, any> | un
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+"
+`;
+
+exports[`structs supports $defs references 1`] = `
+"/**
+ * @schema fqn.of.TestType
+ */
+export interface TestType {
+  /**
+   * @schema fqn.of.TestType#other
+   */
+  readonly other?: Other;
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'other': toJson_Other(obj.other),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * @schema Other
+ */
+export interface Other {
+  /**
+   * @schema Other#stringValue
+   */
+  readonly stringValue: string;
+}
+
+/**
+ * Converts an object of type 'Other' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_Other(obj: Other | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'stringValue': obj.stringValue,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 "
 `;
 
@@ -1223,13 +1327,12 @@ export interface TypeB {
    * @schema TypeB#refToTypeA
    */
   readonly refToTypeA?: NewType;
-
 }
 
 /**
  * Converts an object of type 'TypeB' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_TypeB(obj: TypeB | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -1238,7 +1341,7 @@ export function toJson_TypeB(obj: TypeB | undefined): Record<string, any> | unde
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 "
 `;
 
@@ -1251,13 +1354,12 @@ export interface TypeA {
    * @schema TypeA#ref
    */
   readonly ref?: TypeC;
-
 }
 
 /**
  * Converts an object of type 'TypeA' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_TypeA(obj: TypeA | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -1266,7 +1368,7 @@ export function toJson_TypeA(obj: TypeA | undefined): Record<string, any> | unde
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * @schema TypeC
@@ -1276,13 +1378,12 @@ export interface TypeC {
    * @schema TypeC#field
    */
   readonly field?: string;
-
 }
 
 /**
  * Converts an object of type 'TypeC' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_TypeC(obj: TypeC | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -1291,20 +1392,148 @@ export function toJson_TypeC(obj: TypeC | undefined): Record<string, any> | unde
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 "
 `;
 
-exports[`type can be an array with null and a single non null type 1`] = `
+exports[`type arrays have a single type 1`] = `
 "/**
- * @schema Foo
+ * @schema fqn.of.TestType
  */
-export interface Foo {
+export interface TestType {
   /**
-   * @schema Foo#bar
+   * @schema fqn.of.TestType#bar
    */
   readonly bar?: boolean;
+}
 
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'bar': obj.bar,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+"
+`;
+
+exports[`type arrays have null and a single non null type 1`] = `
+"/**
+ * @schema fqn.of.TestType
+ */
+export interface TestType {
+  /**
+   * @schema fqn.of.TestType#bar
+   */
+  readonly bar?: boolean;
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'bar': obj.bar,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+"
+`;
+
+exports[`unions are tuples with a null type convertNullUnionsToOptional disabled 1`] = `
+"/**
+ * @schema fqn.of.TestType
+ */
+export interface TestType {
+  /**
+   * @schema fqn.of.TestType#foo
+   */
+  readonly foo?: any;
+
+  /**
+   * @schema fqn.of.TestType#bar
+   */
+  readonly bar?: any;
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'foo': obj.foo,
+    'bar': obj.bar,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+"
+`;
+
+exports[`unions are tuples with a null type convertNullUnionsToOptional enabled 1`] = `
+"/**
+ * @schema fqn.of.TestType
+ */
+export interface TestType {
+  /**
+   * @schema fqn.of.TestType#foo
+   */
+  readonly foo?: FqnOfTestTypeFoo;
+
+  /**
+   * @schema fqn.of.TestType#bar
+   */
+  readonly bar?: FqnOfTestTypeBar;
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'foo': obj.foo?.value,
+    'bar': obj.bar?.value,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * @schema FqnOfTestTypeFoo
+ */
+export class FqnOfTestTypeFoo {
+  public static fromBoolean(value: boolean): FqnOfTestTypeFoo {
+    return new FqnOfTestTypeFoo(value);
+  }
+  private constructor(public readonly value: boolean) {
+  }
+}
+
+/**
+ * @schema FqnOfTestTypeBar
+ */
+export class FqnOfTestTypeBar {
+  public static fromBoolean(value: boolean): FqnOfTestTypeBar {
+    return new FqnOfTestTypeBar(value);
+  }
+  private constructor(public readonly value: boolean) {
+  }
 }
 "
 `;
@@ -1321,13 +1550,12 @@ export interface TestType {
    * @schema TestType#fault
    */
   readonly fault?: TestTypeFault;
-
 }
 
 /**
  * Converts an object of type 'TestType' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -1336,7 +1564,7 @@ export function toJson_TestType(obj: TestType | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * Fault injection policy to apply on HTTP traffic at
@@ -1349,13 +1577,12 @@ export interface TestTypeFault {
    * @schema TestTypeFault#delay
    */
   readonly delay?: TestTypeFaultDelay;
-
 }
 
 /**
  * Converts an object of type 'TestTypeFault' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_TestTypeFault(obj: TestTypeFault | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -1364,7 +1591,7 @@ export function toJson_TestTypeFault(obj: TestTypeFault | undefined): Record<str
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * @schema TestTypeFaultDelay
@@ -1397,13 +1624,12 @@ export interface TestTypeFaultDelay {
    * @schema TestTypeFaultDelay#percentage
    */
   readonly percentage?: TestTypeFaultDelayPercentage;
-
 }
 
 /**
  * Converts an object of type 'TestTypeFaultDelay' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_TestTypeFaultDelay(obj: TestTypeFaultDelay | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -1415,7 +1641,7 @@ export function toJson_TestTypeFaultDelay(obj: TestTypeFaultDelay | undefined): 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * Percentage of requests on which the delay
@@ -1428,13 +1654,12 @@ export interface TestTypeFaultDelayPercentage {
    * @schema TestTypeFaultDelayPercentage#value
    */
   readonly value?: number;
-
 }
 
 /**
  * Converts an object of type 'TestTypeFaultDelayPercentage' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_TestTypeFaultDelayPercentage(obj: TestTypeFaultDelayPercentage | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -1443,7 +1668,319 @@ export function toJson_TestTypeFaultDelayPercentage(obj: TestTypeFaultDelayPerce
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+"
+`;
+
+exports[`unions have an array of a type and the same type simplifyElementArrayUnions disabled 1`] = `
+"/**
+ * @schema fqn.of.TestType
+ */
+export interface TestType {
+  /**
+   * @schema fqn.of.TestType#foo
+   */
+  readonly foo?: any;
+
+  /**
+   * @schema fqn.of.TestType#bar
+   */
+  readonly bar?: any;
+
+  /**
+   * @schema fqn.of.TestType#baz
+   */
+  readonly baz?: any;
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'foo': obj.foo,
+    'bar': obj.bar,
+    'baz': obj.baz,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+"
+`;
+
+exports[`unions have an array of a type and the same type simplifyElementArrayUnions enabled 1`] = `
+"/**
+ * @schema fqn.of.TestType
+ */
+export interface TestType {
+  /**
+   * @schema fqn.of.TestType#foo
+   */
+  readonly foo?: string[];
+
+  /**
+   * @schema fqn.of.TestType#bar
+   */
+  readonly bar?: boolean[];
+
+  /**
+   * @schema fqn.of.TestType#baz
+   */
+  readonly baz?: number[];
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'foo': obj.foo?.map(y => y),
+    'bar': obj.bar?.map(y => y),
+    'baz': obj.baz?.map(y => y),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+"
+`;
+
+exports[`unions have enums in unions 1`] = `
+"/**
+ * @schema fqn.of.TestType
+ */
+export interface TestType {
+  /**
+   * @schema fqn.of.TestType#foo
+   */
+  readonly foo?: FqnOfTestTypeFoo;
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'foo': obj.foo?.value,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * @schema FqnOfTestTypeFoo
+ */
+export class FqnOfTestTypeFoo {
+  public static fromString(value: string): FqnOfTestTypeFoo {
+    return new FqnOfTestTypeFoo(value);
+  }
+  public static fromNumber(value: number): FqnOfTestTypeFoo {
+    return new FqnOfTestTypeFoo(value);
+  }
+  private constructor(public readonly value: string | number) {
+  }
+}
+"
+`;
+
+exports[`unions have multiple enums 1`] = `
+"/**
+ * @schema fqn.of.TestType
+ */
+export interface TestType {
+  /**
+   * @schema fqn.of.TestType#foo
+   */
+  readonly foo?: FqnOfTestTypeFoo;
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'foo': obj.foo?.value,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * @schema FqnOfTestTypeFoo
+ */
+export class FqnOfTestTypeFoo {
+  public static fromString(value: string): FqnOfTestTypeFoo {
+    return new FqnOfTestTypeFoo(value);
+  }
+  private constructor(public readonly value: string) {
+  }
+}
+"
+`;
+
+exports[`unions have multiple of the same type 1`] = `
+"/**
+ * @schema fqn.of.TestType
+ */
+export interface TestType {
+  /**
+   * @schema fqn.of.TestType#foo
+   */
+  readonly foo?: FqnOfTestTypeFoo;
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'foo': obj.foo?.value,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * @schema FqnOfTestTypeFoo
+ */
+export class FqnOfTestTypeFoo {
+  public static fromBoolean(value: boolean): FqnOfTestTypeFoo {
+    return new FqnOfTestTypeFoo(value);
+  }
+  private constructor(public readonly value: boolean) {
+  }
+}
+"
+`;
+
+exports[`unions have only one type hoistSingletonUnions disabled 1`] = `
+"/**
+ * @schema fqn.of.TestType
+ */
+export interface TestType {
+  /**
+   * @schema fqn.of.TestType#foo
+   */
+  readonly foo?: FqnOfTestTypeFoo;
+
+  /**
+   * @schema fqn.of.TestType#bar
+   */
+  readonly bar?: FqnOfTestTypeBar;
+
+  /**
+   * @schema fqn.of.TestType#baz
+   */
+  readonly baz?: any;
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'foo': obj.foo?.value,
+    'bar': obj.bar?.value,
+    'baz': obj.baz,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * @schema FqnOfTestTypeFoo
+ */
+export class FqnOfTestTypeFoo {
+  public static fromBoolean(value: boolean): FqnOfTestTypeFoo {
+    return new FqnOfTestTypeFoo(value);
+  }
+  private constructor(public readonly value: boolean) {
+  }
+}
+
+/**
+ * @schema FqnOfTestTypeBar
+ */
+export class FqnOfTestTypeBar {
+  public static fromString(value: string): FqnOfTestTypeBar {
+    return new FqnOfTestTypeBar(value);
+  }
+  private constructor(public readonly value: string) {
+  }
+}
+"
+`;
+
+exports[`unions have only one type hoistSingletonUnions enabled 1`] = `
+"/**
+ * @schema fqn.of.TestType
+ */
+export interface TestType {
+  /**
+   * @schema fqn.of.TestType#foo
+   */
+  readonly foo?: boolean;
+
+  /**
+   * @schema fqn.of.TestType#bar
+   */
+  readonly bar?: string;
+
+  /**
+   * @schema fqn.of.TestType#baz
+   */
+  readonly baz?: number;
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'foo': obj.foo,
+    'bar': obj.bar,
+    'baz': obj.baz,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+"
+`;
+
+exports[`unions include primitive types through references 1`] = `
+"/**
+ * @schema fqn.of.TestType
+ */
+export class TestType {
+  public static fromString(value: string): TestType {
+    return new TestType(value);
+  }
+  public static fromNumber(value: number): TestType {
+    return new TestType(value);
+  }
+  private constructor(public readonly value: string | number) {
+  }
+}
 "
 `;
 
@@ -1463,3 +2000,5 @@ export class TestType {
 }
 "
 `;
+
+exports[`unions reject non-primitive types through references 1`] = `""`;

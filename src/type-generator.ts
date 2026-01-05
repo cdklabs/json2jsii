@@ -4,11 +4,72 @@ import { snakeCase } from 'snake-case';
 import { NAMED_SYMBOLS } from './allowlist';
 import { Code } from './code';
 import { ToJsonFunction } from './tojson';
-
+import * as $T from './transformers';
 
 const PRIMITIVE_TYPES = ['string', 'number', 'integer', 'boolean'];
-const DEFINITIONS_PREFIX = '#/definitions/';
+const DEFINITIONS_LEGACY_PREFIX = '#/definitions/';
+const DEFINITIONS_PREFIX = '#/$defs/';
 const DEFAULT_RENDER_TYPE_NAME = (s: string) => s.split('.').map(x => pascalCase(x)).join('');
+
+/**
+ * Available opt-in schema transformations
+ */
+export interface SchemaTransformations {
+  /**
+   * When true, unions (anyOf, oneOf, allOf) that contain only a single element are hoisted to the top level of the schema.
+   *
+   * This transformation runs late in the transformation stack, to ensure maximal effect.
+   *
+   * ---
+   *
+   * **Considerations**: A future addition to the union will incur a breaking change in the generated code.
+   * Consider if the schema author might have used a union type to convey their future intentions.
+   * However the same risk applies for any schema going from a single type to a union type.
+   *
+   * ----
+   *
+   * @example { anyOf: [{ type: 'string' }] } -> { type: 'string' }
+   *
+   * @default false
+   */
+  readonly hoistSingletonUnions?: boolean;
+  /**
+   * When true, unions (anyOf, oneOf) that contain a null-type are converted into an optional type with the null-type removed from the union.
+   *
+   * Combining with `hoistSingletonUnions` can significantly reduce the amount of union types that aren't really unions.
+   *
+   * ---
+   *
+   * **Considerations**: Optional properties and `null` values aren't strictly the same in JavaScript.
+   * Consider if the difference is functional or if the schema uses this pattern to denoted optional types.
+   *
+   * ----
+   *
+   * @example { required: true, anyOf: [{ type: 'null' }, { type: 'string' }] } -> { required: false, anyOf: [{ type: 'string' }] }
+   *
+   * @default false
+   */
+  readonly convertNullUnionsToOptional?: boolean;
+  /**
+   * When true, unions (anyOf, oneOf) that contain an array type and its element type are simplified to just the array type.
+   *
+   * This is useful for jsii compatibility where such unions would be typed as 'any', but using just the array type
+   * provides better type safety while maintaining the same functionality since a single value can be wrapped in an array.
+   *
+   * ---
+   *
+   * **Considerations**: This changes the schema's type structure but maintains semantic equivalence since
+   * single values can be wrapped in arrays. The transformation assumes that treating a single value as a
+   * single-element array is acceptable for the use case.
+   *
+   * ----
+   *
+   * @example { anyOf: [{ type: 'array', items: { type: 'string' } }, { type: 'string' }] } -> { type: 'array', items: { type: 'string' } }
+   *
+   * @default false
+   */
+  readonly simplifyElementArrayUnions?: boolean;
+}
 
 export interface TypeGeneratorOptions {
   /**
@@ -37,6 +98,14 @@ export interface TypeGeneratorOptions {
   readonly toJson?: boolean;
 
   /**
+   * When true, generated `toJson_Xyz` functions will be marked with as internal.
+   * This is useful when you want to hide these functions from public API documentation.
+   *
+   * @default false
+   */
+  readonly toJsonInternal?: boolean;
+
+  /**
    * When set to true, enums are sanitized from the 'null' literal value,
    * allowing typing the property as an enum, instead of the underlying type.
    *
@@ -62,6 +131,18 @@ export interface TypeGeneratorOptions {
    * @default - Only dot namespacing is handled by default. Elements between dots are pascal cased and concatenated.
    */
   readonly renderTypeName?: (def: string) => string;
+
+  /**
+   * Schemas often define a type in ways that make sense for a schema, but may produce convoluted typescript/jsii code.
+   * In many cases it is possible to transform these definitions into a semantically identically but simpler version,
+   * which will produce "nicer" code.
+   *
+   * These transformations are often not backwards compatible or at least carry a risk of incurring breaking changes in future.
+   * Therefore they are all opt-in.
+   *
+   * @default - no opt-in transformations are applied
+   */
+  readonly transformations?: SchemaTransformations;
 }
 
 /**
@@ -108,18 +189,21 @@ export class TypeGenerator {
    * struct and all other types.
    */
   public static forStruct(structName: string, schema: JSONSchema4, options: TypeGeneratorOptions = {}) {
-    const gen = new TypeGenerator({ definitions: schema.definitions, ...options });
+    const gen = new TypeGenerator({ definitions: { ...schema.definitions, ...schema.$defs }, ...options });
     gen.emitType(structName, schema);
     return gen;
   }
 
   private readonly typesToEmit: { [name: string]: TypeEmitter } = { };
   private readonly emittedTypes: Record<string, EmittedType> = {};
+  private readonly emittedProperties: Set<string> = new Set();
   private readonly exclude: string[];
   private readonly definitions: { [def: string]: JSONSchema4 };
   private readonly toJson: boolean;
+  private readonly toJsonInternal: boolean;
   private readonly sanitizeEnums: boolean;
   private readonly renderTypeName: (def: string) => string;
+  private readonly transformations: SchemaTransformations;
 
   /**
    *
@@ -130,8 +214,10 @@ export class TypeGenerator {
     this.exclude = options.exclude ?? [];
     this.definitions = {};
     this.toJson = options.toJson ?? true;
+    this.toJsonInternal = options.toJsonInternal ?? false;
     this.sanitizeEnums = options.sanitizeEnums ?? false;
     this.renderTypeName = options.renderTypeName ?? DEFAULT_RENDER_TYPE_NAME;
+    this.transformations = options.transformations ?? {};
 
     for (const [typeName, def] of Object.entries(options.definitions ?? {})) {
       this.addDefinition(typeName, def);
@@ -175,45 +261,41 @@ export class TypeGenerator {
   }
 
   /**
-   * Many schemas define a type as an array of types to indicate union types.
-   * To avoid having the type generator be aware of that, we transform those types
-   * into their corresponding typescript definitions.
-   * --------------------------------------------------
+   * Many schemas define a type in ways that make sense for a schema,
+   * but cannot easily be represented in jsii.
+   * However often it is possible to transform these into a simplified version
+   * of the same type, that will have the same semantic meaning in jsii.
    *
-   * Strictly speaking, these definitions are meant to allow the liternal 'null' value
-   * to be used in addition to the actual types. However, since union types are not supported
-   * in jsii, allowing this would mean falling back to 'any' and loosing all type safety for such
-   * properties. Transforming it into a single concrete optional type provides both type safety and
-   * the option to omit the property. What it doesn't allow is explicitly passing 'null', which might
-   * be desired in some cases. For now we prefer type safety over that.
+   * To avoid having the type generator be aware of all these cases,
+   * we transform those types into their corresponding simplified definitions.
    *
-   * 1. ['null', '<type>'] -> optional '<type>'
-   * 2. ['null', '<type1>', '<type2>'] -> optional 'any'
-   *
-   * This is the normal jsii conversion, nothing much we can do here.
-   *
-   * 3. ['<type1>', '<type2>'] -> 'any'
+   * @param def - the schema to be transformed
    */
-  private maybeTransformTypeArray(def: JSONSchema4) {
+  private transformTypes(def: JSONSchema4): JSONSchema4 {
+    const transformers: Array<(def: JSONSchema4) => JSONSchema4> = [
+      // remove
+      $T.reduceNullTypeArray, // legacy mandatory transformation
+      this.maybeWith($T.reduceNullFromUnions, this.transformations.convertNullUnionsToOptional),
 
-    if (!Array.isArray(def.type)) {
-      return;
-    }
+      // merge
+      $T.reduceDuplicateTypesInUnion, // mandatory, as it prevents invalid code
 
-    const nullType = def.type.some(t => t === 'null');
-    const nonNullTypes = new Set(def.type.filter(t => t !== 'null'));
+      // change
+      this.maybeWith($T.reduceArrayUnions, this.transformations.simplifyElementArrayUnions),
 
-    if (nullType) {
-      def.required = false;
-    }
+      // needs to run towards the end to have the most effect
+      this.maybeWith($T.hoistSingletonUnions, this.transformations.hoistSingletonUnions),
+    ];
 
-    if (nonNullTypes.size === 0) {
-      def.type = 'null';
-    } else {
-      // if its a union of non null types we use 'any' to be jsii compliant
-      def.type = nonNullTypes.size > 1 ? 'any' : nonNullTypes.values().next().value;
-    }
+    const deepCopiedDef = JSON.parse(JSON.stringify(def));
+    return transformers.reduce((input, transform) => transform(input), deepCopiedDef);
+  }
 
+  /**
+   * Helper to conditionally run transformations
+   */
+  private maybeWith(transformation: (def: JSONSchema4) => JSONSchema4, run: boolean = false) {
+    return run ? transformation : (def: JSONSchema4) => def;
   }
 
   /**
@@ -235,10 +317,10 @@ export class TypeGenerator {
       }
     }
 
-    this.maybeTransformTypeArray(def);
+    def = this.transformTypes(def);
 
     if (def.enum && this.sanitizeEnums) {
-      // santizie enums from liternal 'null' because they prevent emitting the enum
+      // sanitize enums from literal 'null' because they prevent emitting the enum
       // and instead cause a fallback to 'string'. we assume the optionality of the enum
       // covers the 'null' value.
       def.enum = def.enum.filter(d => d !== null);
@@ -250,7 +332,9 @@ export class TypeGenerator {
       throw new Error(`${typeName} must be normalized before calling emitType`);
     }
 
-    if (structFqn.startsWith(DEFINITIONS_PREFIX)) {
+    if (structFqn.startsWith(DEFINITIONS_LEGACY_PREFIX)) {
+      structFqn = structFqn.substring(DEFINITIONS_LEGACY_PREFIX.length);
+    } else if (structFqn.startsWith(DEFINITIONS_PREFIX)) {
       structFqn = structFqn.substring(DEFINITIONS_PREFIX.length);
     }
 
@@ -416,17 +500,20 @@ export class TypeGenerator {
   private tryEmitUnion(typeName: string, def: JSONSchema4, fqn: string): EmittedType | undefined {
     const options = new Array<string>();
     for (const option of def.oneOf || def.anyOf || []) {
-      if (!supportedUnionOptionType(option.type)) {
+      // If it's a $ref, resolve it first
+      const resolvedOption = option.$ref ? this.resolveReference(option) : option;
+
+      if (!supportedUnionOptionType(resolvedOption.type)) {
         return undefined;
       }
 
-      const type = option.type === 'integer' ? 'number' : option.type;
+      const type = resolvedOption.type === 'integer' ? 'number' : resolvedOption.type;
       options.push(type);
     }
 
     const emitted: EmittedType = { type: typeName, toJson: x => `${x}?.value` };
 
-    this.addCode(typeName, code => {
+    this.emitCustomType(typeName, code => {
       this.emitDescription(code, fqn, def.description);
 
       code.openBlock(`export class ${typeName}`);
@@ -434,7 +521,7 @@ export class TypeGenerator {
 
       for (const type of options) {
         possibleTypes.push(type);
-        const methodName = 'from' + type[0].toUpperCase() + type.substr(1);
+        const methodName = 'from' + type[0].toUpperCase() + type.substring(1);
         code.openBlock(`public static ${methodName}(value: ${type}): ${typeName}`);
         code.line(`return new ${typeName}(value);`);
         code.closeBlock();
@@ -452,7 +539,7 @@ export class TypeGenerator {
   }
 
   private emitStruct(typeName: string, structDef: JSONSchema4, structFqn: string): EmittedType {
-    const toJson = new ToJsonFunction(typeName);
+    const toJson = new ToJsonFunction(typeName, this.toJsonInternal);
     const emitted: EmittedType = {
       type: typeName,
       toJson: x => `${toJson.functionName}(${x})`,
@@ -463,8 +550,12 @@ export class TypeGenerator {
       this.emitDescription(code, structFqn, structDef.description);
       code.openBlock(`export interface ${typeName}`);
 
-      for (const [propName, propSpec] of Object.entries(structDef.properties || {})) {
+      const props = Object.entries(structDef.properties || {});
+      for (const [idx, [propName, propSpec]] of props.entries()) {
         this.emitProperty(code, propName, propSpec, structFqn, structDef, toJson);
+        if (idx < props.length - 1) {
+          code.line();
+        }
       }
 
       code.closeBlock();
@@ -477,6 +568,10 @@ export class TypeGenerator {
     });
 
     return emitted;
+  }
+
+  private propertyFqn(structFqn: string, propName: string) {
+    return `${structFqn}.${propName}`;
   }
 
   private emitProperty(code: Code, name: string, propDef: JSONSchema4, structFqn: string, structDef: JSONSchema4, toJson: ToJsonFunction) {
@@ -494,15 +589,23 @@ export class TypeGenerator {
     // convert the name to camel case so it's compatible with JSII
     name = camelCase(name);
 
+    const propertyFqn = this.propertyFqn(structFqn, name);
+
+    if (this.emittedProperties.has(propertyFqn)) {
+      // can happen if two properties have different casing that results
+      // in the same camelCase string.
+      return;
+    }
+
     this.emitDescription(code, `${structFqn}#${originalName}`, propDef.description);
     const propertyType = this.typeForProperty(`${structFqn}.${name}`, propDef);
     const required = this.isPropertyRequired(originalName, structDef);
     const optional = required ? '' : '?';
 
     code.line(`readonly ${name}${optional}: ${propertyType.type};`);
-    code.line();
 
     toJson.addField(originalName, name, propertyType.toJson);
+    this.emittedProperties.add(propertyFqn);
   }
 
   private emitEnum(typeName: string, def: JSONSchema4, structFqn: string): EmittedType {
@@ -594,8 +697,7 @@ export class TypeGenerator {
   }
 
   private typeForRef(def: JSONSchema4): EmittedType {
-    const prefix = '#/definitions/';
-    if (!def.$ref || !def.$ref.startsWith(prefix)) {
+    if (!def.$ref || !isDefinitionsRef(def.$ref)) {
       throw new Error(`invalid $ref ${JSON.stringify(def)}`);
     }
 
@@ -603,7 +705,7 @@ export class TypeGenerator {
       return { type: 'any', toJson: x => x };
     }
 
-    const typeName = TypeGenerator.normalizeTypeName(this.renderTypeName(def.$ref.substring(prefix.length)));
+    const typeName = TypeGenerator.normalizeTypeName(this.renderTypeName(extractDefinitionName(def.$ref)));
 
     // if we already emitted a type with this type name, just return it
     const emitted = this.emittedTypes[typeName];
@@ -626,11 +728,11 @@ export class TypeGenerator {
 
   private resolveReference(def: JSONSchema4): JSONSchema4 {
     const ref = def.$ref;
-    if (!ref || !ref.startsWith(DEFINITIONS_PREFIX)) {
+    if (!ref || !isDefinitionsRef(ref)) {
       throw new Error('expecting a local reference');
     }
 
-    const lookup = ref.substr(DEFINITIONS_PREFIX.length);
+    const lookup = extractDefinitionName(ref);
     const found = this.definitions[lookup];
     if (!found) {
       throw new Error(`unable to find a definition for the $ref "${lookup}"`);
@@ -657,7 +759,7 @@ export class TypeGenerator {
 }
 
 function supportedUnionOptionType(type: any): type is string {
-  return type && (typeof(type) === 'string' && PRIMITIVE_TYPES.includes(type));
+  return type && typeof(type) === 'string' && PRIMITIVE_TYPES.includes(type);
 }
 
 function pascalCase(s: string): string {
@@ -734,6 +836,19 @@ function testRegexAt(regex: RegExp, input: string, index: number): boolean {
   re.lastIndex = index;
 
   return re.test(input);
+}
+
+function isDefinitionsRef(ref: string): boolean {
+  return ref.startsWith(DEFINITIONS_LEGACY_PREFIX) || ref.startsWith(DEFINITIONS_PREFIX);
+}
+
+function extractDefinitionName(ref: string): string {
+  if (ref.startsWith(DEFINITIONS_LEGACY_PREFIX)) {
+    return ref.substring(DEFINITIONS_LEGACY_PREFIX.length);
+  } else if (ref.startsWith(DEFINITIONS_PREFIX)) {
+    return ref.substring(DEFINITIONS_PREFIX.length);
+  }
+  throw new Error(`invalid definitions ref: ${ref}`);
 }
 
 type TypeEmitter = (code: Code) => EmittedType;

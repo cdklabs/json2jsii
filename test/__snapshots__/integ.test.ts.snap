@@ -90,13 +90,12 @@ export interface MyStruct {
    * @schema MyStruct#VPCConfiguration
    */
   readonly vpcConfiguration?: MyStructVpcConfiguration;
-
 }
 
 /**
  * Converts an object of type 'MyStruct' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -116,7 +115,7 @@ export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * For network connectivity to Cluster inside VPC
@@ -137,13 +136,12 @@ export interface MyStructVpcConfiguration {
    * @schema MyStructVpcConfiguration#SubnetIds
    */
   readonly subnetIds?: string[];
-
 }
 
 /**
  * Converts an object of type 'MyStructVpcConfiguration' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_MyStructVpcConfiguration(obj: MyStructVpcConfiguration | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -153,7 +151,7 @@ export function toJson_MyStructVpcConfiguration(obj: MyStructVpcConfiguration | 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 "
 `;
 
@@ -248,13 +246,12 @@ export interface MyStruct {
    * @schema MyStruct#Modified
    */
   readonly modified?: Date;
-
 }
 
 /**
  * Converts an object of type 'MyStruct' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -275,7 +272,7 @@ export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * @schema Creator
@@ -301,13 +298,12 @@ export interface Creator {
    * @schema Creator#Email
    */
   readonly email?: string;
-
 }
 
 /**
  * Converts an object of type 'Creator' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_Creator(obj: Creator | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -318,7 +314,7 @@ export function toJson_Creator(obj: Creator | undefined): Record<string, any> | 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * @schema Query
@@ -337,13 +333,12 @@ export interface Query {
    * @schema Query#Denominator
    */
   readonly denominator?: string;
-
 }
 
 /**
  * Converts an object of type 'Query' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_Query(obj: Query | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -353,7 +348,7 @@ export function toJson_Query(obj: Query | undefined): Record<string, any> | unde
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * @schema Threshold
@@ -393,13 +388,12 @@ export interface Threshold {
    * @schema Threshold#WarningDisplay
    */
   readonly warningDisplay?: string;
-
 }
 
 /**
  * Converts an object of type 'Threshold' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_Threshold(obj: Threshold | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -412,7 +406,7 @@ export function toJson_Threshold(obj: Threshold | undefined): Record<string, any
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * The type of the slo
@@ -558,13 +552,12 @@ export interface MyStruct {
    * @schema MyStruct#Tags
    */
   readonly tags?: MyStructTags[];
-
 }
 
 /**
  * Converts an object of type 'MyStruct' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -588,7 +581,7 @@ export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * Network configuration for Amazon EKS cluster.
@@ -604,13 +597,12 @@ export interface MyStructKubernetesNetworkConfig {
    * @schema MyStructKubernetesNetworkConfig#ServiceIpv4Cidr
    */
   readonly serviceIpv4Cidr?: string;
-
 }
 
 /**
  * Converts an object of type 'MyStructKubernetesNetworkConfig' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_MyStructKubernetesNetworkConfig(obj: MyStructKubernetesNetworkConfig | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -619,7 +611,7 @@ export function toJson_MyStructKubernetesNetworkConfig(obj: MyStructKubernetesNe
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * An object that represents the virtual private cloud (VPC) configuration to use for an Amazon EKS cluster.
@@ -661,13 +653,12 @@ export interface MyStructResourcesVpcConfig {
    * @schema MyStructResourcesVpcConfig#PublicAccessCidrs
    */
   readonly publicAccessCidrs?: string[];
-
 }
 
 /**
  * Converts an object of type 'MyStructResourcesVpcConfig' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_MyStructResourcesVpcConfig(obj: MyStructResourcesVpcConfig | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -680,7 +671,7 @@ export function toJson_MyStructResourcesVpcConfig(obj: MyStructResourcesVpcConfi
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * The encryption configuration for the cluster.
@@ -699,13 +690,12 @@ export interface EncryptionConfigEntry {
    * @schema EncryptionConfigEntry#Provider
    */
   readonly provider?: Provider;
-
 }
 
 /**
  * Converts an object of type 'EncryptionConfigEntry' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_EncryptionConfigEntry(obj: EncryptionConfigEntry | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -715,7 +705,7 @@ export function toJson_EncryptionConfigEntry(obj: EncryptionConfigEntry | undefi
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * @schema MyStructKubernetesApiAccess
@@ -730,13 +720,12 @@ export interface MyStructKubernetesApiAccess {
    * @schema MyStructKubernetesApiAccess#Users
    */
   readonly users?: KubernetesApiAccessEntry[];
-
 }
 
 /**
  * Converts an object of type 'MyStructKubernetesApiAccess' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_MyStructKubernetesApiAccess(obj: MyStructKubernetesApiAccess | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -746,7 +735,7 @@ export function toJson_MyStructKubernetesApiAccess(obj: MyStructKubernetesApiAcc
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * @schema MyStructTags
@@ -761,13 +750,12 @@ export interface MyStructTags {
    * @schema MyStructTags#Key
    */
   readonly key: string;
-
 }
 
 /**
  * Converts an object of type 'MyStructTags' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_MyStructTags(obj: MyStructTags | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -777,7 +765,7 @@ export function toJson_MyStructTags(obj: MyStructTags | undefined): Record<strin
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * AWS Key Management Service (AWS KMS) customer master key (CMK). Either the ARN or the alias can be used.
@@ -791,13 +779,12 @@ export interface Provider {
    * @schema Provider#KeyArn
    */
   readonly keyArn?: string;
-
 }
 
 /**
  * Converts an object of type 'Provider' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_Provider(obj: Provider | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -806,7 +793,7 @@ export function toJson_Provider(obj: Provider | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * @schema KubernetesApiAccessEntry
@@ -826,13 +813,12 @@ export interface KubernetesApiAccessEntry {
    * @schema KubernetesApiAccessEntry#Groups
    */
   readonly groups?: string[];
-
 }
 
 /**
  * Converts an object of type 'KubernetesApiAccessEntry' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_KubernetesApiAccessEntry(obj: KubernetesApiAccessEntry | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -843,6 +829,6 @@ export function toJson_KubernetesApiAccessEntry(obj: KubernetesApiAccessEntry | 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 "
 `;

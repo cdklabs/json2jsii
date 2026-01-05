@@ -9,13 +9,12 @@ export interface MyStruct {
    * @schema MyStruct#MyAny
    */
   readonly myAny?: any;
-
 }
 
 /**
  * Converts an object of type 'MyStruct' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -24,7 +23,7 @@ export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 "
 `;
 
@@ -37,13 +36,12 @@ export interface MyStruct {
    * @schema MyStruct#Array_Of_complex
    */
   readonly arrayOfComplex?: MyType[];
-
 }
 
 /**
  * Converts an object of type 'MyStruct' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -52,7 +50,7 @@ export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * @schema MyType
@@ -67,13 +65,12 @@ export interface MyType {
    * @schema MyType#Bar
    */
   readonly bar?: string;
-
 }
 
 /**
  * Converts an object of type 'MyType' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_MyType(obj: MyType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -83,7 +80,7 @@ export function toJson_MyType(obj: MyType | undefined): Record<string, any> | un
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 "
 `;
 
@@ -96,13 +93,12 @@ export interface MyStruct {
    * @schema MyStruct#ArrayProp
    */
   readonly arrayProp?: string[];
-
 }
 
 /**
  * Converts an object of type 'MyStruct' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -111,7 +107,7 @@ export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 "
 `;
 
@@ -124,13 +120,12 @@ export interface MyStruct {
    * @schema MyStruct#ArrayProp
    */
   readonly arrayProp?: string[];
-
 }
 
 /**
  * Converts an object of type 'MyStruct' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -139,7 +134,7 @@ export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 "
 `;
 
@@ -152,13 +147,12 @@ export interface MyStruct {
    * @schema MyStruct#ArrayProp
    */
   readonly arrayProp?: any[];
-
 }
 
 /**
  * Converts an object of type 'MyStruct' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -167,7 +161,7 @@ export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 "
 `;
 
@@ -180,13 +174,12 @@ export interface MyStruct {
    * @schema MyStruct#ComplexType
    */
   readonly complexType?: MyType;
-
 }
 
 /**
  * Converts an object of type 'MyStruct' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -195,7 +188,7 @@ export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * @schema MyType
@@ -215,13 +208,12 @@ export interface MyType {
    * @schema MyType#Nested
    */
   readonly nested: YourType;
-
 }
 
 /**
  * Converts an object of type 'MyType' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_MyType(obj: MyType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -232,7 +224,7 @@ export function toJson_MyType(obj: MyType | undefined): Record<string, any> | un
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * @schema YourType
@@ -242,13 +234,12 @@ export interface YourType {
    * @schema YourType#John
    */
   readonly john?: string[];
-
 }
 
 /**
  * Converts an object of type 'YourType' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_YourType(obj: YourType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -257,7 +248,7 @@ export function toJson_YourType(obj: YourType | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 "
 `;
 
@@ -270,13 +261,12 @@ export interface MyStruct {
    * @schema MyStruct#DateTime
    */
   readonly dateTime?: Date;
-
 }
 
 /**
  * Converts an object of type 'MyStruct' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -285,7 +275,7 @@ export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 "
 `;
 
@@ -303,13 +293,12 @@ export interface MyStruct {
    * @schema MyStruct#YourEnum
    */
   readonly yourEnum?: MyStructYourEnum;
-
 }
 
 /**
  * Converts an object of type 'MyStruct' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -319,7 +308,7 @@ export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * @schema MyStructMyEnum
@@ -354,13 +343,12 @@ export interface MyStruct {
    * @schema MyStruct#ComplexMap
    */
   readonly complexMap?: { [key: string]: MyType };
-
 }
 
 /**
  * Converts an object of type 'MyStruct' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -369,7 +357,7 @@ export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * @schema MyType
@@ -384,13 +372,12 @@ export interface MyType {
    * @schema MyType#Bar
    */
   readonly bar?: string;
-
 }
 
 /**
  * Converts an object of type 'MyType' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_MyType(obj: MyType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -400,7 +387,7 @@ export function toJson_MyType(obj: MyType | undefined): Record<string, any> | un
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 "
 `;
 
@@ -418,13 +405,12 @@ export interface MyStruct {
    * @schema MyStruct#NumberMap
    */
   readonly numberMap?: { [key: string]: number };
-
 }
 
 /**
  * Converts an object of type 'MyStruct' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -434,7 +420,7 @@ export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 "
 `;
 
@@ -462,13 +448,12 @@ export interface MyStruct {
    * @schema MyStruct#x-extension
    */
   readonly xExtension?: string;
-
 }
 
 /**
  * Converts an object of type 'MyStruct' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -480,7 +465,7 @@ export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 "
 `;
 
@@ -508,13 +493,12 @@ export interface MyStruct {
    * @schema MyStruct#With_UnderScore
    */
   readonly withUnderScore?: number;
-
 }
 
 /**
  * Converts an object of type 'MyStruct' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -526,7 +510,7 @@ export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 "
 `;
 
@@ -549,13 +533,12 @@ export interface MyStruct {
    * @schema MyStruct#Haver
    */
   readonly haver?: MyStructHaver;
-
 }
 
 /**
  * Converts an object of type 'MyStruct' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -566,7 +549,7 @@ export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> 
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * @schema ComplexType
@@ -576,13 +559,12 @@ export interface ComplexType {
    * @schema ComplexType#Ref_to_union
    */
   readonly refToUnion?: IntOrString;
-
 }
 
 /**
  * Converts an object of type 'ComplexType' to JSON representation.
  */
-/* eslint-disable max-len, quote-props */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 export function toJson_ComplexType(obj: ComplexType | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
@@ -591,7 +573,7 @@ export function toJson_ComplexType(obj: ComplexType | undefined): Record<string,
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
-/* eslint-enable max-len, quote-props */
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * @schema IntOrString

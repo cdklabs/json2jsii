@@ -1,8 +1,9 @@
 import { JSONSchema4 } from 'json-schema';
 import { generate } from './util';
 import { TypeGenerator } from '../src';
+import { which } from './which';
 
-jest.setTimeout(3 * 60_000); // 1min
+jest.setTimeout(3 * 60_000); // 3min
 
 describe('unions', () => {
 
@@ -11,6 +12,35 @@ describe('unions', () => {
       { type: 'string' },
       { type: 'number' },
     ],
+  });
+
+  which('include primitive types through references', {
+    oneOf: [
+      { type: 'string' },
+      { $ref: '#/definitions/NumberType' },
+    ],
+  }, {
+    definitions: {
+      NumberType: {
+        type: 'number',
+      },
+    },
+  });
+
+  which('reject non-primitive types through references', {
+    oneOf: [
+      { type: 'string' },
+      { $ref: '#/definitions/ObjectType' },
+    ],
+  }, {
+    definitions: {
+      ObjectType: {
+        type: 'object',
+        properties: {
+          foo: { type: 'string' },
+        },
+      },
+    },
   });
 
   which('constraints are ignored for objects', {
@@ -66,6 +96,103 @@ describe('unions', () => {
     },
   });
 
+  which('have multiple of the same type', {
+    properties: {
+      foo: {
+        oneOf: [
+          { type: 'boolean' },
+          { type: 'boolean' },
+        ],
+      },
+    },
+  });
+
+  which('have enums in unions', {
+    properties: {
+      foo: {
+        oneOf: [
+          {
+            type: 'string',
+            enum: ['A', 'B', 'C'],
+          },
+          {
+            type: 'number',
+            enum: [1, 2, 3],
+          },
+        ],
+      },
+    },
+  });
+
+  which('have multiple enums', {
+    properties: {
+      foo: {
+        oneOf: [
+          {
+            type: 'string',
+            enum: [
+              'tab',
+            ],
+          },
+          {
+            type: 'string',
+            enum: [
+              'space',
+            ],
+          },
+        ],
+      },
+    },
+  });
+
+  which.usingTransforms('hoistSingletonUnions')('have only one type', {
+    properties: {
+      foo: {
+        anyOf: [{ type: 'boolean' }],
+      },
+      bar: {
+        oneOf: [{ type: 'string' }],
+      },
+      baz: {
+        allOf: [{ type: 'number' }],
+      },
+    },
+  });
+
+  which.usingTransforms('convertNullUnionsToOptional')('are tuples with a null type', {
+    properties: {
+      foo: {
+        anyOf: [{ type: 'null' }, { type: 'boolean' }],
+      },
+      bar: {
+        oneOf: [{ type: 'null' }, { type: 'boolean' }],
+      },
+    },
+  });
+
+  which.usingTransforms('simplifyElementArrayUnions')('have an array of a type and the same type', {
+    properties: {
+      foo: {
+        anyOf: [
+          { type: 'array', items: { type: 'string' } },
+          { type: 'string' },
+        ],
+      },
+      bar: {
+        anyOf: [
+          { type: 'array', items: { type: 'boolean' } },
+          { type: 'boolean' },
+        ],
+      },
+      baz: {
+        allOf: [
+          { type: 'array', items: { type: 'number' } },
+          { type: 'number' },
+        ],
+      },
+    },
+  });
+
 });
 
 
@@ -90,6 +217,25 @@ describe('structs', () => {
     properties: {
       other: {
         $ref: '#/definitions/Other',
+      },
+    },
+  }, {
+    definitions: {
+      Other: {
+        type: 'object',
+        properties: {
+          stringValue: { type: 'string' },
+        },
+        required: ['stringValue'],
+      },
+    },
+  });
+
+  which('supports $defs references', {
+    type: 'object',
+    properties: {
+      other: {
+        $ref: '#/$defs/Other',
       },
     },
   }, {
@@ -445,20 +591,39 @@ test('if "toJson" is disabled, toJson functions are not generated', async () => 
   expect(await generate(gen)).toMatchSnapshot();
 });
 
-test('type can be an array with null and a single non null type', async () => {
-
+test('if "toJsonInternal" is enabled, toJson functions are marked as @internal', async () => {
   const schema: JSONSchema4 = {
     properties: {
-      bar: { type: ['null', 'boolean'] },
+      bar: { type: 'string' },
+      nested: {
+        type: 'object',
+        properties: {
+          value: { type: 'number' },
+        },
+      },
     },
   };
 
   const gen = TypeGenerator.forStruct('Foo', schema, {
-    toJson: false,
+    toJson: true,
+    toJsonInternal: true,
   });
 
   expect(await generate(gen)).toMatchSnapshot();
+});
 
+describe('type arrays', () => {
+  which('have null and a single non null type', {
+    properties: {
+      bar: { type: ['null', 'boolean'] },
+    },
+  });
+
+  which('have a single type', {
+    properties: {
+      bar: { type: ['boolean'] },
+    },
+  });
 });
 
 test('additionalProperties when type is defined as array', async () => {
@@ -607,10 +772,25 @@ test('shared namespace references', async () => {
   expect(code).toMatchSnapshot();
 });
 
-function which(name: string, schema: JSONSchema4, definitions?: JSONSchema4) {
-  test(name, async () => {
-    const gen = new TypeGenerator(definitions);
-    gen.emitType('TestType', schema, 'fqn.of.TestType');
-    expect(await generate(gen)).toMatchSnapshot();
+
+test('dedup properties with different casing', async () => {
+
+  // based on https://github.com/zalando/postgres-operator/blob/7d4da928726b5029f72e9ab83ee9b6ff481e70c7/manifests/postgresql.crd.yaml#L353-L357
+  const schema: JSONSchema4 = {
+    properties: {
+      pod_priority_class_name: {
+        type: 'string',
+      },
+      podPriorityClassName: {
+        type: 'string',
+      },
+    },
+  };
+
+  const gen = TypeGenerator.forStruct('Foo', schema, {
+    toJson: true,
   });
-}
+
+  expect(await generate(gen)).toMatchSnapshot();
+
+});
