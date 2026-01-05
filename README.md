@@ -198,18 +198,50 @@ interface TypeC {
 ## Language bindings
 
 Once you generate jsii-compatible TypeScript source (such as `person.ts` above),
-you can use [jsii-srcmak](https://github.com/eladb/jsii-srcmak) in order to
+you can use [jsii-srcmak](https://github.com/cdklabs/jsii-srcmak) in order to
 produce source code in any of the jsii supported languages.
 
 The following command will produce Python sources for the `Person` types:
 
-```shell
+```console
 $ jsii-srcmak gen/ts \
   --python-outdir gen/py --python-module-name person \
   --java-outdir gen/java --java-package person
 ```
 
 See the [jsii-srcmak](https://github.com/eladb/jsii-srcmak) for library usage.
+
+## Known Limitations
+
+### Unions of interfaces are not supported ([#1120](https://github.com/cdklabs/json2jsii/issues/1120))
+
+Only primitive types are supported in `oneOf`/`anyOf` unions. Unions of complex types fall back to `any`:
+
+```jsonc
+// ❌ Not supported - falls back to `any`
+{ "oneOf": [{ "$ref": "#/definitions/TypeA" }, { "$ref": "#/definitions/TypeB" }] }
+
+// ✅ Supported - primitive union
+{ "oneOf": [{ "type": "string" }, { "type": "number" }] }
+```
+
+### `$ref` must start with `#/definitions/` or `#/$defs/` ([#1195](https://github.com/cdklabs/json2jsii/issues/1195))
+
+Only local definition references are supported:
+
+```jsonc
+// ❌ Not supported
+{ "$ref": "#/properties/foo" }
+{ "$ref": "https://example.com/schemas/common.json" }
+
+// ✅ Supported
+{ "$ref": "#/definitions/MyType" }
+{ "$ref": "#/$defs/MyType" }
+```
+
+### Nested recursive local references fail ([#1197](https://github.com/cdklabs/json2jsii/issues/1197))
+
+Code generation fails for schemas with nested recursive `$ref` patterns.
 
 ## Contributions
 
@@ -218,4 +250,3 @@ All contributions are celebrated.
 ## License
 
 Distributed under the [Apache 2.0](./LICENSE) license.
-
