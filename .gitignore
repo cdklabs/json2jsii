@@ -51,5 +51,6 @@ junit.xml
 !/.github/workflows/upgrade-cdklabs-projen-project-types-main.yml
 !/.github/workflows/upgrade-main.yml
 !/.github/workflows/upgrade-dev-deps-main.yml
+!/.kiro/steering/project.md
 .vscode/
 !/.projenrc.ts
