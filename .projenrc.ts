@@ -10,7 +10,7 @@ const project = new CdklabsTypeScriptProject({
   description: 'Generates jsii structs from JSON schemas',
   repository: 'https://github.com/cdklabs/json2jsii',
   deps: ['json-schema', 'camelcase', 'snake-case'],
-  devDeps: ['@types/json-schema', 'jsii-srcmak', 'prettier', 'cdklabs-projen-project-types'],
+  devDeps: ['@types/json-schema', 'jsii-srcmak', 'prettier', 'cdklabs-projen-project-types', 'fast-check@^3'],
   releaseToNpm: true,
   defaultReleaseBranch: 'main',
   autoApproveUpgrades: true,
@@ -26,6 +26,14 @@ const project = new CdklabsTypeScriptProject({
     '- [ ] Have you reviewed the [breaking changes guide](https://github.com/cdklabs/json2jsii/blob/main/CONTRIBUTING.md#breaking-changes)?',
     '',
   ],
+  jestOptions: {
+    jestConfig: {
+      // Transform fast-check ESM to CommonJS for Jest
+      transformIgnorePatterns: [
+        'node_modules/(?!(fast-check|pure-rand)/)',
+      ],
+    },
+  },
 });
 
 new AiInstructions(project, {

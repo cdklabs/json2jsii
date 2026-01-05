@@ -1,0 +1,126 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`enum value descriptions escapes special characters in descriptions 1`] = `
+"/**
+ * @schema Foo
+ */
+export interface Foo {
+  /**
+   * @schema Foo#format
+   */
+  readonly format?: FooFormat;
+}
+
+/**
+ * @schema FooFormat
+ */
+export enum FooFormat {
+  /** JSON format /* with special _/ characters (json) */
+  JSON = \\"json\\",
+  /** XML format (xml) */
+  XML = \\"xml\\",
+}
+"
+`;
+
+exports[`enum value descriptions handles mixed described and undescribed enums 1`] = `
+"/**
+ * @schema Foo
+ */
+export interface Foo {
+  /**
+   * @schema Foo#mode
+   */
+  readonly mode?: FooMode;
+}
+
+/**
+ * @schema FooMode
+ */
+export enum FooMode {
+  /** Automatic mode selection (auto) */
+  AUTO = \\"auto\\",
+  /** manual */
+  MANUAL = \\"manual\\",
+  /** Combination of auto and manual (hybrid) */
+  HYBRID = \\"hybrid\\",
+}
+"
+`;
+
+exports[`enum value descriptions preserves descriptions when combining enums in oneOf 1`] = `
+"/**
+ * @schema Foo
+ */
+export interface Foo {
+  /**
+   * @schema Foo#status
+   */
+  readonly status?: FooStatus;
+}
+
+/**
+ * @schema FooStatus
+ */
+export enum FooStatus {
+  /** The resource is currently active and running (active) */
+  ACTIVE = \\"active\\",
+  /** The resource is not currently running (inactive) */
+  INACTIVE = \\"inactive\\",
+  /** Multi-value enum description (pending) */
+  PENDING = \\"pending\\",
+  /** Multi-value enum description (unknown) */
+  UNKNOWN = \\"unknown\\",
+}
+"
+`;
+
+exports[`enum value descriptions single-value enum descriptions take precedence over multi-value 1`] = `
+"/**
+ * @schema Foo
+ */
+export interface Foo {
+  /**
+   * @schema Foo#priority
+   */
+  readonly priority?: FooPriority;
+}
+
+/**
+ * @schema FooPriority
+ */
+export enum FooPriority {
+  /** Highest priority - process immediately (high) */
+  HIGH = \\"high\\",
+  /** General priority levels (medium) */
+  MEDIUM = \\"medium\\",
+  /** General priority levels (low) */
+  LOW = \\"low\\",
+}
+"
+`;
+
+exports[`enum value descriptions works with anyOf as well as oneOf 1`] = `
+"/**
+ * @schema Foo
+ */
+export interface Foo {
+  /**
+   * @schema Foo#level
+   */
+  readonly level?: FooLevel;
+}
+
+/**
+ * @schema FooLevel
+ */
+export enum FooLevel {
+  /** Debug level logging (debug) */
+  DEBUG = \\"debug\\",
+  /** Info level logging (info) */
+  INFO = \\"info\\",
+  /** Error level logging (error) */
+  ERROR = \\"error\\",
+}
+"
+`;
