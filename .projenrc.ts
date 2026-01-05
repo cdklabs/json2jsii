@@ -11,7 +11,7 @@ const project = new CdklabsTypeScriptProject({
   authorEmail: 'elad.benisrael@gmail.com',
   repository: 'https://github.com/cdklabs/json2jsii',
   deps: ['json-schema', 'camelcase', 'snake-case'],
-  devDeps: ['@types/json-schema', 'jsii-srcmak', 'prettier', 'cdklabs-projen-project-types'],
+  devDeps: ['@types/json-schema', 'jsii-srcmak', 'prettier', 'cdklabs-projen-project-types', 'fast-check@^3'],
   releaseToNpm: true,
   defaultReleaseBranch: 'main',
   autoApproveUpgrades: true,
