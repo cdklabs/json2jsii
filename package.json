@@ -68,6 +68,9 @@
   "version": "0.0.0",
   "jest": {
     "coverageProvider": "v8",
+    "transformIgnorePatterns": [
+      "node_modules/(?!(fast-check|pure-rand)/)"
+    ],
     "testMatch": [
       "<rootDir>/@(src|test)/**/*(*.)@(spec|test).ts?(x)",
       "<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)",

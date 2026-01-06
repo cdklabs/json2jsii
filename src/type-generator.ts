@@ -652,6 +652,9 @@ export class TypeGenerator {
 
       const processedValues = new Set<string>();
 
+      // Get enum value descriptions if available
+      const enumValueDescriptions: Record<string, string> = (def as any)['x-json2jsii-enumValueDescriptions'] || {};
+
       for (const value of def.enum) {
         if (!['string', 'number'].includes(typeof(value))) {
           throw new Error('only enums with string or number values are supported');
@@ -673,7 +676,16 @@ export class TypeGenerator {
           memberName = 'VALUE_' + memberName;
         }
 
-        code.line(`/** ${value} */`);
+        // Emit JSDoc comment with description (if available) and value
+        const valueKey = String(value);
+        const description = enumValueDescriptions[valueKey];
+        if (description) {
+          // Escape special characters that could break JSDoc comments
+          const escapedDescription = description.replace(/\*\//g, '_/');
+          code.line(`/** ${escapedDescription} (${value}) */`);
+        } else {
+          code.line(`/** ${value} */`);
+        }
         code.line(`${memberName} = ${JSON.stringify(value)},`);
       }
 

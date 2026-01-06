@@ -3,9 +3,20 @@ import { JSONSchema4, JSONSchema4Type } from 'json-schema';
 const PRIMITIVE_TYPES = new Set(['string', 'number', 'integer', 'boolean']);
 
 /**
+ * Custom property name for storing enum value descriptions.
+ * Follows JSON Schema conventions for extension properties (x- prefix).
+ */
+export const ENUM_VALUE_DESCRIPTIONS_KEY = 'x-json2jsii-enumValueDescriptions';
+
+/**
+ * Type for the enum value descriptions mapping.
+ */
+export type EnumValueDescriptions = Record<string, string>;
+
+/**
  * Reduces multiple occurrences of the same type in oneOf/anyOf into a single type.
  * Only reduces primitive types and $refs with matching references.
- * For enums, combines all enum values into a single enum.
+ * For enums, combines all enum values into a single enum and preserves descriptions.
  */
 export function reduceDuplicateTypesInUnion(def: JSONSchema4): JSONSchema4 {
   // If there's no oneOf or anyOf, return as is
@@ -58,15 +69,63 @@ export function reduceDuplicateTypesInUnion(def: JSONSchema4): JSONSchema4 {
     // If these are enums, combine their values
     if (items.every(item => Array.isArray(item.enum))) {
       const combinedEnum = new Set<JSONSchema4Type>();
+      const enumValueDescriptions: EnumValueDescriptions = {};
+
+      // Track which values came from single-value enums (higher priority)
+      const singleValueDescriptions = new Map<string, string>();
+      const multiValueDescriptions = new Map<string, string>();
+
       for (const item of items) {
+        const isSingleValueEnum = item.enum!.length === 1;
+        const description = typeof item.description === 'string' ? item.description : undefined;
+
         for (const value of item.enum!) {
           combinedEnum.add(value);
+
+          // Only process if there's a description
+          if (description) {
+            const valueKey = String(value);
+
+            if (isSingleValueEnum) {
+              // Single-value enum: use first-wins within single-value enums
+              if (!singleValueDescriptions.has(valueKey)) {
+                singleValueDescriptions.set(valueKey, description);
+              }
+            } else {
+              // Multi-value enum: use first-wins within multi-value enums
+              if (!multiValueDescriptions.has(valueKey)) {
+                multiValueDescriptions.set(valueKey, description);
+              }
+            }
+          }
         }
       }
-      reducedUnion.push({
+
+      // Build final descriptions: prefer single-value enum descriptions over multi-value
+      for (const value of combinedEnum) {
+        const valueKey = String(value);
+        const singleDesc = singleValueDescriptions.get(valueKey);
+        const multiDesc = multiValueDescriptions.get(valueKey);
+
+        if (singleDesc) {
+          enumValueDescriptions[valueKey] = singleDesc;
+        } else if (multiDesc) {
+          enumValueDescriptions[valueKey] = multiDesc;
+        }
+        // If neither has a description, don't add an entry (Requirement 1.4)
+      }
+
+      const combinedSchema: JSONSchema4 = {
         type: items[0].type, // Use the type from the first item
         enum: Array.from(combinedEnum),
-      });
+      };
+
+      // Only add descriptions property if there are any descriptions
+      if (Object.keys(enumValueDescriptions).length > 0) {
+        (combinedSchema as any)[ENUM_VALUE_DESCRIPTIONS_KEY] = enumValueDescriptions;
+      }
+
+      reducedUnion.push(combinedSchema);
     } else {
       // For primitive types or matching $refs, just keep the first one
       reducedUnion.push(items[0]);

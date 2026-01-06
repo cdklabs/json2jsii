@@ -26,6 +26,14 @@ const project = new CdklabsTypeScriptProject({
     '- [ ] Have you reviewed the [breaking changes guide](https://github.com/cdklabs/json2jsii/blob/main/CONTRIBUTING.md#breaking-changes)?',
     '',
   ],
+  jestOptions: {
+    jestConfig: {
+      // Transform fast-check ESM to CommonJS for Jest
+      transformIgnorePatterns: [
+        'node_modules/(?!(fast-check|pure-rand)/)',
+      ],
+    },
+  },
 });
 
 new AiInstructions(project, {
