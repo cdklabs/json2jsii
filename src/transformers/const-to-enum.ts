@@ -74,7 +74,7 @@ function transformConstToEnum(def: JSONSchema4): JSONSchema4 {
  * Type guard to check if the schema has a `const` property defined.
  */
 function hasConst(def: JSONSchema4): boolean {
-  return 'const' in def && def.const !== undefined;
+  return typeof def === 'object' && 'const' in def && def.const !== undefined;
 }
 
 /**

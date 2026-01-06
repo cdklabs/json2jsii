@@ -1,3 +1,4 @@
+import * as fc from 'fast-check';
 import { JSONSchema4 } from 'json-schema';
 import { TypeGenerator } from '../src';
 
@@ -105,8 +106,6 @@ describe('prohibited member names', () => {
   });
 });
 
-
-import * as fc from 'fast-check';
 
 /**
  * Property-based tests for prohibited name handling

@@ -309,5 +309,19 @@ describe('constToEnum', () => {
       expect(result.oneOf?.[0].const).toBeUndefined();
       expect(result.oneOf?.[1].enum).toEqual(['b', 'c']);
     });
+
+    test('should handle required property with boolean true schema', () => {
+      const schema: JSONSchema4 = {
+        required: ['field'],
+        properties: {
+          field: true as any,
+        },
+      };
+
+      const result = constToEnum(schema);
+
+      expect(result.required).toEqual(['field']);
+      expect(result.properties?.field).toBe(true);
+    });
   });
 });
