@@ -29,7 +29,10 @@ describe('const-to-enum integration', () => {
 
       const gen = TypeGenerator.forStruct('Config', schema, {
         toJson: false,
-        transformations: { hoistSingletonUnions: true, convertConstToEnum: true },
+        transformations: {
+          hoistSingletonUnions: true,
+          convertConstToEnum: true,
+        },
       });
       const source = await generate(gen);
 
@@ -48,9 +51,9 @@ describe('const-to-enum integration', () => {
          * @schema ConfigIndentStyle
          */
         export enum ConfigIndentStyle {
-          /** tab */
+          /** Use tab characters for indentation (tab) */
           TAB = \\"tab\\",
-          /** space */
+          /** Use space characters for indentation (space) */
           SPACE = \\"space\\",
         }
         "
@@ -85,7 +88,10 @@ describe('const-to-enum integration', () => {
 
       const gen = TypeGenerator.forStruct('Config', schema, {
         toJson: false,
-        transformations: { hoistSingletonUnions: true, convertConstToEnum: true },
+        transformations: {
+          hoistSingletonUnions: true,
+          convertConstToEnum: true,
+        },
       });
       const source = await generate(gen);
 
@@ -104,11 +110,11 @@ describe('const-to-enum integration', () => {
          * @schema ConfigIndentSize
          */
         export enum ConfigIndentSize {
-          /** 2 */
+          /** Two spaces per indent level (2) */
           VALUE_2 = 2,
-          /** 4 */
+          /** Four spaces per indent level (4) */
           VALUE_4 = 4,
-          /** 8 */
+          /** Eight spaces per indent level (8) */
           VALUE_8 = 8,
         }
         "
@@ -146,11 +152,17 @@ describe('const-to-enum integration', () => {
 
       const constGen = TypeGenerator.forStruct('Config', constSchema, {
         toJson: false,
-        transformations: { hoistSingletonUnions: true, convertConstToEnum: true },
+        transformations: {
+          hoistSingletonUnions: true,
+          convertConstToEnum: true,
+        },
       });
       const enumGen = TypeGenerator.forStruct('Config', enumSchema, {
         toJson: false,
-        transformations: { hoistSingletonUnions: true, convertConstToEnum: true },
+        transformations: {
+          hoistSingletonUnions: true,
+          convertConstToEnum: true,
+        },
       });
 
       const constSource = await generate(constGen);
@@ -177,7 +189,10 @@ describe('const-to-enum integration', () => {
 
       const gen = TypeGenerator.forStruct('Config', schema, {
         toJson: false,
-        transformations: { hoistSingletonUnions: true, convertConstToEnum: true },
+        transformations: {
+          hoistSingletonUnions: true,
+          convertConstToEnum: true,
+        },
       });
       const source = await generate(gen);
 
@@ -196,7 +211,7 @@ describe('const-to-enum integration', () => {
          * @schema ConfigFormat
          */
         export enum ConfigFormat {
-          /** json */
+          /** JSON format (json) */
           JSON = \\"json\\",
           /** yaml */
           YAML = \\"yaml\\",
@@ -231,7 +246,10 @@ describe('const-to-enum integration', () => {
 
       const gen = TypeGenerator.forStruct('Config', schema, {
         toJson: false,
-        transformations: { hoistSingletonUnions: true, convertConstToEnum: true },
+        transformations: {
+          hoistSingletonUnions: true,
+          convertConstToEnum: true,
+        },
       });
       const source = await generate(gen);
 
@@ -250,9 +268,9 @@ describe('const-to-enum integration', () => {
          * @schema ConfigLevel
          */
         export enum ConfigLevel {
-          /** debug */
+          /** Debug level logging (debug) */
           DEBUG = \\"debug\\",
-          /** info */
+          /** Info level logging (info) */
           INFO = \\"info\\",
           /** warn */
           WARN = \\"warn\\",
@@ -279,7 +297,10 @@ describe('const-to-enum integration', () => {
 
       const gen = TypeGenerator.forStruct('Config', schema, {
         toJson: false,
-        transformations: { hoistSingletonUnions: true, convertConstToEnum: true },
+        transformations: {
+          hoistSingletonUnions: true,
+          convertConstToEnum: true,
+        },
       });
       const source = await generate(gen);
 
@@ -323,7 +344,10 @@ describe('const-to-enum integration', () => {
 
       const gen = TypeGenerator.forStruct('Config', schema, {
         toJson: false,
-        transformations: { hoistSingletonUnions: true, convertConstToEnum: true },
+        transformations: {
+          hoistSingletonUnions: true,
+          convertConstToEnum: true,
+        },
       });
       const source = await generate(gen);
 
@@ -388,7 +412,10 @@ describe('const-to-enum integration', () => {
 
       const gen = TypeGenerator.forStruct('Config', schema, {
         toJson: false,
-        transformations: { hoistSingletonUnions: true, convertConstToEnum: true },
+        transformations: {
+          hoistSingletonUnions: true,
+          convertConstToEnum: true,
+        },
       });
       const source = await generate(gen);
 
@@ -427,9 +454,9 @@ describe('const-to-enum integration', () => {
          * @schema ConfigEditorSettingsTabStyle
          */
         export enum ConfigEditorSettingsTabStyle {
-          /** hard */
+          /** Hard tabs (actual tab characters) (hard) */
           HARD = \\"hard\\",
-          /** soft */
+          /** Soft tabs (spaces) (soft) */
           SOFT = \\"soft\\",
         }
         "
