@@ -12,6 +12,14 @@ const DEFINITIONS_PREFIX = '#/$defs/';
 const DEFAULT_RENDER_TYPE_NAME = (s: string) => s.split('.').map(x => pascalCase(x)).join('');
 
 /**
+ * JSII synthetic declarations that cannot be used as property names.
+ * These are reserved method names in JSII structs across target languages.
+ *
+ * @see https://github.com/aws/jsii-compiler/blob/0f142651abac9eff35dfbd74c141d5ff058b2a8a/src/assembler.ts#L3193
+ */
+const PROHIBITED_MEMBER_NAMES = ['build', 'equals', 'hashcode'];
+
+/**
  * Available opt-in schema transformations
  */
 export interface SchemaTransformations {
@@ -610,6 +618,11 @@ export class TypeGenerator {
 
     // convert the name to camel case so it's compatible with JSII
     name = camelCase(name);
+
+    // if the name conflicts with a prohibited member name, append underscore
+    if (PROHIBITED_MEMBER_NAMES.includes(name.toLowerCase())) {
+      name = name + '_';
+    }
 
     const propertyFqn = this.propertyFqn(structFqn, name);
 
