@@ -77,6 +77,25 @@ export interface SchemaTransformations {
    * @default false
    */
   readonly simplifyElementArrayUnions?: boolean;
+  /**
+   * When true, JSON Schema `const` keywords are converted to equivalent single-value `enum` arrays.
+   *
+   * This normalization enables other enum handling logic to process both `const` and `enum` patterns uniformly,
+   * enabling `oneOf` unions containing `const` values to generate TypeScript enums.
+   *
+   * ---
+   *
+   * **Considerations**: Without this transformation, `const` values are emitted as their underlying type (e.g. `string`),
+   * which allows any value of that type in TypeScript even though the schema only permits the specific const value.
+   * Enabling this option provides stricter type safety by generating enums that restrict values to exactly what the schema allows.
+   *
+   * ----
+   *
+   * @example { const: 'tab' } -> { enum: ['tab'] }
+   *
+   * @default false
+   */
+  readonly convertConstToEnum?: boolean;
 }
 
 export interface TypeGeneratorOptions {
@@ -281,6 +300,9 @@ export class TypeGenerator {
    */
   private transformTypes(def: JSONSchema4): JSONSchema4 {
     const transformers: Array<(def: JSONSchema4) => JSONSchema4> = [
+      // normalize const to enum first (opt-in)
+      this.maybeWith($T.constToEnum, this.transformations.convertConstToEnum),
+
       // remove
       $T.reduceNullTypeArray, // legacy mandatory transformation
       this.maybeWith($T.reduceNullFromUnions, this.transformations.convertNullUnionsToOptional),
@@ -590,6 +612,9 @@ export class TypeGenerator {
     if (name.startsWith('$')) {
       name = name.substring(1);
     }
+
+    // Replace slashes with underscores (for property names liks 'kubernetes/io')
+    name = name.replace(/\//, '_');
 
     // convert the name to camel case so it's compatible with JSII
     name = camelCase(name);

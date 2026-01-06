@@ -986,6 +986,33 @@ export function toJson_ItemType(obj: ItemType | undefined): Record<string, any> 
 "
 `;
 
+exports[`structs converts field names with slashes correctly 1`] = `
+"/**
+ * @schema fqn.of.TestType
+ */
+export interface TestType {
+  /**
+   * @schema fqn.of.TestType#kubernetes/io
+   */
+  readonly kubernetesIo: string;
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'kubernetes/io': obj.kubernetesIo,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+"
+`;
+
 exports[`structs has a field that references another struct (with required fields) 1`] = `
 "/**
  * @schema fqn.of.TestType
