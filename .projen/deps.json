@@ -56,6 +56,11 @@
       "type": "build"
     },
     {
+      "name": "fast-check",
+      "version": "^3",
+      "type": "build"
+    },
+    {
       "name": "jest",
       "type": "build"
     },
