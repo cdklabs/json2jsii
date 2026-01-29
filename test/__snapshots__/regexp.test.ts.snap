@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`timeout regexp example 1`] = `
+"/**
+ * @schema config
+ */
+export interface Config {
+  /**
+   * @schema config#timeout
+   */
+  readonly timeout?: ConfigTimeout;
+}
+
+/**
+ * Converts an object of type 'Config' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_Config(obj: Config | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'timeout': obj.timeout?.value,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * @schema ConfigTimeout
+ */
+export class ConfigTimeout {
+  public static fromString(value: string): ConfigTimeout {
+    if (!(new RegExp('^[0-9]+(ns|us|µs|μs|ms|s|m|h)?$').test(value))) {
+      throw new Error(\`value \${value} does not match validation regex ^[0-9]+(ns|us|µs|μs|ms|s|m|h)?$\`)
+    };
+    return new ConfigTimeout(value);
+  }
+  public static fromNumber(value: number): ConfigTimeout {
+    return new ConfigTimeout(value);
+  }
+  private constructor(public readonly value: string | number) {
+  }
+}
+"
+`;
