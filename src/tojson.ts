@@ -25,7 +25,7 @@ export class ToJsonFunction {
    * format. This could be `x => x` if no conversion is required.
    */
   public addField(schemaName: string, propertyName: string, toJson: ToJson, propertyRegex?: string) {
-    this.fields[schemaName]= <ObjectField>{
+    this.fields[schemaName] = {
       renderedField: toJson(`obj.${propertyName}`),
       propertyRegex: propertyRegex,
     };
@@ -56,16 +56,17 @@ export class ToJsonFunction {
     }
     code.close('};');
 
-    code.line('// filter undefined values');
-    code.line('return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});');
-
     for (const [k, v] of Object.entries(this.fields)) {
       if (v.propertyRegex) {
-        code.open(`if (result['${k}'] !== undefined && !(new RegExp('${v.propertyRegex}').test(result['${k}']!))) {`);
-        code.line(`throw new Error('property ${k} does not match validation regex ${v.propertyRegex}')`);
-        code.close('};');
+        const escapedRegex = v.propertyRegex.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+        code.open(`if (result['${k}'] !== undefined && !(new RegExp('${escapedRegex}').test(result['${k}']!))) {`);
+        code.line(`throw new Error('property ${k} does not match validation regex ${escapedRegex}');`);
+        code.close('}');
       }
-    };
+    }
+
+    code.line('// filter undefined values');
+    code.line('return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});');
 
     code.closeBlock();
     code.line(`/* eslint-enable ${disabledEslintRules.join(', ')} */`);

@@ -180,7 +180,7 @@ export interface TypeGeneratorOptions {
    *
    * @default false
    */
-  readonly validateRegexp?: boolean;
+  readonly emitRegexValidation?: boolean;
 }
 
 /**
@@ -242,7 +242,7 @@ export class TypeGenerator {
   private readonly sanitizeEnums: boolean;
   private readonly renderTypeName: (def: string) => string;
   private readonly transformations: SchemaTransformations;
-  private readonly validateRegexp: boolean;
+  private readonly emitRegexValidation: boolean;
 
   /**
    *
@@ -257,7 +257,7 @@ export class TypeGenerator {
     this.sanitizeEnums = options.sanitizeEnums ?? false;
     this.renderTypeName = options.renderTypeName ?? DEFAULT_RENDER_TYPE_NAME;
     this.transformations = options.transformations ?? {};
-    this.validateRegexp = options.validateRegexp ?? false;
+    this.emitRegexValidation = options.emitRegexValidation ?? false;
 
     for (const [typeName, def] of Object.entries(options.definitions ?? {})) {
       this.addDefinition(typeName, def);
@@ -551,7 +551,7 @@ export class TypeGenerator {
       }
 
       const type = resolvedOption.type === 'integer' ? 'number' : resolvedOption.type;
-      options.push([type, option.pattern]);
+      options.push([type, resolvedOption.pattern]);
     }
 
     const emitted: EmittedType = { type: typeName, toJson: x => `${x}?.value` };
@@ -566,11 +566,12 @@ export class TypeGenerator {
         possibleTypes.push(type);
         const methodName = 'from' + type[0].toUpperCase() + type.substring(1);
         code.openBlock(`public static ${methodName}(value: ${type}): ${typeName}`);
-        if (this.validateRegexp && pattern) {
-          code.open(`if (!(new RegExp('${pattern}').test(value))) {`);
-          code.line(`throw new Error(\`value \${value} does not match validation regex ${pattern}\`)`);
-          code.close('};');
-        };
+        if (this.emitRegexValidation && pattern) {
+          const escapedPattern = pattern.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+          code.open(`if (!(new RegExp('${escapedPattern}').test(String(value)))) {`);
+          code.line(`throw new Error(\`value \${value} does not match validation regex ${escapedPattern}\`);`);
+          code.close('}');
+        }
 
         code.line(`return new ${typeName}(value);`);
         code.closeBlock();
@@ -658,7 +659,7 @@ export class TypeGenerator {
 
     code.line(`readonly ${name}${optional}: ${propertyType.type};`);
 
-    toJson.addField(originalName, name, propertyType.toJson, this.validateRegexp ? propDef.pattern : undefined);
+    toJson.addField(originalName, name, propertyType.toJson, this.emitRegexValidation ? propDef.pattern : undefined);
     this.emittedProperties.add(propertyFqn);
   }
 

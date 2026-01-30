@@ -30,9 +30,9 @@ export function toJson_Config(obj: Config | undefined): Record<string, any> | un
  */
 export class ConfigTimeout {
   public static fromString(value: string): ConfigTimeout {
-    if (!(new RegExp('^[0-9]+(ns|us|µs|μs|ms|s|m|h)?$').test(value))) {
-      throw new Error(\`value \${value} does not match validation regex ^[0-9]+(ns|us|µs|μs|ms|s|m|h)?$\`)
-    };
+    if (!(new RegExp('^[0-9]+(ns|us|µs|μs|ms|s|m|h)?$').test(String(value)))) {
+      throw new Error(\`value \${value} does not match validation regex ^[0-9]+(ns|us|µs|μs|ms|s|m|h)?$\`);
+    }
     return new ConfigTimeout(value);
   }
   public static fromNumber(value: number): ConfigTimeout {
