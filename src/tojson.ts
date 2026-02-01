@@ -1,12 +1,16 @@
 import { Code } from './code';
 
+export interface ObjectField {
+  renderedField: string;
+  propertyRegex?: string;
+}
 export class ToJsonFunction {
   /**
    * The name the toJson function for a struct.
    */
   public readonly functionName: string;
 
-  private readonly fields: Record<string, string> = {};
+  private readonly fields: Record<string, ObjectField> = {};
 
   constructor(private readonly baseType: string, private readonly internal: boolean = false) {
     this.functionName = `toJson_${baseType}`;
@@ -20,8 +24,11 @@ export class ToJsonFunction {
    * @param toJson A function used to convert a value from JavaScript to schema
    * format. This could be `x => x` if no conversion is required.
    */
-  public addField(schemaName: string, propertyName: string, toJson: ToJson) {
-    this.fields[schemaName] = toJson(`obj.${propertyName}`);
+  public addField(schemaName: string, propertyName: string, toJson: ToJson, propertyRegex?: string) {
+    this.fields[schemaName] = {
+      renderedField: toJson(`obj.${propertyName}`),
+      propertyRegex: propertyRegex,
+    };
   }
 
   public emit(code: Code) {
@@ -45,9 +52,18 @@ export class ToJsonFunction {
 
     code.open('const result = {');
     for (const [k, v] of Object.entries(this.fields)) {
-      code.line(`'${k}': ${v},`);
+      code.line(`'${k}': ${v.renderedField},`);
     }
     code.close('};');
+
+    for (const [k, v] of Object.entries(this.fields)) {
+      if (v.propertyRegex) {
+        const escapedRegex = v.propertyRegex.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+        code.open(`if (result['${k}'] !== undefined && !(new RegExp('${escapedRegex}').test(result['${k}']!))) {`);
+        code.line(`throw new Error('property ${k} does not match validation regex ${escapedRegex}');`);
+        code.close('}');
+      }
+    }
 
     code.line('// filter undefined values');
     code.line('return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});');
