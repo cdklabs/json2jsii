@@ -577,7 +577,11 @@ export class TypeGenerator {
         code.closeBlock();
       }
 
-      code.openBlock(`private constructor(public readonly value: ${possibleTypes.join(' | ')})`);
+      const valueType = possibleTypes.join(' | ');
+      code.line(`public readonly value: ${valueType};`);
+      code.line();
+      code.openBlock(`private constructor(value: ${valueType})`);
+      code.line('this.value = value;');
       code.closeBlock();
 
       code.closeBlock();
