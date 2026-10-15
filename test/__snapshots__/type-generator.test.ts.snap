@@ -1520,7 +1520,10 @@ export class FqnOfTestTypeFoo {
   public static fromBoolean(value: boolean): FqnOfTestTypeFoo {
     return new FqnOfTestTypeFoo(value);
   }
-  private constructor(public readonly value: boolean) {
+  public readonly value: boolean;
+
+  private constructor(value: boolean) {
+    this.value = value;
   }
 }
 
@@ -1531,7 +1534,10 @@ export class FqnOfTestTypeBar {
   public static fromBoolean(value: boolean): FqnOfTestTypeBar {
     return new FqnOfTestTypeBar(value);
   }
-  private constructor(public readonly value: boolean) {
+  public readonly value: boolean;
+
+  private constructor(value: boolean) {
+    this.value = value;
   }
 }
 "
@@ -1784,7 +1790,10 @@ export class FqnOfTestTypeFoo {
   public static fromNumber(value: number): FqnOfTestTypeFoo {
     return new FqnOfTestTypeFoo(value);
   }
-  private constructor(public readonly value: string | number) {
+  public readonly value: string | number;
+
+  private constructor(value: string | number) {
+    this.value = value;
   }
 }
 "
@@ -1822,7 +1831,10 @@ export class FqnOfTestTypeFoo {
   public static fromString(value: string): FqnOfTestTypeFoo {
     return new FqnOfTestTypeFoo(value);
   }
-  private constructor(public readonly value: string) {
+  public readonly value: string;
+
+  private constructor(value: string) {
+    this.value = value;
   }
 }
 "
@@ -1860,7 +1872,10 @@ export class FqnOfTestTypeFoo {
   public static fromBoolean(value: boolean): FqnOfTestTypeFoo {
     return new FqnOfTestTypeFoo(value);
   }
-  private constructor(public readonly value: boolean) {
+  public readonly value: boolean;
+
+  private constructor(value: boolean) {
+    this.value = value;
   }
 }
 "
@@ -1910,7 +1925,10 @@ export class FqnOfTestTypeFoo {
   public static fromBoolean(value: boolean): FqnOfTestTypeFoo {
     return new FqnOfTestTypeFoo(value);
   }
-  private constructor(public readonly value: boolean) {
+  public readonly value: boolean;
+
+  private constructor(value: boolean) {
+    this.value = value;
   }
 }
 
@@ -1921,7 +1939,10 @@ export class FqnOfTestTypeBar {
   public static fromString(value: string): FqnOfTestTypeBar {
     return new FqnOfTestTypeBar(value);
   }
-  private constructor(public readonly value: string) {
+  public readonly value: string;
+
+  private constructor(value: string) {
+    this.value = value;
   }
 }
 "
@@ -1977,7 +1998,10 @@ export class TestType {
   public static fromNumber(value: number): TestType {
     return new TestType(value);
   }
-  private constructor(public readonly value: string | number) {
+  public readonly value: string | number;
+
+  private constructor(value: string | number) {
+    this.value = value;
   }
 }
 "
@@ -1994,7 +2018,10 @@ export class TestType {
   public static fromNumber(value: number): TestType {
     return new TestType(value);
   }
-  private constructor(public readonly value: string | number) {
+  public readonly value: string | number;
+
+  private constructor(value: string | number) {
+    this.value = value;
   }
 }
 "
