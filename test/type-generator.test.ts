@@ -250,6 +250,31 @@ describe('structs', () => {
     },
   });
 
+  which('supports escape sequences in references', {
+    type: 'object',
+    properties: {
+      slash: { $ref: '#/definitions/foo~1bar' },
+      tilde: { $ref: '#/definitions/tilde~0bar' },
+      tildeOne: { $ref: '#/$defs/Other~01bar' },
+      percentEncoded: { $ref: '#/definitions/with%20space' },
+      percentEncodedSlash: { $ref: '#/definitions/one~1%74wo%2Fthree' },
+      exactName: { $ref: '#/definitions/Exact%2EName' },
+      notEncoded: { $ref: '#/definitions/100%' },
+      onlySymbols: { $ref: '#/definitions/@@' },
+    },
+  }, {
+    definitions: {
+      'foo/bar': { type: 'object', properties: { nested: { type: 'object', properties: { y: { type: 'string' } } } } },
+      'tilde~bar': { type: 'object', properties: { y: { type: 'string' } } },
+      'Other~1bar': { type: 'object', properties: { y: { type: 'string' } } },
+      'with space': { type: 'object', properties: { y: { type: 'string' } } },
+      'one/two/three': { type: 'object', properties: { y: { type: 'string' } } },
+      'Exact%2EName': { type: 'object', properties: { y: { type: 'string' } } },
+      '100%': { type: 'string' },
+      '@@': { type: 'string' },
+    },
+  });
+
   which('references itself', {
     type: 'object',
     properties: {

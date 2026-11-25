@@ -4,7 +4,7 @@ import { mkdtempSync, writeFileSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
 import { JSONSchema4 } from 'json-schema';
-import { TypeGenerator } from '../src';
+import { TypeGenerator, TypeGeneratorOptions } from '../src';
 
 test('primitives', () => {
   const toJson = generateToJson({
@@ -29,6 +29,24 @@ test('primitives', () => {
     stringProperty: 'hello, world', numberProperty: undefined,
   })).toStrictEqual({
     StringProperty: 'hello, world',
+  });
+});
+
+test('names with characters that need to be escaped', () => {
+  const toJson = generateToJson({
+    properties: {
+      "it's": { type: 'string', pattern: "^[a-z']+$" },
+      'back\\slash': { type: 'string', pattern: '^\\w+$' },
+      'say "hi"': { type: 'string' },
+      'end */ of comment': { type: 'string' },
+      'kubernetes.io/foo/bar': { type: 'string' },
+    },
+  }, { emitRegexValidation: true });
+
+  expect(toJson({
+    itS: "that's", backSlash: 'b', sayHi: 'c', endOfComment: 'e', kubernetesIoFooBar: 'f',
+  })).toStrictEqual({
+    "it's": "that's", 'back\\slash': 'b', 'say "hi"': 'c', 'end */ of comment': 'e', 'kubernetes.io/foo/bar': 'f',
   });
 });
 
@@ -321,19 +339,19 @@ test('union types', () => {
  * Generates structs from this JSON schema and returns a compiled versio of the
  * toJson method for the top-level struct.
  */
-function generateToJson(schema: JSONSchema4): (x: any) => any {
-  return generateModule('MyStruct', schema).toJson_MyStruct;
+function generateToJson(schema: JSONSchema4, options?: TypeGeneratorOptions): (x: any) => any {
+  return generateModule('MyStruct', schema, options).toJson_MyStruct;
 }
 
 /**
  * Generates structs from this JSON schema and returns a compiled versio of the
  * toJson method for the top-level struct.
  */
-function generateModule(structName: string, schema: JSONSchema4): any {
+function generateModule(structName: string, schema: JSONSchema4, options?: TypeGeneratorOptions): any {
   // generate code into workdir
   const workdir = mkdtempSync(join(tmpdir(), 'tojson.'));
 
-  const gen = TypeGenerator.forStruct(structName, schema);
+  const gen = TypeGenerator.forStruct(structName, schema, options);
   const code = gen.render();
   expect(code).toMatchSnapshot();
 

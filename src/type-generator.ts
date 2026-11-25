@@ -9,7 +9,8 @@ import * as $T from './transformers';
 const PRIMITIVE_TYPES = ['string', 'number', 'integer', 'boolean'];
 const DEFINITIONS_LEGACY_PREFIX = '#/definitions/';
 const DEFINITIONS_PREFIX = '#/$defs/';
-const DEFAULT_RENDER_TYPE_NAME = (s: string) => s.split('.').map(x => pascalCase(x)).join('');
+// Split on everything that can't be part of an identifier, except for '-' and ' ' which are handled by `pascalCase`
+const DEFAULT_RENDER_TYPE_NAME = (s: string) => s.split(/[^\p{ID_Continue}$\- ]+/u).map(x => pascalCase(x)).join('') || '_';
 
 /**
  * JSII synthetic declarations that cannot be used as property names.
@@ -155,7 +156,8 @@ export interface TypeGeneratorOptions {
    * For example, if a complex type references a namespaced definition like `api.group.Foo`, we'd like to control
    * how to translate `api.group.Foo`, which is an illegal typename, into a legal one.
    *
-   * @default - Only dot namespacing is handled by default. Elements between dots are pascal cased and concatenated.
+   * @default - Dots and other characters that are not allowed in a type name are treated as separators.
+   * Elements between separators are pascal cased and concatenated.
    */
   readonly renderTypeName?: (def: string) => string;
 
@@ -375,10 +377,8 @@ export class TypeGenerator {
       throw new Error(`${typeName} must be normalized before calling emitType`);
     }
 
-    if (structFqn.startsWith(DEFINITIONS_LEGACY_PREFIX)) {
-      structFqn = structFqn.substring(DEFINITIONS_LEGACY_PREFIX.length);
-    } else if (structFqn.startsWith(DEFINITIONS_PREFIX)) {
-      structFqn = structFqn.substring(DEFINITIONS_PREFIX.length);
+    if (isDefinitionsRef(structFqn)) {
+      structFqn = this.definitionName(structFqn);
     }
 
     if (this.isExcluded(structFqn)) {
@@ -637,8 +637,9 @@ export class TypeGenerator {
       name = name.substring(1);
     }
 
-    // Replace slashes with underscores (for property names liks 'kubernetes/io')
-    name = name.replace(/\//, '_');
+    // Replace everything that can't be part of an identifier with underscores (for property names like 'kubernetes/io').
+    // '.', '-' and ' ' are handled by `camelCase`.
+    name = name.replace(/[^\p{ID_Continue}$.\- ]+/gu, '_');
 
     // convert the name to camel case so it's compatible with JSII
     name = camelCase(name);
@@ -756,7 +757,7 @@ export class TypeGenerator {
     annotations.schema = fqn;
 
     for (const [type, value] of Object.entries(annotations)) {
-      code.line(` * @${type} ${value}`);
+      code.line(` * @${type} ${value.replace(/\*\//g, '_/')}`);
     }
 
     code.line(' */');
@@ -776,7 +777,7 @@ export class TypeGenerator {
       return { type: 'any', toJson: x => x };
     }
 
-    const typeName = TypeGenerator.normalizeTypeName(this.renderTypeName(extractDefinitionName(def.$ref)));
+    const typeName = TypeGenerator.normalizeTypeName(this.renderTypeName(this.definitionName(def.$ref)));
 
     // if we already emitted a type with this type name, just return it
     const emitted = this.emittedTypes[typeName];
@@ -803,13 +804,23 @@ export class TypeGenerator {
       throw new Error('expecting a local reference');
     }
 
-    const lookup = extractDefinitionName(ref);
+    const lookup = this.definitionName(ref);
     const found = this.definitions[lookup];
     if (!found) {
       throw new Error(`unable to find a definition for the $ref "${lookup}"`);
     }
 
     return found;
+  }
+
+  /**
+   * The name of the definition a `$ref` points to.
+   */
+  private definitionName(ref: string): string {
+    const name = extractDefinitionName(ref);
+
+    // definitions (and aliases) can be referenced by their exact name, even if it contains escape sequences
+    return Object.prototype.hasOwnProperty.call(this.definitions, name) ? name : unescapeFragment(name);
   }
 
   private isPropertyRequired(property: string, structDef: JSONSchema4) {
@@ -920,6 +931,21 @@ function extractDefinitionName(ref: string): string {
     return ref.substring(DEFINITIONS_PREFIX.length);
   }
   throw new Error(`invalid definitions ref: ${ref}`);
+}
+
+/**
+ * Decodes a JSON pointer token that is used in an URI fragment.
+ *
+ * @see https://www.rfc-editor.org/rfc/rfc6901#section-6
+ */
+function unescapeFragment(token: string): string {
+  try {
+    token = decodeURIComponent(token);
+  } catch {
+    // not percent-encoded
+  }
+
+  return token.replace(/~1/g, '/').replace(/~0/g, '~');
 }
 
 type TypeEmitter = (code: Code) => EmittedType;
