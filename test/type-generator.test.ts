@@ -260,6 +260,7 @@ describe('structs', () => {
       percentEncodedSlash: { $ref: '#/definitions/one~1%74wo%2Fthree' },
       exactName: { $ref: '#/definitions/Exact%2EName' },
       notEncoded: { $ref: '#/definitions/100%' },
+      onlySymbols: { $ref: '#/definitions/@@' },
     },
   }, {
     definitions: {
@@ -270,6 +271,7 @@ describe('structs', () => {
       'one/two/three': { type: 'object', properties: { y: { type: 'string' } } },
       'Exact%2EName': { type: 'object', properties: { y: { type: 'string' } } },
       '100%': { type: 'string' },
+      '@@': { type: 'string' },
     },
   });
 

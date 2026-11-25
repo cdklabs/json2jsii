@@ -10,7 +10,7 @@ const PRIMITIVE_TYPES = ['string', 'number', 'integer', 'boolean'];
 const DEFINITIONS_LEGACY_PREFIX = '#/definitions/';
 const DEFINITIONS_PREFIX = '#/$defs/';
 // Split on everything that can't be part of an identifier, except for '-' and ' ' which are handled by `pascalCase`
-const DEFAULT_RENDER_TYPE_NAME = (s: string) => s.split(/[^\p{ID_Continue}$\- ]+/u).map(x => pascalCase(x)).join('') || s;
+const DEFAULT_RENDER_TYPE_NAME = (s: string) => s.split(/[^\p{ID_Continue}$\- ]+/u).map(x => pascalCase(x)).join('') || '_';
 
 /**
  * JSII synthetic declarations that cannot be used as property names.

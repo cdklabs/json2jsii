@@ -1354,6 +1354,11 @@ export interface TestType {
    * @schema fqn.of.TestType#notEncoded
    */
   readonly notEncoded?: string;
+
+  /**
+   * @schema fqn.of.TestType#onlySymbols
+   */
+  readonly onlySymbols?: string;
 }
 
 /**
@@ -1370,6 +1375,7 @@ export function toJson_TestType(obj: TestType | undefined): Record<string, any> 
     'percentEncodedSlash': toJson_OneTwoThree(obj.percentEncodedSlash),
     'exactName': toJson_Exact2EName(obj.exactName),
     'notEncoded': obj.notEncoded,
+    'onlySymbols': obj.onlySymbols,
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
