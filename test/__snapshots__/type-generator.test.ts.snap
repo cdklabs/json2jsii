@@ -1315,6 +1315,237 @@ export function toJson_Other(obj: Other | undefined): Record<string, any> | unde
 "
 `;
 
+exports[`structs supports escape sequences in references 1`] = `
+"/**
+ * @schema fqn.of.TestType
+ */
+export interface TestType {
+  /**
+   * @schema fqn.of.TestType#slash
+   */
+  readonly slash?: FooBar;
+
+  /**
+   * @schema fqn.of.TestType#tilde
+   */
+  readonly tilde?: TildeBar;
+
+  /**
+   * @schema fqn.of.TestType#tildeOne
+   */
+  readonly tildeOne?: Other1Bar;
+
+  /**
+   * @schema fqn.of.TestType#percentEncoded
+   */
+  readonly percentEncoded?: WithSpace;
+
+  /**
+   * @schema fqn.of.TestType#percentEncodedSlash
+   */
+  readonly percentEncodedSlash?: OneTwoThree;
+
+  /**
+   * @schema fqn.of.TestType#exactName
+   */
+  readonly exactName?: Exact2EName;
+
+  /**
+   * @schema fqn.of.TestType#notEncoded
+   */
+  readonly notEncoded?: string;
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'slash': toJson_FooBar(obj.slash),
+    'tilde': toJson_TildeBar(obj.tilde),
+    'tildeOne': toJson_Other1Bar(obj.tildeOne),
+    'percentEncoded': toJson_WithSpace(obj.percentEncoded),
+    'percentEncodedSlash': toJson_OneTwoThree(obj.percentEncodedSlash),
+    'exactName': toJson_Exact2EName(obj.exactName),
+    'notEncoded': obj.notEncoded,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * @schema foo/bar
+ */
+export interface FooBar {
+  /**
+   * @schema foo/bar#nested
+   */
+  readonly nested?: FooBarNested;
+}
+
+/**
+ * Converts an object of type 'FooBar' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_FooBar(obj: FooBar | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'nested': toJson_FooBarNested(obj.nested),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * @schema tilde~bar
+ */
+export interface TildeBar {
+  /**
+   * @schema tilde~bar#y
+   */
+  readonly y?: string;
+}
+
+/**
+ * Converts an object of type 'TildeBar' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_TildeBar(obj: TildeBar | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'y': obj.y,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * @schema Other~1bar
+ */
+export interface Other1Bar {
+  /**
+   * @schema Other~1bar#y
+   */
+  readonly y?: string;
+}
+
+/**
+ * Converts an object of type 'Other1Bar' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_Other1Bar(obj: Other1Bar | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'y': obj.y,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * @schema with space
+ */
+export interface WithSpace {
+  /**
+   * @schema with space#y
+   */
+  readonly y?: string;
+}
+
+/**
+ * Converts an object of type 'WithSpace' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_WithSpace(obj: WithSpace | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'y': obj.y,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * @schema one/two/three
+ */
+export interface OneTwoThree {
+  /**
+   * @schema one/two/three#y
+   */
+  readonly y?: string;
+}
+
+/**
+ * Converts an object of type 'OneTwoThree' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_OneTwoThree(obj: OneTwoThree | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'y': obj.y,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * @schema Exact%2EName
+ */
+export interface Exact2EName {
+  /**
+   * @schema Exact%2EName#y
+   */
+  readonly y?: string;
+}
+
+/**
+ * Converts an object of type 'Exact2EName' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_Exact2EName(obj: Exact2EName | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'y': obj.y,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * @schema FooBarNested
+ */
+export interface FooBarNested {
+  /**
+   * @schema FooBarNested#y
+   */
+  readonly y?: string;
+}
+
+/**
+ * Converts an object of type 'FooBarNested' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_FooBarNested(obj: FooBarNested | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'y': obj.y,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+"
+`;
+
 exports[`type aliases alias to a custom type 1`] = `
 "// this is NewType
 

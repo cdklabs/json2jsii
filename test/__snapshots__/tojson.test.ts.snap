@@ -469,6 +469,63 @@ export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> 
 "
 `;
 
+exports[`names with characters that need to be escaped 1`] = `
+"/**
+ * @schema MyStruct
+ */
+export interface MyStruct {
+  /**
+   * @schema MyStruct#it's
+   */
+  readonly itS?: string;
+
+  /**
+   * @schema MyStruct#back\\\\slash
+   */
+  readonly backSlash?: string;
+
+  /**
+   * @schema MyStruct#say \\"hi\\"
+   */
+  readonly sayHi?: string;
+
+  /**
+   * @schema MyStruct#end _/ of comment
+   */
+  readonly endOfComment?: string;
+
+  /**
+   * @schema MyStruct#kubernetes.io/foo/bar
+   */
+  readonly kubernetesIoFooBar?: string;
+}
+
+/**
+ * Converts an object of type 'MyStruct' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_MyStruct(obj: MyStruct | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'it\\\\'s': obj.itS,
+    'back\\\\\\\\slash': obj.backSlash,
+    'say \\"hi\\"': obj.sayHi,
+    'end */ of comment': obj.endOfComment,
+    'kubernetes.io/foo/bar': obj.kubernetesIoFooBar,
+  };
+  if (result['it\\\\'s'] !== undefined && !(new RegExp('^[a-z\\\\']+$').test(result['it\\\\'s']!))) {
+    throw new Error('property it\\\\'s does not match validation regex ^[a-z\\\\']+$');
+  }
+  if (result['back\\\\\\\\slash'] !== undefined && !(new RegExp('^\\\\\\\\w+$').test(result['back\\\\\\\\slash']!))) {
+    throw new Error('property back\\\\\\\\slash does not match validation regex ^\\\\\\\\w+$');
+  }
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+"
+`;
+
 exports[`primitives 1`] = `
 "/**
  * @schema MyStruct

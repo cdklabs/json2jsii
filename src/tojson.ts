@@ -52,15 +52,15 @@ export class ToJsonFunction {
 
     code.open('const result = {');
     for (const [k, v] of Object.entries(this.fields)) {
-      code.line(`'${k}': ${v.renderedField},`);
+      code.line(`${stringLiteral(k)}: ${v.renderedField},`);
     }
     code.close('};');
 
     for (const [k, v] of Object.entries(this.fields)) {
       if (v.propertyRegex) {
-        const escapedRegex = v.propertyRegex.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
-        code.open(`if (result['${k}'] !== undefined && !(new RegExp('${escapedRegex}').test(result['${k}']!))) {`);
-        code.line(`throw new Error('property ${k} does not match validation regex ${escapedRegex}');`);
+        const key = stringLiteral(k);
+        code.open(`if (result[${key}] !== undefined && !(new RegExp(${stringLiteral(v.propertyRegex)}).test(result[${key}]!))) {`);
+        code.line(`throw new Error(${stringLiteral(`property ${k} does not match validation regex ${v.propertyRegex}`)});`);
         code.close('}');
       }
     }
@@ -71,6 +71,13 @@ export class ToJsonFunction {
     code.closeBlock();
     code.line(`/* eslint-enable ${disabledEslintRules.join(', ')} */`);
   }
+}
+
+/**
+ * Renders a single quoted string literal.
+ */
+function stringLiteral(s: string): string {
+  return `'${JSON.stringify(s).slice(1, -1).replace(/\\"/g, '"').replace(/'/g, "\\'")}'`;
 }
 
 /**
