@@ -1987,6 +1987,23 @@ export function toJson_TestType(obj: TestType | undefined): Record<string, any> 
 "
 `;
 
+exports[`unions include integer and number 1`] = `
+"/**
+ * @schema fqn.of.TestType
+ */
+export class TestType {
+  public static fromNumber(value: number): TestType {
+    return new TestType(value);
+  }
+  public readonly value: number;
+
+  private constructor(value: number) {
+    this.value = value;
+  }
+}
+"
+`;
+
 exports[`unions include primitive types through references 1`] = `
 "/**
  * @schema fqn.of.TestType
@@ -2021,6 +2038,67 @@ export class TestType {
   public readonly value: string | number;
 
   private constructor(value: string | number) {
+    this.value = value;
+  }
+}
+"
+`;
+
+exports[`unions include the same primitive type directly and through a reference 1`] = `
+"/**
+ * @schema fqn.of.TestType
+ */
+export interface TestType {
+  /**
+   * @schema fqn.of.TestType#storeType
+   */
+  readonly storeType?: FqnOfTestTypeStoreType;
+
+  /**
+   * @schema fqn.of.TestType#names
+   */
+  readonly names?: FqnOfTestTypeNames[];
+}
+
+/**
+ * Converts an object of type 'TestType' to JSON representation.
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_TestType(obj: TestType | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'storeType': obj.storeType?.value,
+    'names': obj.names?.map(y => y?.value),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * @schema FqnOfTestTypeStoreType
+ */
+export class FqnOfTestTypeStoreType {
+  public static fromString(value: string): FqnOfTestTypeStoreType {
+    return new FqnOfTestTypeStoreType(value);
+  }
+  public readonly value: string;
+
+  private constructor(value: string) {
+    this.value = value;
+  }
+}
+
+/**
+ * @schema FqnOfTestTypeNames
+ */
+export class FqnOfTestTypeNames {
+  public static fromString(value: string): FqnOfTestTypeNames {
+    return new FqnOfTestTypeNames(value);
+  }
+  public readonly value: string;
+
+  private constructor(value: string) {
     this.value = value;
   }
 }

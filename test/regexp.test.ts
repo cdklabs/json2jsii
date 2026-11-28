@@ -122,3 +122,34 @@ test('pattern from $ref is resolved correctly', () => {
   const output = g.render();
   expect(output).toContain("new RegExp('^[0-9]+s$')");
 });
+
+test('union of the same type through a reference matches any of its patterns', () => {
+  const g = TypeGenerator.forStruct(
+    'Test',
+    {
+      properties: {
+        name: {
+          anyOf: [
+            { type: 'string', pattern: '^private$' },
+            { $ref: '#/definitions/name' },
+          ],
+        },
+        storeType: {
+          oneOf: [
+            { type: 'string', enum: ['project', 'global'] },
+            { $ref: '#/definitions/name' },
+          ],
+        },
+      },
+      definitions: {
+        name: { type: 'string', pattern: '^[a-z]+$' },
+      },
+    },
+    { emitRegexValidation: true },
+  );
+
+  const output = g.render();
+  expect(output).toContain("if (!(new RegExp('^private$').test(String(value)) || new RegExp('^[a-z]+$').test(String(value)))) {");
+  // the enum option has no pattern, so any string is accepted
+  expect(output.match(/new RegExp\('\^\[a-z\]\+\$'\)/g)).toHaveLength(1);
+});

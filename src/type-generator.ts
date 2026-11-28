@@ -541,7 +541,9 @@ export class TypeGenerator {
    * @returns true if this definition can be represented as a union or false if it cannot
    */
   private tryEmitUnion(typeName: string, def: JSONSchema4, fqn: string): EmittedType | undefined {
-    const options = new Array<[string, string?]>();
+    // options of the same type share a factory method, so a value of that type
+    // is valid if it matches any of their patterns
+    const options = new Map<string, string[] | undefined>();
     for (const option of def.oneOf || def.anyOf || []) {
       // If it's a $ref, resolve it first
       const resolvedOption = option.$ref ? this.resolveReference(option) : option;
@@ -551,7 +553,12 @@ export class TypeGenerator {
       }
 
       const type = resolvedOption.type === 'integer' ? 'number' : resolvedOption.type;
-      options.push([type, resolvedOption.pattern]);
+      if (!options.has(type)) {
+        options.set(type, []);
+      }
+      const patterns = options.get(type);
+      // undefined: one of the options has no pattern, so any value of this type is valid
+      options.set(type, patterns && resolvedOption.pattern ? [...patterns, resolvedOption.pattern] : undefined);
     }
 
     const emitted: EmittedType = { type: typeName, toJson: x => `${x}?.value` };
@@ -562,14 +569,15 @@ export class TypeGenerator {
       code.openBlock(`export class ${typeName}`);
       const possibleTypes = [];
 
-      for (const [type, pattern] of options) {
+      for (const [type, patterns] of options) {
         possibleTypes.push(type);
         const methodName = 'from' + type[0].toUpperCase() + type.substring(1);
         code.openBlock(`public static ${methodName}(value: ${type}): ${typeName}`);
-        if (this.emitRegexValidation && pattern) {
-          const escapedPattern = pattern.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
-          code.open(`if (!(new RegExp('${escapedPattern}').test(String(value)))) {`);
-          code.line(`throw new Error(\`value \${value} does not match validation regex ${escapedPattern}\`);`);
+        if (this.emitRegexValidation && patterns) {
+          const escapedPatterns = patterns.map(pattern => pattern.replace(/\\/g, '\\\\').replace(/'/g, "\\'"));
+          const test = escapedPatterns.map(pattern => `new RegExp('${pattern}').test(String(value))`).join(' || ');
+          code.open(`if (!(${test})) {`);
+          code.line(`throw new Error(\`value \${value} does not match validation regex ${escapedPatterns.join(' or ')}\`);`);
           code.close('}');
         }
 
