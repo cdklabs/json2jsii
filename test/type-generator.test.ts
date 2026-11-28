@@ -27,6 +27,38 @@ describe('unions', () => {
     },
   });
 
+  which('include the same primitive type directly and through a reference', {
+    properties: {
+      storeType: {
+        oneOf: [
+          { type: 'string', enum: ['project', 'global'] },
+          { $ref: '#/definitions/envVariable' },
+        ],
+      },
+      names: {
+        type: 'array',
+        items: {
+          anyOf: [
+            { type: 'string', pattern: '^private$' },
+            { $ref: '#/definitions/name' },
+          ],
+        },
+      },
+    },
+  }, {
+    definitions: {
+      envVariable: { type: 'string', pattern: '^\\$\\{.*\\}$' },
+      name: { type: 'string', pattern: '^[a-z]+$' },
+    },
+  });
+
+  which('include integer and number', {
+    oneOf: [
+      { type: 'integer' },
+      { type: 'number' },
+    ],
+  });
+
   which('reject non-primitive types through references', {
     oneOf: [
       { type: 'string' },
